@@ -103,6 +103,22 @@
 	</div>
 </section>
 
+{#if r.expert_ratings?.length}
+	<section class="card">
+		<h2>Expert ratings <span class="muted small">(for comparison only)</span></h2>
+		<p class="small muted">
+			Shown as a benchmark. They are <strong>not</strong> used anywhere in our model. After the election we will score our
+			forecast and these ratings side by side.
+		</p>
+		<ul class="experts">
+			{#each r.expert_ratings as e}
+				<li><span class="small">{e.rater}</span> <strong>{e.rating}</strong> <span class="tiny muted">({e.rating_date})</span></li>
+			{/each}
+		</ul>
+		<p class="tiny muted">Ratings as tabulated on Wikipedia's 2026 race pages.</p>
+	</section>
+{/if}
+
 <section class="card">
 	<h2>Forecast over time</h2>
 	{#if data.history}
@@ -173,5 +189,6 @@
 	.blend { height: 10px; border-radius: 5px; background: var(--axis); overflow: hidden; margin: 4px 0 8px; }
 	.bp { height: 100%; background: var(--ink-2); border-radius: 5px; }
 	.polls td { font-size: 0.88rem; }
+	.experts { list-style: none; padding: 0; margin: 0 0 8px; display: flex; gap: 8px 24px; flex-wrap: wrap; }
 	.wbar { display: inline-block; height: 6px; border-radius: 3px; background: var(--ink-3); margin-right: 4px; vertical-align: middle; }
 </style>

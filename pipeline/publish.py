@@ -14,6 +14,7 @@ from __future__ import annotations
 import datetime as dt
 import json
 import math
+import os
 
 import numpy as np
 import pandas as pd
@@ -95,6 +96,14 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
     N_hat = manifest["N_hat"]
     updated = manifest["created_utc"]
 
+    # ---- expert ratings: benchmark only, displayed for comparison (never a model input)
+    from pipeline.config import DB
+    ex_path = DB / "expert_ratings.parquet"
+    expert = {}
+    if ex_path.exists():
+        for rid, g in pd.read_parquet(ex_path).groupby("race_id"):
+            expert[rid] = g[["rater", "rating", "rating_date"]].to_dict(orient="records")
+
     # ---- per-race files
     pt = poll_table.copy()
     races_compact = []
@@ -119,7 +128,8 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
             p_dside=r["p_dside"], p_rep=1 - r["p_dside"], p_runoff=r["p_runoff"],
             margin=dict(mean=r["mu"], **{f"q{p}": r[f"m_q{p}"] for p in (5, 10, 25, 50, 75, 90, 95)}),
             margin_hist=r["hist"], p_by_scenario=r["p_dside_by_scenario"],
-            breakdown=breakdown(r, coef, N_hat), polls=polls, run_id=run_id, updated=updated)
+            breakdown=breakdown(r, coef, N_hat), polls=polls, expert_ratings=expert.get(r["race_id"], []),
+            run_id=run_id, updated=updated)
         _write(out / "races" / f"{r['race_id']}.json", race)
         races_compact.append(dict(id=r["race_id"], office=r["office"], state=r["state"], special=r["special"],
                                   district=None if pd.isna(r.get("district")) else int(r["district"]),
@@ -164,7 +174,9 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
     rows = tbl[["race_id", "p_dside", "mu", "m_q10", "m_q90"]].assign(run_id=run_id, as_of=manifest["as_of"])
     hist = pd.concat([pd.read_csv(HISTORY), rows]) if HISTORY.exists() else rows
     hist = hist.drop_duplicates(["as_of", "race_id"], keep="last")
-    hist.to_csv(HISTORY, index=False)
+    official = os.environ.get("GITHUB_ACTIONS") == "true"   # only the scheduled run writes tracked history
+    if official:
+        hist.to_csv(HISTORY, index=False)
     nat_row = pd.DataFrame([dict(as_of=manifest["as_of"], run_id=run_id,
                                  sen_p_rep=national["sen"]["p_rep_control"], sen_p_dem=national["sen"]["p_dem_control"],
                                  sen_dem_seats=national["sen"]["dem_seats_mean"],
@@ -173,12 +185,14 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
                                  gov_dem_mean=national["gov"]["dem_seats_mean"], generic=N_hat)])
     nh = pd.concat([pd.read_csv(NATIONAL_HISTORY), nat_row]) if NATIONAL_HISTORY.exists() else nat_row
     nh = nh.drop_duplicates(["as_of"], keep="last")
-    nh.to_csv(NATIONAL_HISTORY, index=False)
+    if official:
+        nh.to_csv(NATIONAL_HISTORY, index=False)
     _write(out / "history.json", dict(national=nh.to_dict(orient="records"),
                                       races={rid: g[["as_of", "p_dside", "mu", "m_q10", "m_q90"]].to_dict(orient="list")
                                              for rid, g in hist.groupby("race_id")}))
 
     # ---- manifest
-    (RUNS / run_id).mkdir(parents=True, exist_ok=True)
-    (RUNS / run_id / "manifest.json").write_text(json.dumps(_clean(manifest), indent=1))
+    if official:
+        (RUNS / run_id).mkdir(parents=True, exist_ok=True)
+        (RUNS / run_id / "manifest.json").write_text(json.dumps(_clean(manifest), indent=1))
     _write(out / "manifests" / f"{run_id}.json", manifest)
