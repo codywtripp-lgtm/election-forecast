@@ -1,2 +1,2 @@
-as_of,run_id,sen_p_rep,sen_p_dem,sen_dem_seats,gov_dem_mean,generic
-2026-10-02,2026-10-02-e41470d,0.41136,0.58318,51.04398,26.72862,7.834179755696853
+as_of,run_id,sen_p_rep,sen_p_dem,sen_dem_seats,gov_dem_mean,generic,house_p_dem,house_dem_seats
+2026-10-02,2026-10-02-d46f2eb,0.4013,0.59252,51.14586,26.75036,7.976464050098649,0.77322,228.09302
