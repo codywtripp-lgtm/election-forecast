@@ -16,7 +16,7 @@
 <div class="bar wrap" role="region" aria-label="Forecast summary">
 	<div class="item">
 		<span class="label">Senate</span>
-		<span><strong class={senLeader.cls}>{senLeader.party}</strong> win control in
+		<span><span class="phone-only">Senate: </span><strong class={senLeader.cls}>{senLeader.party}</strong> win control in
 			<strong class="num">{inHundred(senLeader.p)}</strong> simulations</span>
 		<span class="seats num muted small">avg {sen.dem_seats_mean.toFixed(1)} D – {sen.rep_seats_mean.toFixed(1)} R</span>
 	</div>
@@ -46,9 +46,11 @@
 	.item { display: flex; flex-direction: column; min-width: 0; }
 	.label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); font-weight: 600; }
 	.updated { justify-content: center; }
+	.phone-only { display: none; }
 	@media (max-width: 640px) {
 		.bar { grid-template-columns: 1fr; font-size: 0.85rem; gap: 0; padding-bottom: 6px; }
 		.seats, .wide-only, .label { display: none; }
 		.updated { font-size: 0.75rem; }
+		.phone-only { display: inline; font-weight: 600; }
 	}
 </style>

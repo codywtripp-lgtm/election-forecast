@@ -91,7 +91,7 @@
 }
 
 * { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 140px; }
 body {
 	margin: 0;
 	background: var(--page);

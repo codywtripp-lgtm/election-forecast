@@ -81,7 +81,7 @@
 			simulations; <strong class="dem">Democrats</strong> flip it in <strong class="num">{inHundred(senView.p_dem_control ?? 0)}</strong>.
 		{/if}
 		{#if (senView.p_independents_decide ?? 0) >= 0.005}
-			In {inHundred(senView.p_independents_decide ?? 0)}, neither party reaches a majority without an independent.
+			In {inHundred(senView.p_independents_decide ?? 0)} simulations, neither party reaches a majority without an independent.
 		{/if}
 	</p>
 	<p class="small muted">
