@@ -5,11 +5,13 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+  pages: write
+  id-token: write
 concurrency:
   group: daily
   cancel-in-progress: false
 jobs:
-  run:
+  forecast:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -25,11 +27,22 @@ jobs:
       - name: Normalize
         run: |
           python -m pipeline.races
+          python -m pipeline.normalize.results
           python -m pipeline.normalize.polls
-      - name: Commit data
+          python -m pipeline.composition
+      - name: Validate
+        run: python -m pytest -q
+      - name: Forecast
+        run: python -m pipeline.run --sims 50000
+      - name: Commit data, history and run manifest
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data
-          git diff --cached --quiet || git commit -m "Daily data $(date -u +%F)"
+          git add data runs
+          git diff --cached --quiet || git commit -m "Forecast $(date -u +%F\ %H:%M) UTC"
+          git pull --rebase
           git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: site-data
+          path: site/static/data

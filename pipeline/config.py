@@ -10,6 +10,7 @@ RAW = DATA / "raw"
 MANUAL = DATA / "manual"
 DB = DATA / "db"
 RUNS = ROOT / "runs"
+MODEL = DATA / "model"          # committed, versioned model parameters (calibrated by the backtest)
 SITE_DATA = ROOT / "site" / "static" / "data"
 
 CYCLE = 2026

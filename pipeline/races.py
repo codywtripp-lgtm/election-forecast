@@ -96,6 +96,9 @@ def build() -> tuple[pd.DataFrame, pd.DataFrame]:
     races["rule"] = races["rule"].fillna("plurality")
     races["rule_verified"] = races.pop("verified").fillna("default")
     cands["candidate_id"] = cands["race_id"] + ":" + cands["name"].str.lower().str.replace(r"[^a-z]+", "-", regex=True)
+    for o in pd.read_csv(MANUAL / "candidate_overrides.csv").itertuples():
+        val = {"True": True, "False": False}.get(str(o.value), o.value)
+        cands.loc[cands["candidate_id"] == o.candidate_id, o.field] = val
     return races, cands
 
 
