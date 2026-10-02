@@ -285,6 +285,10 @@ def main() -> None:
     q = pd.concat([fq, vq], ignore_index=True)
     a = pd.concat([fa, va], ignore_index=True)
     q["pollster_key"] = q["pollster"].map(pollster_key)
+    # weighting-method classes are coded from current methodology statements → 2025– polls only
+    from pipeline.model.weighting import classify
+    cur = q["source"] == "votehub"
+    q.loc[cur, "weighting_class"] = classify(q.loc[cur, "pollster"]).to_numpy()
     for c in ("district", "sample_size"):
         q[c] = pd.to_numeric(q[c], errors="coerce")
     q["cycle"] = q["cycle"].astype("Int64")
