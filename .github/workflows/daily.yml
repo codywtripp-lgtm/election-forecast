@@ -1,14 +1,17 @@
-name: daily
+name: forecast
 on:
   schedule:
     - cron: "15 11,23 * * *"   # 7:15am / 7:15pm ET (EDT)
+  push:
+    branches: [main]
+    paths: ["pipeline/**", "site/**", "data/manual/**", "data/model/**", "docs/**", ".github/workflows/daily.yml"]
   workflow_dispatch:
 permissions:
   contents: write
   pages: write
   id-token: write
 concurrency:
-  group: daily
+  group: forecast
   cancel-in-progress: false
 jobs:
   forecast:
@@ -39,10 +42,31 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data runs
-          git diff --cached --quiet || git commit -m "Forecast $(date -u +%F\ %H:%M) UTC"
+          git diff --cached --quiet || git commit -m "Forecast $(date -u '+%F %H:%M') UTC"
           git pull --rebase
           git push
-      - uses: actions/upload-artifact@v4
+      - uses: actions/setup-node@v4
         with:
-          name: site-data
-          path: site/static/data
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Build site
+        working-directory: site
+        env:
+          BASE_PATH: /${{ github.event.repository.name }}
+        run: |
+          npm ci
+          npm run build
+          touch build/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site/build
+  deploy:
+    needs: forecast
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

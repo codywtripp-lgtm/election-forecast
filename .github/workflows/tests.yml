@@ -14,3 +14,25 @@ jobs:
           cache: pip
       - run: pip install -r requirements.txt
       - run: python -m pytest -q
+  site:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - name: Build data and site (real forecast run, small simulation)
+        run: |
+          pip install -r requirements.txt
+          python -m pipeline.races
+          python -m pipeline.normalize.results
+          python -m pipeline.normalize.polls
+          python -m pipeline.composition
+          python -m pipeline.run --sims 5000
+          cd site && npm ci && npm run check && npm run build

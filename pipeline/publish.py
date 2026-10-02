@@ -127,6 +127,9 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
                                   rule=r["rule"], p_runoff=r["p_runoff"], incumbent_party=r["incumbent_party"]))
 
     gen = avgs.set_index("race_id").loc[f"{CYCLE}-generic"]
+    samples = national.pop("samples", None)
+    if samples:
+        _write(out / "samples.json", samples)
     summary = dict(run_id=run_id, updated=updated, as_of=manifest["as_of"],
                    days_to_election=manifest["days_to_election"], election_date="2026-11-03",
                    n_sims=manifest["n_sims"], national=national,

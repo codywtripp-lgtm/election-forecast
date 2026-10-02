@@ -8,6 +8,7 @@ Output features (data/db/demographics.parquet), shares of adults 25+ / total pop
 from __future__ import annotations
 
 import io
+from functools import lru_cache
 
 import pandas as pd
 
@@ -34,6 +35,7 @@ def _read(t: str) -> pd.DataFrame:
     return pd.read_csv(DIR / f"{t}.dat.gz", sep="|", dtype={"GEO_ID": str}).set_index("GEO_ID")
 
 
+@lru_cache
 def features() -> pd.DataFrame:
     race, edu, wedu = _read("b03002"), _read("b15003"), _read("c15002h")
     df = pd.DataFrame(index=race.index)
