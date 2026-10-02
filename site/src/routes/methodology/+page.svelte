@@ -7,6 +7,10 @@
 	let q = $state('');
 	const pollsters = $derived(data.pollsters.filter((p: any) => !q || p.pollster.toLowerCase().includes(q.toLowerCase())));
 	const base = $derived(bt?.baselines ?? {});
+	const fmtDelta = (d: number) => {
+		const pts = Math.round(d * 100);
+		return pts === 0 ? ' (±0)' : ` (${pts > 0 ? '+' : '−'}${Math.abs(pts)})`;
+	};
 </script>
 
 <svelte:head><title>Methodology: how the 2026 forecast works</title></svelte:head>
@@ -62,6 +66,35 @@
 	</section>
 {/if}
 
+{#if data.sensitivity}
+	<section class="card">
+		<h2>How much do the assumptions matter?</h2>
+		<p class="small">
+			The same forecast re-run ({data.sensitivity.as_of}, {data.sensitivity.sims.toLocaleString()} simulations each) with one
+			assumption changed at a time. Rows that move the numbers a lot are the assumptions to watch.
+		</p>
+		<div class="table-scroll">
+			<table class="small">
+				<thead>
+					<tr><th>Variant</th><th class="num">Senate: D control</th><th class="num">House: D majority</th><th class="num">Senate D seats</th><th class="num">House D seats</th></tr>
+				</thead>
+				<tbody>
+					{#each data.sensitivity.rows as r, i}
+						{@const b = data.sensitivity.rows[0]}
+						<tr class:base={i === 0}>
+							<td>{r.variant}</td>
+							<td class="num">{Math.round(r.senate_dem * 100)}%{#if i > 0}<span class="delta">{fmtDelta(r.senate_dem - b.senate_dem)}</span>{/if}</td>
+							<td class="num">{r.house_dem !== undefined ? Math.round(r.house_dem * 100) + '%' : '–'}{#if i > 0 && r.house_dem !== undefined}<span class="delta">{fmtDelta(r.house_dem - b.house_dem)}</span>{/if}</td>
+							<td class="num">{r.senate_dem_seats.toFixed(1)}</td>
+							<td class="num">{r.house_dem_seats !== undefined ? r.house_dem_seats.toFixed(0) : '–'}</td>
+						</tr>
+					{/each}
+				</tbody>
+			</table>
+		</div>
+	</section>
+{/if}
+
 <section class="card">
 	<h2>Pollster ratings</h2>
 	<p class="small">
@@ -94,6 +127,8 @@
 
 <style>
 	.lede { font-size: 1.1rem; }
+	tr.base td { font-weight: 700; }
+	.delta { color: var(--ink-3); font-weight: 400; margin-left: 4px; font-size: 0.85em; }
 	.card { margin-bottom: 16px; }
 	input[type='search'] {
 		font: inherit; padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);

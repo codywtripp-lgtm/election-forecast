@@ -328,6 +328,8 @@ Fitted error structure (Election Day s.d., points): national 2.8, regional 0.6, 
 
 ## 8. Sensitivity analysis
 
+**Live:** `pipeline/sensitivity.py` re-runs the day's forecast under the variants below and publishes the table on the methodology page (refreshed weekly with the backtest). At launch, Democratic Senate-control odds ranged from 48% (2024-like electorate) to 72% (high-engagement midterm), and fell to 52% if the historical midterm likely-voter shift (R+1.45) were used instead of the 2026 evidence; error-size and tail-shape changes moved them by 1–3 points.
+
 Published runs re-computing 2026 toplines (chamber odds, expected seats, top-10 race probabilities) under:
 - turnout scenario weights: each scenario at 100%; (0.5, 0.25, 0.25) / (0.25, 0.25, 0.5)
 - δ_class: posterior mean ± 1 and ± 2 SE; δ = 0

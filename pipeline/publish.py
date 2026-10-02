@@ -155,6 +155,9 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
     report = MODEL / "backtest_report.json"
     if report.exists():
         _write(out / "backtest.json", json.loads(report.read_text()))
+    sens = MODEL / "sensitivity.json"
+    if sens.exists():
+        _write(out / "sensitivity.json", json.loads(sens.read_text(encoding="utf-8")))
 
     # ---- history (committed CSV) → history.json
     HISTORY.parent.mkdir(parents=True, exist_ok=True)
