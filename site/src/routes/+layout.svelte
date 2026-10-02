@@ -57,6 +57,9 @@
 		backdrop-filter: blur(8px);
 		border-bottom: 1px solid var(--border);
 	}
+	@media (max-width: 640px) {
+		.site-header { position: static; backdrop-filter: none; }
+	}
 	.head-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 4px; flex-wrap: wrap; }
 	.brand { font-weight: 700; color: var(--ink-1); text-decoration: none; letter-spacing: -0.01em; }
 	nav { display: flex; gap: 16px; }

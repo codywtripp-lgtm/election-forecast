@@ -42,13 +42,31 @@ class ErrParams:
         return float(np.sqrt(1 + max(days, 0) / self.T0))
 
 
-def demo_loadings(states: pd.Series) -> np.ndarray:
-    """Standardised state demographic shares (z-scores across the 50 states + DC)."""
+REDRAWN_2026 = {"TX", "NC", "OH", "CA", "UT", "FL", "TN", "LA", "AL"}  # ACS districts are on the old lines
+
+
+def demo_loadings(states: pd.Series, districts: pd.Series | None = None) -> np.ndarray:
+    """Standardised demographic shares (z-scores using state-level moments). House districts use
+    their own ACS 2024 shares, except in states redrawn for 2026 (the ACS has the old lines),
+    which fall back to the state's shares."""
     from pipeline.ingest.census import features  # reads the committed ACS snapshot, no network
-    d = features()
-    d = d[(d["level"] == "state") & d["state"].notna()].set_index("state")[DEMO_FACTORS]
-    z = (d - d.mean()) / d.std()
-    return z.reindex(states).fillna(0.0).to_numpy()
+    f = features()
+    st = f[(f["level"] == "state") & f["state"].notna()].set_index("state")[DEMO_FACTORS]
+    mu, sd = st.mean(), st.std()
+    out = ((st - mu) / sd).reindex(states).fillna(0.0).to_numpy()
+    if districts is None:
+        return out
+    cd = f[(f["level"] == "cd") & f["state"].notna() & f["district"].notna()]
+    z_cd = {(s, int(d)): ((row - mu) / sd).to_numpy()
+            for s, d, (_, row) in zip(cd["state"], cd["district"], cd[DEMO_FACTORS].iterrows())}
+    for i, (s, d) in enumerate(zip(states, districts)):
+        if d is None or pd.isna(d) or s in REDRAWN_2026:
+            continue
+        # ACS numbers at-large districts 0 (or 98); ours are 1
+        key = (s, int(d)) if (s, int(d)) in z_cd else (s, 0)
+        if key in z_cd:
+            out[i] = z_cd[key]
+    return out
 
 
 def blend(races: pd.DataFrame, avgs: pd.DataFrame, fmodel: dict, N_hat: float, days: int,
@@ -82,10 +100,10 @@ def simulate(tbl: pd.DataFrame, days: int, ep: ErrParams, n_sims: int = 50_000, 
     nat = _t(rng, (n_sims, 1), ep.df) * ep.nat_ed * s
     div_idx = np.array([DIVISIONS.index(DIVISION[st]) for st in tbl["state"]])
     div = (_t(rng, (n_sims, len(DIVISIONS)), ep.df) * ep.div_ed * s)[:, div_idx]
-    L = demo_loadings(tbl["state"])                                   # R × F
+    L = demo_loadings(tbl["state"], tbl["district"] if "district" in tbl else None)  # R × F
     dem = (_t(rng, (n_sims, L.shape[1]), ep.df) @ L.T) * ep.dem_ed * s / np.sqrt(L.shape[1])
-    race = _t(rng, (n_sims, R), ep.df) * tbl["sd"].to_numpy()
-    margins = tbl["mu"].to_numpy() + nat + div + dem + race
+    race = (_t(rng, (n_sims, R), ep.df) * tbl["sd"].to_numpy()).astype(np.float32)
+    margins = tbl["mu"].to_numpy().astype(np.float32) + (nat + div + dem).astype(np.float32) + race
     return dict(margins=margins, national=nat[:, 0], rng=rng)
 
 

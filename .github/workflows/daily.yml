@@ -30,6 +30,7 @@ jobs:
       - name: Normalize
         run: |
           python -m pipeline.races
+          python -m pipeline.house
           python -m pipeline.normalize.results
           python -m pipeline.normalize.polls
           python -m pipeline.composition

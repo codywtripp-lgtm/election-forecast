@@ -26,6 +26,8 @@ Last reviewed 2026-10-02.
 | S16 | Cooperative Election Study | validated vote by group | not started | open | For G10. |
 | S17 | Expert ratings (Cook, Sabato, Inside Elections) | **benchmark only** | not started | store ratings (facts) with citation | Wikipedia race pages tabulate them (G11). |
 | S18 | `us-atlas` TopoJSON | state map | **live** | ISC | |
+| S20 | The Downballot, presidential results by congressional district (public Google Sheets) | House district lean: 2024/2020 on the 2026 lines; 2008–2024 on each earlier cycle's lines | **live** | published free ("paywall-free"); no explicit licence — attributed on the site; owner may want to confirm reuse | Whole-number percentages on the 2026 sheet. Reflects all 10 redrawn states and Missouri's reversion to its 2022 map, matching the Wikipedia redistricting summary. |
+| S21 | Wikipedia House election pages | 2026 nominees per district; 2012–2024 district results | **live** | CC BY-SA 4.0 | |
 | S19 | Clerk of the House | 2024 national House vote | **live** (one number) | public | Entered in `data/manual/national_house_vote.csv` with citation; 1998–2022 from 538 `raw_polls.csv`. |
 
 ## Known gaps (and what we do about them)
@@ -33,7 +35,7 @@ Last reviewed 2026-10-02.
 | # | Gap | Impact | Plan / status |
 |---|---|---|---|
 | G1 | Wikipedia CC BY-SA share-alike | poll database licence | **Resolved:** owner approved publishing the poll database under CC BY-SA 4.0. |
-| G2 | 2026 district lines: 10 states changed (TX, NC, OH, CA, UT, FL, TN, LA, AL; MO's new map blocked → 2022 map). TN map under legal challenge. **Unverified** (Wikipedia summary). | House lean wrong if any state is wrong | Phase 2: verify each against the official enacted plan; `data/manual/district_plans.csv` with source URLs. ACS district demographics are on the old (2024) lines. |
+| G2 | 2026 district lines: 10 states changed (TX, NC, OH, CA, UT, FL, TN, LA, AL; MO's new map blocked → 2022 map). TN map under legal challenge. | House lean wrong if any state is wrong | **Two independent sources agree** (Wikipedia redistricting summary; The Downballot's 2026-lines sheet, whose district results reflect those exact changes). Not yet checked against each state's official plan file. ACS district demographics are on the old (2024) lines, so redrawn states use state-level demographics. |
 | G3 | Poll histories before 2018 | 2010–2016 backtests are final-forecast only | Stated on the methodology page. |
 | G4 | 2025–26 special/off-year poll set | needed for δ_class | VoteHub has NJ/VA 2025 governor polls; results needed. |
 | G5 | **Weighting method not recorded anywhere in bulk** | δ_class not applied at launch (all polls UNK) | Hand-code the most prolific 2026 pollsters from their methodology statements. |

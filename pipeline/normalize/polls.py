@@ -277,6 +277,8 @@ def main() -> None:
     vq, va = load_votehub(fte_mode_by_pollster(fq))
     races = pd.read_parquet(DB / "races.parquet")
     cands = pd.read_parquet(DB / "candidates.parquet")
+    if (DB / "house_candidates.parquet").exists():
+        cands = pd.concat([cands, pd.read_parquet(DB / "house_candidates.parquet")], ignore_index=True)
     vq = fix_2026_specials(vq, races)
     va = attach_parties(vq, va, cands)
     fa["candidate_id"] = None

@@ -4,13 +4,15 @@
 	import { margin, partyLetter, raceTitle } from '#lib/format.ts';
 	import type { RaceSummary } from '#lib/types.ts';
 
-	let { races, caption }: { races: RaceSummary[]; caption: string } = $props();
+	let { races, caption, competitiveDefault = false }: { races: RaceSummary[]; caption: string; competitiveDefault?: boolean } = $props();
 	let q = $state('');
+	let competitive = $state(competitiveDefault);
 	let sort: 'close' | 'state' | 'dem' = $state('close');
 
 	const rows = $derived(
 		races
-			.filter((r) => !q || `${raceTitle(r)} ${r.d} ${r.r}`.toLowerCase().includes(q.toLowerCase()))
+			.filter((r) => !q || `${raceTitle(r)} ${r.d} ${r.r} ${r.state}`.toLowerCase().includes(q.toLowerCase()))
+			.filter((r) => !competitive || q || (r.p > 0.05 && r.p < 0.95))
 			.sort((a, b) =>
 				sort === 'close' ? Math.abs(a.p - 0.5) - Math.abs(b.p - 0.5)
 				: sort === 'dem' ? b.p - a.p
@@ -24,6 +26,9 @@
 		<span class="sr-only">Search races</span>
 		<input type="search" placeholder="Search state or candidate" bind:value={q} />
 	</label>
+	{#if competitiveDefault}
+		<label class="small"><input type="checkbox" bind:checked={competitive} /> Competitive only (5–95%)</label>
+	{/if}
 	<div class="sorts" role="group" aria-label="Sort races">
 		<button aria-pressed={sort === 'close'} onclick={() => (sort = 'close')}>Closest</button>
 		<button aria-pressed={sort === 'dem'} onclick={() => (sort = 'dem')}>Most D</button>
@@ -48,7 +53,7 @@
 					<td><a href={resolve('/race/[id]', { id: r.id })}>{raceTitle(r)}</a></td>
 					<td class="small">
 						<span class="dem">{r.d} ({partyLetter(r.d_party)})</span><br />
-						<span class="rep">{r.r} (R)</span>
+						{#if r.r}<span class="rep">{r.r} (R)</span>{:else}<span class="muted">No Republican</span>{/if}
 					</td>
 					<td class="num">
 						<span class="dem">{Math.round(r.p * 100)}%</span><br />
@@ -58,7 +63,7 @@
 					<td>
 						<span class="pill" style:background={fillVar(r.p)} style:color={inkVar(r.p)}>{classOf(r.p).label}</span>
 						{#if r.p_runoff > 0.05}<span class="chip">runoff {Math.round(r.p_runoff * 100)}%</span>{/if}
-						{#if r.n_polls === 0}<span class="chip">no polls</span>{/if}
+						{#if r.fixed}<span class="chip">uncontested</span>{:else if r.n_polls === 0}<span class="chip">no polls</span>{/if}
 					</td>
 				</tr>
 			{/each}

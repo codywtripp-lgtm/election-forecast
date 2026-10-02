@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { asset, resolve } from '$app/paths';
 	import USMap from '#lib/components/USMap.svelte';
+	import HexMap from '#lib/components/HexMap.svelte';
 	import SeatHistogram from '#lib/components/SeatHistogram.svelte';
 	import RaceTable from '#lib/components/RaceTable.svelte';
 	import { CLASSES } from '#lib/colors.ts';
@@ -15,15 +16,18 @@
 	const races = $derived(s.races.filter((r: RaceSummary) => r.office === tab));
 	const sen = $derived(s.national.sen);
 	const gov = $derived(s.national.gov);
+	const house = $derived(s.national.house);
+	const houseView = $derived(house && scenario !== 'all' ? { ...house, ...house.by_scenario[scenario] } : house);
+	const houseTipping = $derived(Object.entries(house?.tipping_point ?? {}).slice(0, 5) as [string, number][]);
 	const senView = $derived(scenario === 'all' ? sen : { ...sen, ...sen.by_scenario[scenario] });
 	const govView = $derived(scenario === 'all' ? gov : { ...gov, ...gov.by_scenario[scenario] });
 	const raceById = $derived(Object.fromEntries(s.races.map((r: RaceSummary) => [r.id, r])));
 	const tipping = $derived(Object.entries(sen.tipping_point ?? {}).slice(0, 5) as [string, number][]);
 
 	// ---- "simulate one election": replay one stored simulation draw from the model run
-	type Samples = { race_ids: string[]; dside_wins: string[]; margins: number[][]; scenario: number[] };
+	type Samples = { race_ids: string[]; dside_wins: string[]; scenario: number[] };
 	let samples: Samples | null = null;
-	let sim: { k: number; winners: Record<string, boolean>; senD: number; senInd: number; govD: number; scenario: string } | null =
+	let sim: { k: number; winners: Record<string, boolean>; senD: number; senInd: number; govD: number; houseD: number; scenario: string } | null =
 		$state(null);
 	let simShown: Record<string, boolean> | null = $state(null);
 	let running = $state(false);
@@ -44,14 +48,18 @@
 			scenario: s.scenarios[S.scenario[k]]?.label ?? '',
 			senD: sen.holdover_dem + wins('sen', true),
 			senInd: wins('sen', false),
-			govD: gov.holdover_dem + wins('gov', true)
+			govD: gov.holdover_dem + wins('gov', true),
+			houseD: wins('house', true)
 		};
 		// reveal state by state, safest first and closest last
 		const order = races.slice().sort((a: RaceSummary, b: RaceSummary) => Math.abs(b.p - 0.5) - Math.abs(a.p - 0.5));
 		const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 		simShown = {};
-		for (const r of order) {
-			simShown = { ...simShown, [r.state]: winners[r.id] };
+		const key = (r: RaceSummary) => (tab === 'house' ? r.id : r.state);
+		const step = tab === 'house' ? 15 : 1; // reveal House districts in batches
+		for (let i = 0; i < order.length; i += step) {
+			const batch = Object.fromEntries(order.slice(i, i + step).map((r: RaceSummary) => [key(r), winners[r.id]]));
+			simShown = { ...simShown, ...batch };
 			if (!reduce) await new Promise((res) => setTimeout(res, 35));
 		}
 		running = false;
@@ -141,6 +149,43 @@
 	</section>
 </div>
 
+{#if tab === 'house' && houseView}
+	<div class="grid-2">
+		<section class="card">
+			<h2>House seats</h2>
+			<p class="lede-sm">
+				{#if (houseView.p_dem_majority ?? 0) >= (houseView.p_rep_majority ?? 0)}
+					<strong class="dem">Democrats</strong> win the House in <strong>{inHundred(houseView.p_dem_majority ?? 0)}</strong> simulations.
+				{:else}
+					<strong class="rep">Republicans</strong> keep the House in <strong>{inHundred(houseView.p_rep_majority ?? 0)}</strong> simulations.
+				{/if}
+				Average: {houseView.dem_seats_mean.toFixed(0)} D – {houseView.rep_seats_mean.toFixed(0)} R. A majority is 218.
+			</p>
+			{#if house}<SeatHistogram hist={house.dem_seats_hist} majority={218} repMajorityAt={218} total={435} highlight={sim?.houseD ?? null} />{/if}
+		</section>
+		<section class="card">
+			<h2>House tipping-point districts</h2>
+			<ol class="tp">
+				{#each houseTipping as [id, share]}
+					{@const r = raceById[id]}
+					{#if r}
+						<li>
+							<a href={resolve('/race/[id]', { id })}>{raceTitle(r)}</a>
+							<span class="bar" style:width="{share * 1200}px" aria-hidden="true"></span>
+							<span class="num small muted">{(share * 100).toFixed(1)}%</span>
+						</li>
+					{/if}
+				{/each}
+			</ol>
+			<p class="tiny muted">
+				Most House districts have no public polls, so the House forecast leans on fundamentals: district partisan lean on the 2026
+				lines, the national environment and incumbency. {s.races.filter((r) => r.office === 'house' && r.n_polls > 0).length} districts
+				have at least one poll.
+			</p>
+		</section>
+	</div>
+{/if}
+
 <section class="card map-card">
 	<div class="tabs" role="tablist" aria-label="Office">
 		<button role="tab" aria-selected={tab === 'sen'} onclick={() => setTab('sen')}>Senate</button>
@@ -148,14 +193,9 @@
 		<button role="tab" aria-selected={tab === 'house'} onclick={() => setTab('house')}>House</button>
 	</div>
 
-	{#if tab === 'house'}
+	{#if tab === 'house' && !house}
 		<div class="house-soon">
-			<h2>House forecast: coming by October 20</h2>
-			<p class="muted">
-				The House model is mostly fundamentals (district lean on the 2026 lines, national environment, incumbency), because most of
-				the 435 districts have little or no polling. Ten states redrew their maps for 2026, and we are verifying each one before
-				publishing. The House view will be a hex map, so small urban districts are not hidden.
-			</p>
+			<h2>House forecast: coming soon</h2>
 		</div>
 	{:else}
 		<div class="sim-row">
@@ -166,15 +206,21 @@
 					{#if tab === 'sen'}
 						<strong class="dem">{sim.senD} D</strong> · <strong class="rep">{100 - sim.senD - sim.senInd} R</strong>
 						{#if sim.senInd}· {sim.senInd} independent{sim.senInd > 1 ? 's' : ''}{/if}
-					{:else}
+					{:else if tab === 'gov'}
 						<strong class="dem">{sim.govD} D</strong> · <strong class="rep">{50 - sim.govD} R</strong> governors
+					{:else}
+						<strong class="dem">{sim.houseD} D</strong> · <strong class="rep">{435 - sim.houseD} R</strong> House seats
 					{/if}
 					<span class="muted">({sim.scenario})</span>
 				</span>
 				<button class="small" onclick={clearSim}>Back to probabilities</button>
 			{/if}
 		</div>
-		<USMap {races} simWinners={simShown} label="{tab === 'sen' ? 'Senate' : 'Governor'} forecast map" />
+		{#if tab === 'house'}
+			<HexMap {races} simWinners={simShown} />
+		{:else}
+			<USMap {races} simWinners={simShown} label="{tab === 'sen' ? 'Senate' : 'Governor'} forecast map" />
+		{/if}
 		<div class="legend small" aria-label="Legend">
 			{#if simShown}
 				<span><span class="swatch" style:background="var(--dem)"></span> D side wins this draw</span>
@@ -183,20 +229,21 @@
 				{#each CLASSES as c}
 					<span><span class="swatch" style:background="var(--c-{c.key})"></span> {c.label}</span>
 				{/each}
-				<span><span class="swatch none"></span> No race</span>
+				{#if tab !== 'house'}<span><span class="swatch none"></span> No race</span>{/if}
 			{/if}
 		</div>
 		<p class="tiny muted">
 			Toss-up 40–60%, Lean 60–75%, Likely 75–95%, Safe 95%+. Blue is the Democratic nominee or, where an independent is the main
 			challenger (Idaho, Montana, Nebraska, South Dakota Senate), that independent.
+			{#if tab === 'house'}One hexagon per district, grouped by state; positions within a state are not geographic.{/if}
 		</p>
 	{/if}
 </section>
 
-{#if tab !== 'house'}
+{#if tab !== 'house' || house}
 	<section class="card">
-		<h2>All {tab === 'sen' ? 'Senate' : 'governor'} races</h2>
-		<RaceTable {races} caption="{tab === 'sen' ? 'Senate' : 'Governor'} race forecasts" />
+		<h2>All {tab === 'sen' ? 'Senate' : tab === 'gov' ? 'governor' : 'House'} races</h2>
+		<RaceTable {races} caption="{tab === 'sen' ? 'Senate' : 'Governor'} race forecasts" competitiveDefault={tab === 'house'} />
 	</section>
 {/if}
 
@@ -215,4 +262,5 @@
 	.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 8px; }
 	.swatch.none { background: var(--surface); outline: 1px solid var(--axis); }
 	.house-soon { padding: 24px 0; max-width: 40em; }
+	.lede-sm { font-size: 1.05rem; }
 </style>

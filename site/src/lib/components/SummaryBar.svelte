@@ -2,7 +2,15 @@
 	import { fmtUpdated, inHundred } from '#lib/format.ts';
 	import type { Chamber } from '#lib/types.ts';
 
-	let { bar }: { bar: { updated: string; run_id: string; days: number; sen: Chamber; gov: Chamber } } = $props();
+	let { bar }: { bar: { updated: string; run_id: string; days: number; sen: Chamber; gov: Chamber; house?: Chamber } } = $props();
+	const house = $derived(bar.house);
+	const houseLeader = $derived(
+		house
+			? (house.p_dem_majority ?? 0) >= (house.p_rep_majority ?? 0)
+				? { party: 'Democrats', cls: 'dem', p: house.p_dem_majority ?? 0 }
+				: { party: 'Republicans', cls: 'rep', p: house.p_rep_majority ?? 0 }
+			: null
+	);
 	const sen = $derived(bar.sen);
 	const senLeader = $derived(
 		(sen.p_dem_control ?? 0) >= (sen.p_rep_control ?? 0)
@@ -16,13 +24,19 @@
 <div class="bar wrap" role="region" aria-label="Forecast summary">
 	<div class="item">
 		<span class="label">Senate</span>
-		<span><span class="phone-only">Senate: </span><strong class={senLeader.cls}>{senLeader.party}</strong> win control in
+		<span><span class="phone-only">Senate:&nbsp;</span><strong class={senLeader.cls}>{senLeader.party}</strong> win control in
 			<strong class="num">{inHundred(senLeader.p)}</strong> simulations</span>
 		<span class="seats num muted small">avg {sen.dem_seats_mean.toFixed(1)} D – {sen.rep_seats_mean.toFixed(1)} R</span>
 	</div>
-	<div class="item wide-only">
+	<div class="item">
 		<span class="label">House</span>
-		<span class="muted">Forecast launches by Oct 20</span>
+		{#if houseLeader && house}
+			<span><span class="phone-only">House:&nbsp;</span><strong class={houseLeader.cls}>{houseLeader.party}</strong> win the majority in
+				<strong class="num">{inHundred(houseLeader.p)}</strong></span>
+			<span class="seats num muted small">avg {house.dem_seats_mean.toFixed(0)} D – {house.rep_seats_mean.toFixed(0)} R</span>
+		{:else}
+			<span class="muted">Coming soon</span>
+		{/if}
 	</div>
 	<div class="item wide-only">
 		<span class="label">Governors</span>
