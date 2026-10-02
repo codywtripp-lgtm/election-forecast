@@ -44,7 +44,8 @@ class ErrParams:
 
 def demo_loadings(states: pd.Series) -> np.ndarray:
     """Standardised state demographic shares (z-scores across the 50 states + DC)."""
-    d = pd.read_parquet(DB / "demographics.parquet")
+    from pipeline.ingest.census import features  # reads the committed ACS snapshot, no network
+    d = features()
     d = d[(d["level"] == "state") & d["state"].notna()].set_index("state")[DEMO_FACTORS]
     z = (d - d.mean()) / d.std()
     return z.reindex(states).fillna(0.0).to_numpy()

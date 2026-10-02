@@ -1,6 +1,22 @@
-# Methodology (draft for review)
+# Methodology
 
-Status: **design only — nothing here has been fit yet.** Numbers in this document are *priors or starting values*, labelled as such. Every one gets replaced by a backtest-fitted value (or confirmed) before the forecast is published, and the fitted value is logged with its run.
+## Launch status (October 2026)
+
+What is live, and what is not yet (no number on the site comes from anything in the "not yet" column):
+
+| Component | Live now | Not yet / simplified |
+|---|---|---|
+| Pollster ratings (§1) | Fit on ~17,800 final-21-day polls with results, 1998–2024 | Transparency checklist is AAPOR/Roper membership only |
+| Poll adjustments (§2) | Likely-voter shift, partisan-sponsor correction, house effects, recency + generic-ballot trend, sample-size cap, herding penalty, ranked-choice transfers | — |
+| Weighting-method correction (§2.6) | Every poll carries a methodology class | **All polls are "UNK" until hand-coded, so no correction is applied yet** (DATA_GAPS G5) |
+| National environment (§4.1) | Our generic-ballot average (400+ polls) | Approval / midterm-penalty / economy regression not yet fit (needs 1946–2022 history, G9); a month out the generic ballot dominates it |
+| Race prior (§4.2) | Partisan lean, national environment, incumbency (fit 2000–2024, recent cycles weighted more) | Candidate quality and fundraising not yet in (G8, S13) |
+| Turnout scenarios (§5) | Three scenarios in every simulation, toggle on the site | Launch version sizes the scenarios from the measured likely-vs-registered-voter gap, not yet from CPS/CES group turnout |
+| Simulation (§6) | 50,000 correlated draws; national, 9 regional, 4 demographic factors (ACS 2024), Student-t; GA runoff, AK/ME RCV, independents | — |
+| Validation (§7) | As-of backtest 2010–2024, leave-one-cycle-out scoring, published on this page | — |
+| House | — | Launching by Oct 20 (Phase 2) |
+
+Numbers below marked "start" were the pre-fit design values; fitted values are recorded in `data/model/` and in each run's manifest.
 
 Every modeling assumption is tagged **[A#]** with a sensitivity rating:
 - **low** — plausible alternatives move race probabilities < 1 pt and chamber odds < 1 pt
@@ -82,7 +98,13 @@ RV and adult samples are shifted to an LV basis:
 adj_LV = margin_RV + γ(cycle_type, president_party)
 ```
 
-γ is estimated from paired releases (same pollster, same field period, both RV and LV toplines) in the 538 archive, separately for midterms. Historically the LV screen helped the out-party/GOP in midterms; in 2026 the president's party is Republican, and recent cycles suggest the higher-propensity electorate has shifted toward Democrats, so **the sign is not assumed** — it comes from the data, with the 2018/2022 paired polls weighted most. Adult samples get γ_A = γ plus an extra adult→RV step, and a larger variance. **[A5, high]**
+γ is estimated from paired releases (same pollster, same field period, both RV and LV toplines). **The sign is not assumed.** Fitted values:
+
+- History (538 archive): LV − RV = −1.25 (2018), −1.64 (2022), −0.24 (2024) points (negative = LV more Republican).
+- 2026 paired releases so far: **+0.91 ± 0.36** (LV *more Democratic*, consistent with high-propensity voters shifting toward Democrats since 2024).
+- Model: prior N(−0.9, 1.0²) updated with the current-cycle pairs → about **+0.7 ± 0.34** today; it updates automatically as more pairs arrive.
+
+Adults → RV: +0.4 (2018–2024 paired average). **[A5, high]**
 
 ### 2.3 Recency
 ```
@@ -98,7 +120,7 @@ w_n = sqrt(min(n, n_cap) / 600)
 
 ### 2.5 Partisan / campaign sponsors
 Polls sponsored by a campaign, party committee, or allied group get:
-- an additive correction toward the opposing party, fit from historical sponsored-vs-independent residuals (prior ≈ 2–4 pts), and
+- an additive correction toward the opposing party, fit from historical sponsored-vs-independent residuals (fitted 2014–2024: Democratic-sponsored polls ran **2.8 pts** more Democratic than the field, Republican-sponsored **3.9 pts** more Republican), and
 - a weight multiplier (start: 0.5).
 
 Sponsor classification is hand-maintained (DATA_GAPS G6). **[A8, med]**
@@ -125,6 +147,8 @@ posterior: updated with whatever coded polls exist; logged with n and SE
 ```
 
 In simulation, δ is **drawn per simulation** from its posterior, not fixed — uncertainty about the correction feeds into the forecast spread. It gets a published sensitivity run (§8). **[A9, high]**
+
+**Launch status:** no pollster's weighting method has been hand-coded yet, so every poll is UNK and δ is not applied. A correction that is the same for every poll would only duplicate the national polling-error term, which the backtest already sizes from 2016–2024 misses (when weighting methods were equally unrecorded). δ starts to matter once classes differ across polls.
 
 ### 2.7 Combined weight
 ```
@@ -161,6 +185,8 @@ N = β₀ + β₁ · generic_ballot_avg + β₂ · net_approval_avg + β₃ · m
 
 Fit on midterms 1946–2022 (approval + generic-ballot history needs hand assembly — DATA_GAPS G9). With ~19 midterms this is a small-sample regression: coefficients are ridge-shrunk and their uncertainty enters the simulation. **[A11, high]**
 
+**Launch status:** N̂ = our adjusted generic-ballot average (likely-voter basis, house effects, sponsor corrections). The approval/midterm-penalty/economy regression is not fit yet (G9). The published backtest scores use this same generic-ballot-only N̂, and the error in N̂ is part of the national error term.
+
 Special-election overperformance (2025–26 results vs. baseline partisanship) enters as an extra signal on N with a weight fit on 2017–18 and 2021–22. **[A12, med]**
 
 ### 4.2 Race-level prior
@@ -173,7 +199,14 @@ m_r,prior = λ_office · lean_r + N + inc_r + quality_r + money_r + regional_r
 - `quality_r`: challenger held prior elected office (state legislature / statewide / congressional), coded per candidate. **[A16, low]**
 - `money_r`: log ratio of candidate receipts (FEC). Endogenous (money follows expected competitiveness), so we cap its coefficient and test robustness. **[A17, med]**
 
-Coefficients fit on 2010–2024 races. Prior variance `σ_prior,r²` from backtest residuals by office and days-out.
+Coefficients fit on 2000–2024 contested D-vs-R races, weighted 0.8× per cycle back (incumbency was worth much more in the 2000s). Fitted at launch:
+
+| | constant | lean | N | incumbency | residual s.d. | races |
+|---|---|---|---|---|---|---|
+| Senate | +1.8 | 0.80 | 0.78 | ±8.4 | 10.0 | 416 |
+| Governor | −2.5 | 0.44 | 0.59 | ±13.4 | 13.8 | 255 |
+
+Quality and fundraising terms are not in the launch version (G8, S13). Independents running as the main non-Republican (Idaho, Montana, Nebraska, South Dakota Senate) use the same Senate equation, a simplification covered by the wide uncertainty on those races.
 
 ### 4.3 Blending polls and prior
 Precision weighting:
@@ -205,6 +238,16 @@ The 2026 electorate is modeled as a **distribution over three scenarios**, not a
 **Avoiding double counting.** LV polls already embed a turnout model. The scenario shift is applied fully to the fundamentals prior and RV/A polls, and only a fraction `κ` (start 0.5) to LV polls. **[A19, high]**
 
 **Weights.** Prior P(S1, S2, S3) = (0.25, 0.50, 0.25), updated by: 2025–26 special-election turnout vs. baseline, 2026 primary turnout by party, and registration trends where available. The update rule is simple and documented (likelihood from how each indicator behaved in 2010/2014/2018/2022). **[A20, high]**
+
+**Launch version (simplified, labelled on the site).** The group-level build above needs CPS + CES state tables that are not ingested yet (G10). Until then, each scenario is a uniform margin shift anchored on the one direct 2026 measurement of who turns out, the likely-voter vs registered-voter gap γ (§2.2):
+
+| Scenario | Shift (points toward D) | Weight |
+|---|---|---|
+| S1 2024-like electorate | −(\|γ\| + se)·sign(γ) ≈ −1.0 | 0.25 |
+| S2 typical midterm (what LV screens assume) | 0 | 0.50 |
+| S3 high-engagement midterm | +(\|γ\| + se)·sign(γ) ≈ +1.0 | 0.25 |
+
+Weights are not yet updated from special-election or primary turnout. In the launch run, Democratic Senate control moves from about 49% (S1) to 73% (S3), so this is a high-sensitivity assumption.
 
 The forecast integrates over scenarios (each simulation draws a scenario). The race page has a toggle showing the forecast conditional on each scenario. Labeled as a modeling assumption on the methodology page.
 
@@ -259,7 +302,22 @@ m_k,r = μ_r(s_k, δ_k) + national_k + region_k,j(r) + Σ_f L_r,f · demo_k,f + 
 
 **Metrics** (by office and days-out): Brier score, log loss, calibration curves (predicted vs. observed win rate in bins), vote-share MAE and interval coverage (80% intervals should cover ~80%).
 
-**Comparisons:** our model vs. polls-only, fundamentals-only, and expert ratings (benchmark only, converted to probabilities by a published mapping — DATA_GAPS G11).
+**Comparisons:** our model vs. polls-only, fundamentals-only, and expert ratings (benchmark only, converted to probabilities by a published mapping — DATA_GAPS G11; not built yet).
+
+**Results at launch (leave-one-cycle-out, Senate + governor, 2010–2024):**
+
+| | Brier | Log loss | Winner right | 80% range covers |
+|---|---|---|---|---|
+| Model, 1 day out | 0.047 | 0.156 | 93% | ~80% |
+| Model, 30 days out | 0.044 | 0.149 | 93% | 82% |
+| Model, 120 days out | 0.060 | 0.206 | 92% | 90% |
+| Polls only (polled races) | 0.060 | 0.197 | 92% | 81% |
+| Model on the same polled races | 0.052 | 0.174 | 92% | 81% |
+| Fundamentals only | 0.080 | 0.262 | 88% | 90% |
+
+Fitted error structure (Election Day s.d., points): national 2.8, regional 0.6, demographic 2.1, race-level poll error 4.0; growth with time T₀ = 120 days; Student-t ν = 5. The weekly backtest job refits these and the methodology page always shows the current values.
+
+**Known weakness:** national poll misses by cycle were +0.1, +3.1, −3.7, −3.9, +0.1, −6.6, −1.9, −3.6 (2010→2024; negative = polls too Democratic). Because most recent misses ran the same way, Democrats forecast at 10–40% won less often than predicted. We do **not** add a directional correction, because the sign flipped in 2012 and 2018. The size of these misses is carried by the national error term instead.
 
 **Publication:** calibration charts and metrics on the methodology page, regenerated by the backtest job.
 

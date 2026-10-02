@@ -191,6 +191,14 @@ def main() -> None:
                               int((h["caucus"] == "REP").sum()), is_ind, caucus_d)
     national["sen"]["tipping_point"] = tp.sort_values(ascending=False).head(10).round(4).to_dict()
 
+    # 400 stored draws for the site's "simulate one election" button (winner + margin per race)
+    k = min(400, args.sims)
+    samples = dict(race_ids=tbl["race_id"].tolist(),
+                   dside_wins=["".join("1" if x else "0" for x in win[:k, j]) for j in range(len(tbl))],
+                   margins=[np.round(m[:k, j], 1).tolist() for j in range(len(tbl))],
+                   scenario=scen[:k].tolist())
+    national["samples"] = samples
+
     from pipeline.publish import publish
     run_id = f"{as_of.isoformat()}-{git_sha()[:7]}"
     inputs = sorted(p for p in (RAW).rglob("*.gz")) + sorted(MANUAL.glob("*.csv")) + sorted(MODEL.glob("*.json"))
