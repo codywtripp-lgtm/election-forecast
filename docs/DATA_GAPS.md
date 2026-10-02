@@ -45,7 +45,7 @@ Last reviewed 2026-10-02.
 | G9 | Approval + generic-ballot history 1946–2022 | national environment regression | Not in launch; N̂ = generic-ballot average. |
 | G10 | Group turnout (CPS) and preferences (CES); special-election and primary turnout | turnout scenarios | Launch scenarios are anchored on the measured LV−RV gap; weights fixed 25/50/25. |
 | G11 | Expert ratings history | benchmark only | Not built. |
-| G12 | Election rules | correctness | `data/manual/race_rules.csv`. **Unverified:** Louisiana (first closed-primary cycle) and Mississippi general-election rules for Senate, both modeled as plurality. Vermont governor: legislature picks if no majority; modeled as plurality. |
+| G12 | Election rules | correctness | `data/manual/race_rules.csv`. Louisiana (closed primaries; plurality general) and Mississippi (no federal general-election runoff) **verified** with Secretary of State sources. Vermont governor: legislature picks if no majority; modeled as plurality. |
 | G13 | Independent caucus intentions | Senate control counting | `data/manual/caucus.csv`: Osborn (NE), Bodnar (MT), Achilles (ID), Bengs (SD) all set to 50% Democratic caucus, unverified. |
 | G14 | Two candidates named Dan Sullivan in Alaska's Senate race | poll matching | Handled with `candidate_overrides.csv` / `candidate_aliases.csv`. |
 
