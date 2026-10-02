@@ -1,0 +1,11 @@
+cycle,office,state,rule,runoff_date,verified,source,notes
+2026,sen,GA,majority_runoff,2026-12-01,yes,https://law.justia.com/codes/georgia/title-21/chapter-2/article-11/part-1/section-21-2-501/,"Runoff 28 days after general (O.C.G.A. 21-2-501)"
+2026,gov,GA,majority_runoff,2026-12-01,yes,https://law.justia.com/codes/georgia/title-21/chapter-2/article-11/part-1/section-21-2-501/,
+2026,sen,AK,top4_rcv,,yes,https://www.elections.alaska.gov/RCV.php,"Top-four primary + RCV general (Ballot Measure 2, 2020; repeal failed 2024)"
+2026,gov,AK,top4_rcv,,yes,https://www.elections.alaska.gov/RCV.php,
+2026,sen,ME,rcv,,yes,https://www.maine.gov/sos/cec/elec/upcoming/rcv.html,"RCV covers federal general elections"
+2026,gov,ME,plurality,,yes,https://www.maine.gov/sos/cec/elec/upcoming/rcv.html,"RCV not used in the governor general election"
+2026,gov,CA,top_two,,yes,https://www.sos.ca.gov/elections/primary-elections-california,"Nominees already set by the June primary"
+2026,gov,VT,majority_legislature,,yes,https://legislature.vermont.gov/statutes/section/17/049/02592,"No majority -> legislature elects; modeled as plurality (see METHODOLOGY)"
+2026,sen,LA,plurality,,no,,"2026 is first cycle of closed party primaries for Congress; general-election rule to verify"
+2026,sen,MS,plurality,,no,,"General-election majority requirement for federal office to verify"
