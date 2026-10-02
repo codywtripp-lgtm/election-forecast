@@ -8,7 +8,7 @@
 	import { STATE_NAMES } from '#lib/geo.ts';
 
 	let { data } = $props();
-	const r = $derived(data.race);
+	const r = $derived({ ...data.race, d_side: { ...data.race.d_side, name: data.race.d_side.name ?? 'No Democrat' }, rep: { ...data.race.rep, name: data.race.rep.name ?? 'No Republican' } });
 	const dL = $derived(partyLetter(r.d_side.party));
 	let scenario = $state('all');
 	const p = $derived(scenario === 'all' ? r.p_dside : r.p_by_scenario[scenario]);

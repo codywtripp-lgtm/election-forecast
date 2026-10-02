@@ -31,6 +31,7 @@ jobs:
         run: |
           pip install -r requirements.txt
           python -m pipeline.races
+          python -m pipeline.house
           python -m pipeline.normalize.results
           python -m pipeline.normalize.polls
           python -m pipeline.composition

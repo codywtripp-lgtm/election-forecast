@@ -3,6 +3,8 @@ export interface RaceSummary {
 	office: 'sen' | 'gov' | 'house';
 	state: string;
 	special: boolean;
+	district?: number | null;
+	fixed?: 'D' | 'R' | null;
 	d: string;
 	d_party: string;
 	r: string;
@@ -31,6 +33,7 @@ export interface Chamber {
 	p_any_independent_wins?: number;
 	p_dem_majority?: number;
 	p_rep_majority?: number;
+	majority?: number;
 	tipping_point?: Record<string, number>;
 	by_scenario: Record<string, Partial<Chamber>>;
 }
@@ -49,7 +52,7 @@ export interface Summary {
 	days_to_election: number;
 	election_date: string;
 	n_sims: number;
-	national: { sen: Chamber; gov: Chamber };
+	national: { sen: Chamber; gov: Chamber; house?: Chamber };
 	generic_ballot: { margin: number; dem: number; rep: number; n_polls: number };
 	scenarios: Scenario[];
 	races: RaceSummary[];

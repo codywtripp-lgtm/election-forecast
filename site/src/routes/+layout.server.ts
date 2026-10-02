@@ -9,7 +9,8 @@ export const load = () => {
 			run_id: s.run_id,
 			days: s.days_to_election,
 			sen: s.national.sen,
-			gov: s.national.gov
+			gov: s.national.gov,
+			house: s.national.house
 		}
 	};
 };

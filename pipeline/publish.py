@@ -111,6 +111,7 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
         others = cands[(cands["race_id"] == r["race_id"]) & ~cands["candidate_id"].isin([r["d_cid"], r["r_cid"]])]
         race = dict(
             race_id=r["race_id"], office=r["office"], state=r["state"], special=r["special"], rule=r["rule"],
+            district=None if pd.isna(r.get("district")) else int(r["district"]), fixed=r.get("fixed"),
             rule_verified=r["rule_verified"], incumbent=r["incumbent"], incumbent_party=r["incumbent_party"],
             d_side=dict(id=r["d_cid"], name=r["d_name"], party=r["d_party"]),
             rep=dict(id=r["r_cid"], name=r["r_name"], party="REP"),
@@ -121,6 +122,8 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
             breakdown=breakdown(r, coef, N_hat), polls=polls, run_id=run_id, updated=updated)
         _write(out / "races" / f"{r['race_id']}.json", race)
         races_compact.append(dict(id=r["race_id"], office=r["office"], state=r["state"], special=r["special"],
+                                  district=None if pd.isna(r.get("district")) else int(r["district"]),
+                                  fixed=r.get("fixed"),
                                   d=r["d_name"], d_party=r["d_party"], r=r["r_name"], p=r["p_dside"],
                                   mu=r["mu"], q10=r["m_q10"], q90=r["m_q90"], poll_weight=r["poll_weight"],
                                   n_polls=0 if pd.isna(r.get("n_polls")) else int(r["n_polls"]),
@@ -162,6 +165,8 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
     nat_row = pd.DataFrame([dict(as_of=manifest["as_of"], run_id=run_id,
                                  sen_p_rep=national["sen"]["p_rep_control"], sen_p_dem=national["sen"]["p_dem_control"],
                                  sen_dem_seats=national["sen"]["dem_seats_mean"],
+                                 house_p_dem=national.get("house", {}).get("p_dem_majority"),
+                                 house_dem_seats=national.get("house", {}).get("dem_seats_mean"),
                                  gov_dem_mean=national["gov"]["dem_seats_mean"], generic=N_hat)])
     nh = pd.concat([pd.read_csv(NATIONAL_HISTORY), nat_row]) if NATIONAL_HISTORY.exists() else nat_row
     nh = nh.drop_duplicates(["as_of"], keep="last")

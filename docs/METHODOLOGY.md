@@ -14,7 +14,7 @@ What is live, and what is not yet (no number on the site comes from anything in 
 | Turnout scenarios (§5) | Three scenarios in every simulation, toggle on the site | Launch version sizes the scenarios from the measured likely-vs-registered-voter gap, not yet from CPS/CES group turnout |
 | Simulation (§6) | 50,000 correlated draws; national, 9 regional, 4 demographic factors (ACS 2024), Student-t; GA runoff, AK/ME RCV, independents | — |
 | Validation (§7) | As-of backtest 2010–2024, leave-one-cycle-out scoring, published on this page | — |
-| House | — | Launching by Oct 20 (Phase 2) |
+| House (§4.2, §6) | All 435 districts: district lean on the 2026 lines (The Downballot's presidential-by-district results), national environment, incumbency (fit on 2,619 contested races 2012–2024), polls where they exist (~50 districts), same correlated simulation; uncontested and same-party top-two seats fixed | Candidate quality/fundraising not in; ACS district demographics are on the old lines for the 10 redrawn states (state-level demographics used there) |
 
 Numbers below marked "start" were the pre-fit design values; fitted values are recorded in `data/model/` and in each run's manifest.
 
@@ -205,6 +205,9 @@ Coefficients fit on 2000–2024 contested D-vs-R races, weighted 0.8× per cycle
 |---|---|---|---|---|---|---|
 | Senate | +1.8 | 0.80 | 0.78 | ±8.4 | 10.0 | 416 |
 | Governor | −2.5 | 0.44 | 0.59 | ±13.4 | 13.8 | 255 |
+| House | +1.0 | 0.92 | 0.77 | ±5.4 | 6.9 | 2,619 |
+
+House lean uses the presidential results on each cycle's own district lines (2012–2024 lines for the fit, 2026 lines for the forecast). In the 10 states redrawn for 2026 only 2024 results exist on the new lines; 2020 is imputed from 2024 plus the state's 2020→2024 shift (flag `lean_2020_imputed`). Missouri uses its 2022 map (the 2025 map is blocked).
 
 Quality and fundraising terms are not in the launch version (G8, S13). Independents running as the main non-Republican (Idaho, Montana, Nebraska, South Dakota Senate) use the same Senate equation, a simplification covered by the wide uncertainty on those races.
 

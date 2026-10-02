@@ -36,8 +36,29 @@ def git_sha() -> str:
         return "unknown"
 
 
+def house_lean_2026() -> dict:
+    hl = pd.read_parquet(DB / "house_lean.parquet")
+    hl = hl[hl["cycle"] == CYCLE]
+    return {(r.state, int(r.district)): float(r.lean) for r in hl.itertuples()}
+
+
+def fixed_outcome(office: str, rule: str, g: pd.DataFrame, dcid: str | None, rcid: str | None) -> str | None:
+    """Races whose winning side is already certain: no Republican on the ballot, no D-side
+    (Democrat or independent) on the ballot, or a same-party top-two general (CA/WA)."""
+    parties = set(g["party"])
+    if rule == "top_two" and len(g) == 2 and len(parties) == 1:
+        return "D" if parties == {"DEM"} else ("R" if parties == {"REP"} else None)
+    d_party = g.set_index("candidate_id")["party"].get(dcid) if dcid else None
+    if rcid is None and d_party in ("DEM", "IND"):
+        return "D"
+    if rcid is not None and d_party not in ("DEM", "IND"):
+        return "R"
+    return None
+
+
 def race_table(races: pd.DataFrame, cands: pd.DataFrame, d_side: dict, r_side: dict) -> pd.DataFrame:
     by_id = cands.set_index("candidate_id")
+    hlean = house_lean_2026() if (races["office"] == "house").any() else {}
     rows = []
     for r in races.itertuples():
         g = cands[cands["race_id"] == r.race_id]
@@ -47,9 +68,13 @@ def race_table(races: pd.DataFrame, cands: pd.DataFrame, d_side: dict, r_side: d
         inc = 0
         if len(inc_cand):
             inc = -1 if inc_cand["party"].iloc[0] == "REP" else (1 if inc_cand["candidate_id"].iloc[0] == dcid else 0)
-        rows.append(dict(race_id=r.race_id, office=r.office, state=r.state, special=r.special, rule=r.rule,
-                         rule_verified=r.rule_verified, incumbent=r.incumbent, incumbent_party=r.incumbent_party,
-                         inc=inc, lean=state_lean(CYCLE, r.state),
+        district = getattr(r, "district", None)
+        district = None if district is None or pd.isna(district) else int(district)
+        lean = hlean.get((r.state, district), np.nan) if r.office == "house" else state_lean(CYCLE, r.state)
+        rows.append(dict(race_id=r.race_id, office=r.office, state=r.state, district=district, special=r.special,
+                         rule=r.rule, rule_verified=r.rule_verified, incumbent=r.incumbent,
+                         incumbent_party=r.incumbent_party, inc=inc, lean=lean,
+                         fixed=fixed_outcome(r.office, r.rule, g, dcid, rcid),
                          d_cid=dcid, d_name=by_id.loc[dcid, "name"] if dcid else None,
                          d_party=by_id.loc[dcid, "party"] if dcid else None,
                          r_cid=rcid, r_name=by_id.loc[rcid, "name"] if rcid else None))
@@ -63,6 +88,9 @@ def rcv_adjust(polls: pd.DataFrame, rcv_races: set) -> pd.DataFrame:
     polls["adj_rcv"] = np.where(mask, RCV_TRANSFER * (polls["other_dem"] - polls["other_rep"]), 0.0)
     polls["margin"] = polls["margin"] + polls["adj_rcv"]
     return polls
+
+
+MAJORITY = {"sen": None, "gov": 26, "house": 218}
 
 
 def chamber(tbl: pd.DataFrame, win: np.ndarray, holdovers: pd.DataFrame, rng, office: str,
@@ -92,25 +120,27 @@ def chamber(tbl: pd.DataFrame, win: np.ndarray, holdovers: pd.DataFrame, rng, of
                    p_independents_decide=float((~rep_control & ~dem_control).mean()),
                    p_any_independent_wins=float((w & is_ind).any(axis=1).mean()))
     else:
-        res.update(p_dem_majority=float((d_seats >= 26).mean()), p_rep_majority=float((r_seats >= 26).mean()))
+        maj = MAJORITY[office]
+        res.update(p_dem_majority=float((d_seats >= maj).mean()), p_rep_majority=float((r_seats >= maj).mean()),
+                   majority=maj)
     return res
 
 
 def tipping_from_margins(t: pd.DataFrame, m: np.ndarray, w: np.ndarray, hold_d: int, hold_r: int,
-                         is_ind: np.ndarray, caucus_d: np.ndarray) -> pd.Series:
+                         is_ind: np.ndarray, caucus_d: np.ndarray, rep_need: int = 50, dem_need: int = 51) -> pd.Series:
     n, R = m.shape
     counts = np.zeros(R)
     counts_d = (w & (~is_ind | caucus_d))
     r_seats = hold_r + (~w).sum(axis=1)
     d_seats = hold_d + counts_d.sum(axis=1)
     for k in range(n):
-        if r_seats[k] >= 50:
+        if r_seats[k] >= rep_need:
             order = np.argsort(m[k])                # most Republican first
-            need = 50 - hold_r
+            need = rep_need - hold_r
             cum = np.cumsum(~w[k][order])
-        elif d_seats[k] >= 51:
+        elif d_seats[k] >= dem_need:
             order = np.argsort(-m[k])               # most D-side first
-            need = 51 - hold_d
+            need = dem_need - hold_d
             cum = np.cumsum(counts_d[k][order])
         else:
             continue
@@ -134,6 +164,9 @@ def main() -> None:
     a = pd.read_parquet(DB / "answers.parquet")
     races = pd.read_parquet(DB / "races.parquet")
     cands = pd.read_parquet(DB / "candidates.parquet")
+    if (DB / "house_races.parquet").exists():
+        races = pd.concat([races, pd.read_parquet(DB / "house_races.parquet")], ignore_index=True)
+        cands = pd.concat([cands, pd.read_parquet(DB / "house_candidates.parquet")], ignore_index=True)
     holdovers = pd.read_parquet(DB / "holdovers.parquet")
     caucus = pd.read_csv(MANUAL / "caucus.csv").set_index("candidate_id")["p_caucus_dem"].to_dict()
 
@@ -155,6 +188,9 @@ def main() -> None:
 
     tbl = blend(tbl, avgs, fmodel, N_hat, days, ep)
     tbl["other_hat"] = other_hat(tbl)
+    # certain outcomes: one side is not on the ballot, so the margin is not modeled
+    fixed = tbl["fixed"].to_numpy()
+    tbl.loc[tbl["fixed"].notna(), "poll_weight"] = 0.0
 
     # turnout scenarios: each simulation draws one; shift applied to its margins  [A19, A20]
     shifts, probs, scen_meta = scenario_shifts(lv)
@@ -163,6 +199,8 @@ def main() -> None:
     scen = rng.choice(len(SCENARIOS), size=args.sims, p=probs)
     sims["margins"] = sims["margins"] + np.asarray(shifts)[scen][:, None]
     win = outcomes(tbl, sims, ep)
+    for j in np.where(pd.notna(fixed))[0]:
+        win[:, j] = fixed[j] == "D"
 
     m = sims["margins"]
     tbl["p_dside"] = win.mean(axis=0)
@@ -175,7 +213,8 @@ def main() -> None:
         {s["key"]: float(win[scen == i, j].mean()) for i, s in enumerate(SCENARIOS)} for j in range(len(tbl))]
 
     national = {}
-    for office in ("sen", "gov"):
+    offices = [o for o in ("sen", "gov", "house") if (tbl["office"] == o).any()]
+    for office in offices:
         national[office] = chamber(tbl, win, holdovers, rng, office, caucus)
         national[office]["by_scenario"] = {
             s["key"]: chamber(tbl, win[scen == i], holdovers, np.random.default_rng(i), office, caucus)
@@ -190,12 +229,17 @@ def main() -> None:
     tp = tipping_from_margins(t_sen, m[:, sen_idx], win[:, sen_idx], int((h["caucus"] == "DEM").sum()),
                               int((h["caucus"] == "REP").sum()), is_ind, caucus_d)
     national["sen"]["tipping_point"] = tp.sort_values(ascending=False).head(10).round(4).to_dict()
+    if "house" in national:
+        hi = np.where(tbl["office"] == "house")[0]
+        th = tbl.iloc[hi]
+        tp_h = tipping_from_margins(th, m[:, hi], win[:, hi], 0, 0, (th["d_party"] != "DEM").to_numpy(),
+                                    np.zeros((args.sims, len(th)), bool), rep_need=218, dem_need=218)
+        national["house"]["tipping_point"] = tp_h.sort_values(ascending=False).head(10).round(4).to_dict()
 
     # 400 stored draws for the site's "simulate one election" button (winner + margin per race)
     k = min(400, args.sims)
     samples = dict(race_ids=tbl["race_id"].tolist(),
                    dside_wins=["".join("1" if x else "0" for x in win[:k, j]) for j in range(len(tbl))],
-                   margins=[np.round(m[:k, j], 1).tolist() for j in range(len(tbl))],
                    scenario=scen[:k].tolist())
     national["samples"] = samples
 

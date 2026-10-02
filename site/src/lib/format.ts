@@ -19,11 +19,24 @@ export function margin(m: number, d = 'D', r = 'R'): string {
 	return m > 0 ? `${d}+${m.toFixed(1)}` : `${r}+${(-m).toFixed(1)}`;
 }
 
-export function raceTitle(r: { office: string; state: string; special?: boolean }): string {
-	return `${STATE_NAMES[r.state] ?? r.state} ${OFFICE_LABEL[r.office]}${r.special ? ' (special)' : ''}`;
+const AT_LARGE = new Set(['AK', 'DE', 'ND', 'SD', 'VT', 'WY']);
+
+export function raceTitle(r: { office: string; state: string; special?: boolean; district?: number | null; id?: string; race_id?: string }): string {
+	const name = STATE_NAMES[r.state] ?? r.state;
+	if (r.office === 'house') {
+		const d = r.district ?? Number((r.id ?? r.race_id ?? '').slice(-2));
+		return AT_LARGE.has(r.state) ? `${name} at-large House seat` : `${name}'s ${ordinal(d)} District`;
+	}
+	return `${name} ${OFFICE_LABEL[r.office]}${r.special ? ' (special)' : ''}`;
 }
 
-export function partyLetter(party: string): string {
+export function ordinal(n: number): string {
+	const s = ['th', 'st', 'nd', 'rd'], v = n % 100;
+	return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+export function partyLetter(party: string | null | undefined): string {
+	if (!party) return '?';
 	return party === 'DEM' ? 'D' : party === 'REP' ? 'R' : party === 'IND' ? 'I' : party.slice(0, 1);
 }
 

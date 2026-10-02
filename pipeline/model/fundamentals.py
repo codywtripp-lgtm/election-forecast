@@ -40,9 +40,29 @@ def training_frame() -> pd.DataFrame:
     return r.dropna(subset=["margin", "lean", "N"])
 
 
+def house_training_frame() -> pd.DataFrame:
+    """2012–2024 contested D-vs-R House races with district lean on that cycle's lines."""
+    r = pd.read_parquet(DB / "house_results.parquet")
+    for c in ("contested", "top2_same_party", "dem_is_ind"):
+        r[c] = r[c].fillna(False).astype(bool)
+    r = r[r["contested"] & ~r["top2_same_party"] & ~r["dem_is_ind"]]
+    r = r[r["state"] != "LA"]                                      # November jungle primaries before 2026
+    r["district"] = r["race_id"].str[-2:].astype(int)
+    lean = pd.read_parquet(DB / "house_lean.parquet")
+    r = r.merge(lean[["cycle", "state", "district", "lean"]], on=["cycle", "state", "district"], how="inner")
+    r["N"] = r["cycle"].map(national_house_vote())
+    r["inc"] = [inc_code(run, p) for run, p in zip(r["incumbent_running"], r["incumbent_cand_party"])]
+    return r.dropna(subset=["margin", "lean", "N"])
+
+
 def fit(train: pd.DataFrame | None = None, exclude_cycle: int | None = None) -> dict:
     """OLS per office. exclude_cycle supports leave-one-cycle-out backtests."""
-    t = training_frame() if train is None else train
+    if train is None:
+        t = training_frame()
+        if (DB / "house_results.parquet").exists():
+            t = pd.concat([t, house_training_frame()], ignore_index=True)
+    else:
+        t = train
     if exclude_cycle is not None:
         t = t[t["cycle"] != exclude_cycle]
     out = {}
