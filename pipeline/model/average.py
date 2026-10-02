@@ -64,7 +64,7 @@ def lv_shift(polls: pd.DataFrame, p: AvgParams) -> tuple[float, float]:
 
 
 def adjust(polls: pd.DataFrame, ratings: pd.DataFrame, rparams: dict, as_of: dt.date,
-           election: dt.date, p: AvgParams, generic_trend=None, lv=None) -> pd.DataFrame:
+           election: dt.date, p: AvgParams, generic_trend=None, lv=None, delta: dict | None = None) -> pd.DataFrame:
     """Apply population + sponsor corrections and compute weights (before house effects)."""
     as_of_ts = pd.Timestamp(as_of)
     df = polls[(polls["published"] <= as_of_ts) & (polls["end_date"] >= as_of_ts - pd.Timedelta(days=p.max_age_days))].copy()
@@ -98,12 +98,25 @@ def adjust(polls: pd.DataFrame, ratings: pd.DataFrame, rparams: dict, as_of: dt.
         df.loc[df["office"] == "generic", "adj_trend"] = 0.0
     df["weight"] = df["w_recency"] * df["w_quality"] * df["w_sponsor"] * df["w_herding"] * df["w_frequency"]
     df["margin_pre_house"] = df["margin"] + df["adj_pop"] + df["adj_sponsor"] + df["adj_trend"]
+    # [A9] weighting-method class: its estimated relative bias joins the pollster's house-effect prior,
+    # centred so the corrections average to zero across today's polls (only class differences are used)
+    cls = df["weighting_class"].fillna("UNK") if "weighting_class" in df else pd.Series("UNK", index=df.index)
+    d = delta or {}
+    df["delta_class"] = cls.map(lambda c: d.get(c, {}).get("delta", 0.0))
+    df["delta_sd"] = cls.map(lambda c: d.get(c, {}).get("sd", 0.0) if c != "UNK" else 0.0)
+    if len(df):
+        df["delta_class"] = df["delta_class"] - np.average(df["delta_class"], weights=df["weight"])
     return df
 
 
 def house_effects(df: pd.DataFrame, p: AvgParams, iters: int = 3) -> pd.Series:
-    """Current-cycle house effects, shrunk toward each pollster's historical bias (prior sd house_sd)."""
-    h = df.groupby("pollster")["hist_bias"].first()
+    """Current-cycle house effects, shrunk toward a prior = historical bias + weighting-class correction
+    (prior variance house_sd² + the class correction's own variance)."""
+    dc = df.groupby("pollster")["delta_class"].first() if "delta_class" in df else 0.0
+    dsd = df.groupby("pollster")["delta_sd"].first() if "delta_sd" in df else 0.0
+    prior = df.groupby("pollster")["hist_bias"].first() + dc
+    pv = p.house_sd ** 2 + dsd ** 2
+    h = prior.copy()
     for _ in range(iters):
         x = df["margin_pre_house"] - df["pollster"].map(h)
         avg = (x * df["weight"]).groupby(df["race_id"]).sum() / df["weight"].groupby(df["race_id"]).sum()
@@ -111,8 +124,7 @@ def house_effects(df: pd.DataFrame, p: AvgParams, iters: int = 3) -> pd.Series:
         v = df["sv"] + df["tau2"]
         num = (resid / v).groupby(df["pollster"]).sum()
         den = (1 / v).groupby(df["pollster"]).sum()
-        prior = df.groupby("pollster")["hist_bias"].first()
-        h = (prior / p.house_sd ** 2 + num) / (1 / p.house_sd ** 2 + den)
+        h = (prior / pv + num) / (1 / pv + den)
         h = h - np.average(h, weights=den)  # house effects are relative: centre on the field
     return h
 

@@ -200,7 +200,9 @@ def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, pub
     polls = rcv_adjust(polls, set(tbl.loc[tbl["rule"].isin(["rcv", "top4_rcv"]), "race_id"]))
     lv = ov.get("lv", lv_shift(polls, ap))
     gt = generic_trend_fn(polls, ratings, rparams, as_of, E, ap)
-    adj = adjust(polls, ratings, rparams, as_of, E, ap, gt, lv)
+    from pipeline.model.weighting import estimate as estimate_delta
+    delta = estimate_delta()
+    adj = adjust(polls, ratings, rparams, as_of, E, ap, gt, lv, delta=delta)
     avgs, poll_table = averages(adj, ap)
     gen = avgs.set_index("race_id").loc[f"{CYCLE}-generic"]
     N_hat = float(gen["poll_avg"])
@@ -275,6 +277,7 @@ def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, pub
                     n_sims=args.sims, seed=int(as_of.strftime("%Y%m%d")),
                     error_params=asdict(ep), avg_params=asdict(ap), lv_shift=dict(mean=lv[0], sd=lv[1]),
                     N_hat=N_hat, scenarios=scen_meta, fundamentals=fmodel, ratings_params=rparams,
+                    weighting_correction=delta,
                     inputs={str(p.relative_to(DATA.parent)).replace("\\", "/"): sha256(p) for p in inputs})
     publish(run_id, manifest, tbl, national, poll_table, ratings, avgs, cands)
     return national

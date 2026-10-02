@@ -8,7 +8,7 @@ What is live, and what is not yet (no number on the site comes from anything in 
 |---|---|---|
 | Pollster ratings (§1) | Fit on ~17,800 final-21-day polls with results, 1998–2024 | Transparency checklist is AAPOR/Roper membership only |
 | Poll adjustments (§2) | Likely-voter shift, partisan-sponsor correction, house effects, recency + generic-ballot trend, sample-size cap, herding penalty, ranked-choice transfers | — |
-| Weighting-method correction (§2.6) | Every poll carries a methodology class | **All polls are "UNK" until hand-coded, so no correction is applied yet** (DATA_GAPS G5) |
+| Weighting-method correction (§2.6) | 11 of the most prolific pollsters hand-coded from their own methodology statements (≈40% of 2026 polls); class corrections estimated from 2025 NJ/VA governor polls and fed into house-effect priors | Few coded pollsters in completed races → corrections heavily shrunk (sd ≈ 1.3–1.7 pts); 2022-midterm comparison not done (G5) |
 | National environment (§4.1) | Our generic-ballot average (400+ polls) | Approval / midterm-penalty / economy regression not yet fit (needs 1946–2022 history, G9); a month out the generic ballot dominates it |
 | Race prior (§4.2) | Partisan lean, national environment, incumbency (fit 2000–2024, recent cycles weighted more) | Candidate quality and fundraising not yet in (G8, S13) |
 | Turnout scenarios (§5) | Three scenarios in every simulation, toggle on the site | Launch version sizes the scenarios from the measured likely-vs-registered-voter gap, not yet from CPS/CES group turnout |
@@ -148,7 +148,15 @@ posterior: updated with whatever coded polls exist; logged with n and SE
 
 In simulation, δ is **drawn per simulation** from its posterior, not fixed — uncertainty about the correction feeds into the forecast spread. It gets a published sensitivity run (§8). **[A9, high]**
 
-**Launch status:** no pollster's weighting method has been hand-coded yet, so every poll is UNK and δ is not applied. A correction that is the same for every poll would only duplicate the national polling-error term, which the backtest already sizes from 2016–2024 misses (when weighting methods were equally unrecorded). δ starts to matter once classes differ across polls.
+**As implemented (Oct 2026).**
+
+*Classes* (coded from each pollster's own published methodology; `data/manual/weighting_method.csv` lists the statement and date for every code): **PV** weights to recalled past presidential vote · **PID** weights to party ID / registration / voter-file party but not recalled vote · **DEMO** demographics only · **UNK** not coded. Coded so far: PV — YouGov, Morning Consult, Ipsos, UNH, Change Research, Marquette; PID — Emerson, NYT/Siena (voter-file party + modeled past vote), Echelon, Quantus; DEMO — Fox News (Beacon/Shaw). Joint polls take a class only if all partners share it.
+
+*Estimation.* Completed 2025–26 races with results (so far the 2025 New Jersey and Virginia governor races, polls in the final 35 days). The **pollster** is the unit (one pollster's many polls count once, with variance τ_h² + σ²/n). For each class, the difference between its mean error and the all-pollster mean error is shrunk toward 0 with prior N(0, 2²).
+
+At launch: every 2025 poll underestimated the Democrats (field mean error −7.6 pts). Relative to that field, the one coded PV pollster ran +5.2 more Democratic (shrunk to **δ_PV = +1.5 ± 1.7**), PID −0.2 (→ −0.1 ± 1.3), DEMO −0.5 (→ −0.2 ± 1.6). These rest on 5 coded pollsters, so they are weak evidence and are treated that way.
+
+*How it is applied.* Only differences between classes are identifiable from polls alone, so δ enters each pollster's **house-effect prior** (prior mean = historical bias + δ_class, prior variance = 2² + sd_class²), centred so the class corrections average to zero across today's polls. Pollsters with many 2026 polls are judged mostly by their own current house effect; thinly polled ones lean on their class. The 2025 field-wide miss is **not** imported as a directional correction (same rule as the national polling error). Effect at launch: Democratic Senate-control odds +0.5 pts.
 
 ### 2.7 Combined weight
 ```

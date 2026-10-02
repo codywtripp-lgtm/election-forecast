@@ -68,6 +68,10 @@ def weight_reasons(p: pd.Series) -> list[str]:
         out.append("pollster's results cluster suspiciously near the average")
     if p["w_frequency"] < 0.75:
         out.append("pollster has several recent polls of this race (weight shared)")
+    wc = p.get("weighting_class", "UNK")
+    if wc in ("PV", "PID", "DEMO"):
+        out.append({"PV": "weights to past vote", "PID": "weights to party",
+                    "DEMO": "demographic weighting only"}[wc])
     if p["population"] in ("rv", "a"):
         out.append({"rv": "registered voters, shifted to likely-voter basis",
                     "a": "all adults, shifted to likely-voter basis"}[p["population"]])
@@ -111,6 +115,7 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
         rp = pt[pt["race_id"] == r["race_id"]].sort_values("end_date", ascending=False)
         polls = [dict(pollster=p["pollster"], sponsors=p["sponsors"], start=p["start_date"], end=p["end_date"],
                       n=p["sample_size"], population=p["population"], mode=p["mode"], partisan=p["partisan"],
+                      weighting=p.get("weighting_class", "UNK"),
                       dem=p["dem_pct"], rep=p["rep_pct"], margin_raw=p["margin"] - p.get("adj_rcv", 0.0),
                       adj=dict(population=p["adj_pop"], sponsor=p["adj_sponsor"], house=p["adj_house"],
                                trend=p["adj_trend"], rcv=p.get("adj_rcv", 0.0)),
@@ -148,6 +153,7 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
                    n_sims=manifest["n_sims"], national=national,
                    generic_ballot=dict(margin=N_hat, dem=gen["dem_avg"], rep=gen["rep_avg"], n_polls=gen["n_polls"]),
                    scenarios=manifest["scenarios"], races=races_compact,
+                   weighting_correction=manifest.get("weighting_correction"),
                    placeholders=[], attribution=["Polls: VoteHub (CC BY 4.0), 538 archive (CC BY 4.0), Wikipedia (CC BY-SA 4.0)",
                                                  "Results: MIT Election Data + Science Lab (CC0), Wikipedia"])
     _write(out / "summary.json", summary)
@@ -157,6 +163,7 @@ def publish(run_id: str, manifest: dict, tbl: pd.DataFrame, national: dict, poll
     _write(out / "polls.json", [dict(race=p["race_id"], office=p["office"], state=p["state"], pollster=p["pollster"],
                                      sponsors=p["sponsors"], partisan=p["partisan"], start=p["start_date"],
                                      end=p["end_date"], n=p["sample_size"], pop=p["population"], mode=p["mode"],
+                                     wclass=p.get("weighting_class", "UNK"),
                                      dem=p["dem_pct"], rep=p["rep_pct"], margin=p["margin"],
                                      adj=p["adj_margin"], w=p["weight_share"], url=p["url"])
                                 for _, p in db.iterrows()])

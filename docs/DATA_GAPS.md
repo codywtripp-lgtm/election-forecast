@@ -38,7 +38,7 @@ Last reviewed 2026-10-02.
 | G2 | 2026 district lines: 10 states changed (TX, NC, OH, CA, UT, FL, TN, LA, AL; MO's new map blocked → 2022 map). TN map under legal challenge. | House lean wrong if any state is wrong | **Two independent sources agree** (Wikipedia redistricting summary; The Downballot's 2026-lines sheet, whose district results reflect those exact changes). Not yet checked against each state's official plan file. ACS district demographics are on the old (2024) lines, so redrawn states use state-level demographics. |
 | G3 | Poll histories before 2018 | 2010–2016 backtests are final-forecast only | Stated on the methodology page. |
 | G4 | 2025–26 special/off-year poll set | needed for δ_class | VoteHub has NJ/VA 2025 governor polls; results needed. |
-| G5 | **Weighting method not recorded anywhere in bulk** | δ_class not applied at launch (all polls UNK) | Hand-code the most prolific 2026 pollsters from their methodology statements. |
+| G5 | **Weighting method not recorded anywhere in bulk** | δ_class weakly identified | 11 pollsters hand-coded (≈40% of 2026 polls), each with its source statement. Next: code the rest of the top 30 (Cygnal, PPP, SurveyUSA, McLaughlin, RMG, Big Data Poll… were not clearly stated in what we found), add 2022-era classes for the 2022 comparison. |
 | G6 | Partisan-sponsor classification | sponsor penalty | Using VoteHub's partisan flag and 538's `partisan` field. |
 | G7 | Transparency checklist | ratings | Launch uses AAPOR/Roper membership (from 538) as the transparency group. |
 | G8 | Candidate quality (prior office) | prior | Not in launch fundamentals. |

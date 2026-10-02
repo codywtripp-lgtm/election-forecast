@@ -95,6 +95,37 @@
 	</section>
 {/if}
 
+{#if data.weighting}
+	<section class="card">
+		<h2>Weighting-method correction</h2>
+		<p class="small">
+			Polls that weight to past vote (PV), to party (PID) or to demographics only (DEMO) can miss in different ways. We hand-code
+			each pollster's method from its own published statement and estimate how each class missed in completed 2025–26 races
+			relative to all polls. Estimates are shrunk toward zero and used only as differences between classes.
+		</p>
+		<table class="small">
+			<thead><tr><th>Class</th><th class="num">Pollsters</th><th class="num">Polls</th><th class="num">Raw difference</th><th class="num">Correction used</th></tr></thead>
+			<tbody>
+				{#each ['PV', 'PID', 'DEMO'] as c}
+					{@const w = data.weighting[c]}
+					{#if w}
+						<tr><td>{c}</td><td class="num">{w.n_pollsters}</td><td class="num">{w.n_polls}</td>
+							<td class="num">{w.raw_diff !== undefined ? (w.raw_diff >= 0 ? '+' : '−') + Math.abs(w.raw_diff).toFixed(1) : '–'}</td>
+							<td class="num">{w.delta >= 0 ? '+' : '−'}{Math.abs(w.delta).toFixed(1)} ± {w.sd.toFixed(1)}</td></tr>
+					{/if}
+				{/each}
+			</tbody>
+		</table>
+		{#if data.weighting._field_mean_error}
+			<p class="tiny muted">
+				For context, all {data.weighting._field_mean_error.n_polls} polls in those races averaged
+				{Math.abs(data.weighting._field_mean_error.delta).toFixed(1)} points too {data.weighting._field_mean_error.delta < 0 ? 'Republican' : 'Democratic'};
+				that field-wide miss is handled by the national error term, not by this correction.
+			</p>
+		{/if}
+	</section>
+{/if}
+
 <section class="card">
 	<h2>Pollster ratings</h2>
 	<p class="small">

@@ -9,8 +9,9 @@ export const load = () => {
 	const html = marked.parse(md, { async: false }) as string;
 	const backtest = hasData('backtest.json') ? readData<any>('backtest.json') : null;
 	const sensitivity = hasData('sensitivity.json') ? readData<any>('sensitivity.json') : null;
+	const weighting = (readData<any>('summary.json') as any).weighting_correction ?? null;
 	const pollsters = (readData<any[]>('pollsters.json') ?? [])
 		.filter((p: any) => p.n >= 15 && p.last_cycle >= 2018)
 		.sort((a: any, b: any) => a.tau2 - b.tau2);
-	return { html, backtest, pollsters, sensitivity };
+	return { html, backtest, pollsters, sensitivity, weighting };
 };

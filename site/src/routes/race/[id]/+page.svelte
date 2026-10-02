@@ -149,6 +149,7 @@
 								{#if pl.url}<a href={pl.url} rel="noopener external">{pl.pollster}</a>{:else}{pl.pollster}{/if}
 								{#if pl.sponsors}<div class="tiny muted">for {pl.sponsors}</div>{/if}
 								{#if pl.partisan}<span class="chip">{pl.partisan === 'DEM' ? 'D' : 'R'} sponsor</span>{/if}
+								{#if pl.weighting && pl.weighting !== 'UNK'}<span class="chip" title="Weighting method (see methodology)">{pl.weighting}</span>{/if}
 							</td>
 							<td class="small">{fmtDate(pl.start)}–{fmtDate(pl.end)}</td>
 							<td class="num small">{pl.n ? Math.round(pl.n).toLocaleString() : '?'} {pl.population.toUpperCase()}</td>
