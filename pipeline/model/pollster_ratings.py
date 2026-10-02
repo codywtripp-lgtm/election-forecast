@@ -145,16 +145,29 @@ def shrinkage_k(agg: pd.DataFrame, df: pd.DataFrame) -> tuple[float, float]:
     return float(np.clip(within_b / between_b, 2, 200)), float(np.clip(within_t / between_t, 2, 200))
 
 
+_TABLES: dict[int, dict] = {}
+
+
+def _table(ratings: pd.DataFrame) -> dict:
+    """pollster_key → rating dict, built once per ratings frame (plain dicts: fast and side-effect free)."""
+    t = _TABLES.get(id(ratings))
+    if t is None:
+        t = {k: dict(bias=float(b), tau2=float(v), herding=bool(h), n=int(n))
+             for k, b, v, h, n in zip(ratings["pollster_key"], ratings["bias"], ratings["tau2"],
+                                      ratings["herding"], ratings["n"])}
+        _TABLES.clear()
+        _TABLES[id(ratings)] = t
+    return t
+
+
 def lookup(ratings: pd.DataFrame, params: dict, pollster: str) -> dict:
     """Rating for a (possibly joint 'A/B') pollster. Unknown pollsters get the 'other' group prior."""
-    by_key = ratings.set_index("pollster_key")
+    by_key = _table(ratings)
     key = pollster_key(pollster)
-    if key in by_key.index:
-        row = by_key.loc[key]
-        return dict(bias=float(row["bias"]), tau2=float(row["tau2"]), herding=bool(row["herding"]),
-                    rated=True, n=int(row["n"]))
+    if key in by_key:
+        return dict(by_key[key], rated=True)
     parts = [pollster_key(p) for p in str(pollster).split("/")]
-    hits = [by_key.loc[p] for p in parts if p in by_key.index]
+    hits = [by_key[p] for p in parts if p in by_key]
     if hits:
         return dict(bias=float(np.mean([h["bias"] for h in hits])), tau2=float(np.mean([h["tau2"] for h in hits])),
                     herding=any(bool(h["herding"]) for h in hits), rated=True, n=int(sum(h["n"] for h in hits)))

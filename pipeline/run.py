@@ -157,6 +157,19 @@ def main() -> None:
     ap_.add_argument("--sims", type=int, default=50_000)
     args = ap_.parse_args()
     as_of = dt.date.fromisoformat(args.as_of) if args.as_of else dt.date.today()
+    national = run_forecast(as_of, args.sims)
+    print(json.dumps({k: {kk: vv for kk, vv in v.items() if kk.startswith("p_") or kk.endswith("_mean")}
+                      for k, v in national.items() if isinstance(v, dict)}, indent=1))
+
+
+def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, publish_outputs: bool = True) -> dict:
+    """The whole daily forecast. `overrides` (sensitivity runs only) can set:
+    lv=(mean, sd), nat_scale, dem_scale, df, scenario_weights=[w1, w2, w3]."""
+    ov = overrides or {}
+
+    class _A:  # keep the body below unchanged: it refers to args.sims
+        sims = sims_n
+    args = _A()
     E = ELECTION_DATE
     days = days_to(E, as_of)
 
@@ -173,13 +186,19 @@ def main() -> None:
     ratings, rparams = pr.fit()
     fmodel = fund.fit()
     ep = ErrParams(**json.loads((MODEL / "error_params.json").read_text()))
+    if "nat_scale" in ov:
+        ep.nat_ed *= ov["nat_scale"]
+    if "dem_scale" in ov:
+        ep.dem_ed *= ov["dem_scale"]
+    if "df" in ov:
+        ep.df = ov["df"]
     ap = AvgParams()
 
     d_side = choose_d_side(q, a, cands)
     tbl = race_table(races, cands, d_side, choose_r_side(q, a, cands))
     polls = poll_frame(q[q["cycle"] == CYCLE], a, d_side=d_side)
     polls = rcv_adjust(polls, set(tbl.loc[tbl["rule"].isin(["rcv", "top4_rcv"]), "race_id"]))
-    lv = lv_shift(polls, ap)
+    lv = ov.get("lv", lv_shift(polls, ap))
     gt = generic_trend_fn(polls, ratings, rparams, as_of, E, ap)
     adj = adjust(polls, ratings, rparams, as_of, E, ap, gt, lv)
     avgs, poll_table = averages(adj, ap)
@@ -194,6 +213,8 @@ def main() -> None:
 
     # turnout scenarios: each simulation draws one; shift applied to its margins  [A19, A20]
     shifts, probs, scen_meta = scenario_shifts(lv)
+    if "scenario_weights" in ov:
+        probs = list(ov["scenario_weights"])
     sims = simulate(tbl, days, ep, n_sims=args.sims, seed=int(as_of.strftime("%Y%m%d")))
     rng = sims["rng"]
     scen = rng.choice(len(SCENARIOS), size=args.sims, p=probs)
@@ -218,7 +239,7 @@ def main() -> None:
         national[office] = chamber(tbl, win, holdovers, rng, office, caucus)
         national[office]["by_scenario"] = {
             s["key"]: chamber(tbl, win[scen == i], holdovers, np.random.default_rng(i), office, caucus)
-            for i, s in enumerate(SCENARIOS)}
+            for i, s in enumerate(SCENARIOS) if (scen == i).any()}
         for v in national[office]["by_scenario"].values():
             v.pop("dem_seats_hist", None), v.pop("rep_seats_hist", None)
     sen_idx = np.where(tbl["office"] == "sen")[0]
@@ -236,7 +257,10 @@ def main() -> None:
                                     np.zeros((args.sims, len(th)), bool), rep_need=218, dem_need=218)
         national["house"]["tipping_point"] = tp_h.sort_values(ascending=False).head(10).round(4).to_dict()
 
-    # 400 stored draws for the site's "simulate one election" button (winner + margin per race)
+    if not publish_outputs:
+        return national
+
+    # 400 stored draws for the site's "simulate one election" button
     k = min(400, args.sims)
     samples = dict(race_ids=tbl["race_id"].tolist(),
                    dside_wins=["".join("1" if x else "0" for x in win[:k, j]) for j in range(len(tbl))],
@@ -253,8 +277,7 @@ def main() -> None:
                     N_hat=N_hat, scenarios=scen_meta, fundamentals=fmodel, ratings_params=rparams,
                     inputs={str(p.relative_to(DATA.parent)).replace("\\", "/"): sha256(p) for p in inputs})
     publish(run_id, manifest, tbl, national, poll_table, ratings, avgs, cands)
-    print(json.dumps({k: {kk: vv for kk, vv in v.items() if kk.startswith("p_") or kk.endswith("_mean")}
-                      for k, v in national.items()}, indent=1))
+    return national
 
 
 if __name__ == "__main__":

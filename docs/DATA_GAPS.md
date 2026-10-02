@@ -24,7 +24,7 @@ Last reviewed 2026-10-02.
 | S15 | Census ACS 2024 1-year (table-based summary files) | state + district demographics for correlated errors | **live** | public domain | The Census *API* now requires a key; the summary files on www2.census.gov do not. District rows are on the 2024 (119th Congress) lines. |
 | S15b | Census CPS Voting Supplement | turnout by group/state | not started | public | For the full turnout-scenario build (G10). |
 | S16 | Cooperative Election Study | validated vote by group | not started | open | For G10. |
-| S17 | Expert ratings (Cook, Sabato, Inside Elections) | **benchmark only** | not started | store ratings (facts) with citation | Wikipedia race pages tabulate them (G11). |
+| S17 | Expert ratings (Cook, Sabato, Inside Elections) | **benchmark only** | **live** (Senate + governor) | rating labels as tabulated on Wikipedia, with dates | Shown on race pages "for comparison only"; dated history in `data/benchmarks/expert_ratings.csv` for the post-election scorecard. House ratings not yet. Never a model input. |
 | S18 | `us-atlas` TopoJSON | state map | **live** | ISC | |
 | S20 | The Downballot, presidential results by congressional district (public Google Sheets) | House district lean: 2024/2020 on the 2026 lines; 2008–2024 on each earlier cycle's lines | **live** | published free ("paywall-free"); no explicit licence — attributed on the site; owner may want to confirm reuse | Whole-number percentages on the 2026 sheet. Reflects all 10 redrawn states and Missouri's reversion to its 2022 map, matching the Wikipedia redistricting summary. |
 | S21 | Wikipedia House election pages | 2026 nominees per district; 2012–2024 district results | **live** | CC BY-SA 4.0 | |
@@ -45,7 +45,7 @@ Last reviewed 2026-10-02.
 | G9 | Approval + generic-ballot history 1946–2022 | national environment regression | Not in launch; N̂ = generic-ballot average. |
 | G10 | Group turnout (CPS) and preferences (CES); special-election and primary turnout | turnout scenarios | Launch scenarios are anchored on the measured LV−RV gap; weights fixed 25/50/25. |
 | G11 | Expert ratings history | benchmark only | Not built. |
-| G12 | Election rules | correctness | `data/manual/race_rules.csv`. **Unverified:** Louisiana (first closed-primary cycle) and Mississippi general-election rules for Senate, both modeled as plurality. Vermont governor: legislature picks if no majority; modeled as plurality. |
+| G12 | Election rules | correctness | `data/manual/race_rules.csv`. Louisiana (closed primaries; plurality general) and Mississippi (no federal general-election runoff) **verified** with Secretary of State sources. Vermont governor: legislature picks if no majority; modeled as plurality. |
 | G13 | Independent caucus intentions | Senate control counting | `data/manual/caucus.csv`: Osborn (NE), Bodnar (MT), Achilles (ID), Bengs (SD) all set to 50% Democratic caucus, unverified. |
 | G14 | Two candidates named Dan Sullivan in Alaska's Senate race | poll matching | Handled with `candidate_overrides.csv` / `candidate_aliases.csv`. |
 
