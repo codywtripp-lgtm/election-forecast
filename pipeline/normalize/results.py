@@ -1,4 +1,4 @@
-"""Historical Senate and governor results (2010–2025) from Wikipedia cycle pages via the MediaWiki API.
+"""Historical Senate and governor results (2000–2025) from Wikipedia cycle pages via the MediaWiki API.
 
 Each cycle page has a summary table: state, incumbent, incumbent party, result text, and candidates
 with vote percentages ("▌ Katie Britt (Republican) 66.6% ▌Will Boyd (Democratic) 30.9%").
@@ -21,8 +21,8 @@ from pipeline.parties import norm_party
 from pipeline.states import to_abbr
 
 API = "https://en.wikipedia.org/w/api.php"
-SEN_YEARS = list(range(2010, 2025, 2))
-GOV_YEARS = list(range(2010, 2026))
+SEN_YEARS = list(range(2000, 2025, 2))
+GOV_YEARS = list(range(2000, 2026))
 CAND_PCT = re.compile(r"^(?P<name>.+?)\s*\((?P<party>[^()]+)\)\s*(?P<pct>[\d.]+)\s*%")
 
 

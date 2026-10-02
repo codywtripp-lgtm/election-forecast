@@ -6,5 +6,6 @@ node_modules/
 site/.svelte-kit/
 site/build/
 .DS_Store
-data/db/*.parquet
+data/db/*
 !data/db/.gitkeep
+site/static/data/

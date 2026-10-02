@@ -12,7 +12,7 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 
-from pipeline.config import DB, RAW
+from pipeline.config import DB, MANUAL, RAW
 from pipeline.ingest import votehub
 from pipeline.states import to_abbr
 
@@ -26,7 +26,8 @@ VH_OFFICES = {"us-senator": "sen", "governor": "gov", "us-representative": "hous
 
 Q_COLS = ["qid", "source", "poll_id", "cycle", "office", "race_id", "state", "district", "stage",
           "pollster", "sponsors", "partisan", "internal", "start_date", "end_date", "sample_size",
-          "population", "mode", "mode_source", "weighting_class", "url", "hypothetical", "subject"]
+          "population", "mode", "mode_source", "weighting_class", "url", "hypothetical", "subject",
+          "published"]
 
 
 def _date(s: pd.Series) -> pd.Series:
@@ -119,6 +120,7 @@ def load_fte() -> tuple[pd.DataFrame, pd.DataFrame]:
         q["weighting_class"] = "UNK"
         q["url"] = _col(first, "url")
         q["hypothetical"] = _col(first, "hypothetical").astype(str).eq("True")
+        q["published"] = _date(_col(first, "created_at").fillna(first["end_date"]))
         qs.append(q[Q_COLS])
         d = d[d["qid"].isin(q["qid"])]
         if office == "generic":  # wide file: dem / rep columns
@@ -185,7 +187,8 @@ def load_votehub(fte_modes: dict[str, str]) -> tuple[pd.DataFrame, pd.DataFrame]
             sample_size=p.get("sample_size"), population=norm_population(p.get("population")),
             mode=mode or "unknown", mode_source="inferred_538" if mode else "unknown",
             weighting_class="UNK", url=p.get("url"), hypothetical=False,
-            subject="Donald Trump" if office == "approval" else subj))
+            subject="Donald Trump" if office == "approval" else subj,
+            published=pd.Timestamp(p.get("created_at") or p["end_date"]).date()))
         for a in p["answers"]:
             party = {"Dem": "DEM", "Rep": "REP"}.get(a["choice"]) if office == "generic" else None
             ans.append(dict(qid=qid, answer=a["choice"], candidate=a["choice"], party=party, pct=a["pct"]))
@@ -238,11 +241,17 @@ def attach_parties(q: pd.DataFrame, a: pd.DataFrame, cands: pd.DataFrame) -> pd.
     race_of = q.set_index("qid")["race_id"].to_dict()
     stage_of = q.set_index("qid")["stage"].to_dict()
     by_race = {rid: g for rid, g in cands.groupby("race_id")}
+    aliases = pd.read_csv(MANUAL / "candidate_aliases.csv")
+    alias = {(r.race_id, r.poll_name): r.candidate_id for r in aliases.itertuples()}
+    by_id = cands.set_index("candidate_id")
     cid, party = [], []
     for qid_, name, p in zip(a["qid"], a["candidate"], a["party"]):
         rid = race_of.get(qid_)
         found = None
-        if rid in by_race and stage_of.get(qid_) == "general":
+        if (rid, name) in alias and stage_of.get(qid_) == "general":
+            found = by_id.loc[alias[(rid, name)]].copy()
+            found["candidate_id"] = alias[(rid, name)]
+        elif rid in by_race and stage_of.get(qid_) == "general":
             found = match_candidate(name, by_race[rid])
         cid.append(found["candidate_id"] if found is not None else None)
         party.append(found["party"] if found is not None else p)
