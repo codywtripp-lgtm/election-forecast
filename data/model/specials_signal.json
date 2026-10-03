@@ -1,0 +1,55 @@
+{
+ "k": 0.3851254011445344,
+ "loo_sd": 7.212644441410474,
+ "cycles": [
+  {
+   "cycle": 2018,
+   "n": 123,
+   "median_swing": 10.0,
+   "mean_swing": 9.599,
+   "nat_pres": 2.182,
+   "N_true": 8.51,
+   "y": 6.328,
+   "loo_err": 7.95
+  },
+  {
+   "cycle": 2020,
+   "n": 79,
+   "median_swing": 4.0,
+   "mean_swing": 3.752,
+   "nat_pres": 2.182,
+   "N_true": 2.96,
+   "y": 0.778,
+   "loo_err": -0.857
+  },
+  {
+   "cycle": 2022,
+   "n": 84,
+   "median_swing": -3.0,
+   "mean_swing": -4.214,
+   "nat_pres": 4.449,
+   "N_true": -2.64,
+   "y": -7.089,
+   "loo_err": -6.325
+  },
+  {
+   "cycle": 2024,
+   "n": 62,
+   "median_swing": 4.5,
+   "mean_swing": 3.835,
+   "nat_pres": 4.449,
+   "N_true": -2.6,
+   "y": -7.049,
+   "loo_err": -10.205
+  }
+ ],
+ "current": {
+  "cycle": 2026,
+  "n": 111,
+  "median_swing": 13.0,
+  "mean_swing": 12.621621621621621,
+  "nat_pres": -1.470281192089549,
+  "N_specials": 3.5363490227893988
+ },
+ "source": "https://www.the-downballot.com/p/data"
+}

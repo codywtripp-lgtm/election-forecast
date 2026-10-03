@@ -205,7 +205,12 @@ def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, pub
     adj = adjust(polls, ratings, rparams, as_of, E, ap, gt, lv, delta=delta)
     avgs, poll_table = averages(adj, ap)
     gen = avgs.set_index("race_id").loc[f"{CYCLE}-generic"]
-    N_hat = float(gen["poll_avg"])
+    N_generic = float(gen["poll_avg"])
+    # [A12] special elections: computed and published for comparison, NOT used — blending them in
+    # made every backtest metric slightly worse (see METHODOLOGY §4.1)
+    from pipeline import specials
+    env = specials.national_blend(N_generic, ep.nat_ed * ep.scale(days), CYCLE, as_of)
+    N_hat = N_generic
 
     tbl = blend(tbl, avgs, fmodel, N_hat, days, ep)
     tbl["other_hat"] = other_hat(tbl)
@@ -277,7 +282,7 @@ def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, pub
                     n_sims=args.sims, seed=int(as_of.strftime("%Y%m%d")),
                     error_params=asdict(ep), avg_params=asdict(ap), lv_shift=dict(mean=lv[0], sd=lv[1]),
                     N_hat=N_hat, scenarios=scen_meta, fundamentals=fmodel, ratings_params=rparams,
-                    weighting_correction=delta,
+                    weighting_correction=delta, environment=dict(generic_ballot=N_generic, **env),
                     inputs={str(p.relative_to(DATA.parent)).replace("\\", "/"): sha256(p) for p in inputs})
     publish(run_id, manifest, tbl, national, poll_table, ratings, avgs, cands)
     return national

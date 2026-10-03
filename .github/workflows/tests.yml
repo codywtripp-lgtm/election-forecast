@@ -36,5 +36,7 @@ jobs:
           python -m pipeline.normalize.polls
           python -m pipeline.composition
           python -m pipeline.expert
+          python -m pipeline.specials
           python -m pipeline.run --sims 5000
+          python -m pipeline.trackers
           cd site && npm ci && npm run check && npm run build

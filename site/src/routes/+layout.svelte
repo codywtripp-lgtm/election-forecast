@@ -9,6 +9,7 @@
 	const nav = [
 		{ href: '/', label: 'Forecast', routes: ['/', '/race/[id]', '/state/[st]'] },
 		{ href: '/polls', label: 'Polls', routes: ['/polls'] },
+		{ href: '/trackers', label: 'Trackers', routes: ['/trackers'] },
 		{ href: '/methodology', label: 'Methodology', routes: ['/methodology'] }
 	] as const;
 </script>

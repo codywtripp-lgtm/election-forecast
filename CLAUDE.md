@@ -32,6 +32,7 @@ Independent, statistically rigorous election forecast site. Launch: Nov 3, 2026 
 - Site: SvelteKit 3 (`#lib/...ts` imports, `resolve()`/`asset()` from `$app/paths`), adapter-static, data read at build time from `site/static/data/2026` (generated, not committed).
 - 2026-10-02: House (PR #5): `pipeline/house.py` (Wikipedia House pages + Downballot pres-by-CD sheets), House fundamentals, 435 districts in the same simulation, hex map.
 - 2026-10-02: Sensitivity analysis (PR #6, `pipeline/sensitivity.py`, weekly), expert ratings benchmark (Cook/IE/Sabato on race pages, never a model input), LA/MS rules verified, weighting-method correction (PR #7: `data/manual/weighting_method.csv`, `pipeline/model/weighting.py`).
+- 2026-10-03: Trackers page (generic ballot, net approval, special elections; `pipeline/trackers.py`, `pipeline/specials.py`). Specials tested as an environment signal → backtest slightly worse → not used.
 - Local runs never write tracked history/manifests (only when GITHUB_ACTIONS=true).
 - Open items: code more pollsters' weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10); House expert ratings; candidate quality + FEC fundraising; Phase 3 (scorecard after Nov 3, approval/generic-ballot/special-election trackers, 2027 + 2028 scaffolding, RSS).
 - (old) Next (after House): Phase 2 polish (verify 2026 district lines, district lean, hex map); hand-code weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10).

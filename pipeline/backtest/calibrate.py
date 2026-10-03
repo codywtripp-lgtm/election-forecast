@@ -45,16 +45,19 @@ def _groups(bt: pd.DataFrame):
         div = np.array([DIVISIONS.index(DIVISION[s]) for s in g["state"]])
         D = np.eye(len(DIVISIONS))[div]
         L = demo_loadings(g["state"])
-        yield g, D @ D.T, L @ L.T / L.shape[1]
+        # plain numpy only inside the optimiser loop (pandas arithmetic there crashed on Windows)
+        arrs = dict(days=float(g["days_out"].iloc[0]), sd2=g["sd"].to_numpy(float) ** 2,
+                    e=(g["margin"].to_numpy(float) - g["mu"].to_numpy(float)))
+        yield arrs, D @ D.T, L @ L.T / L.shape[1]
 
 
 def neg_loglik(theta, groups, T0):
     nat, div, dem = np.exp(theta)
     total = 0.0
     for g, DD, LL in groups:
-        s2 = 1 + g["days_out"].iloc[0] / T0
-        S = np.diag(g["sd"].to_numpy() ** 2) + s2 * (nat ** 2 + div ** 2 * DD + dem ** 2 * LL)
-        e = (g["margin"] - g["mu"]).to_numpy()
+        s2 = 1 + g["days"] / T0
+        S = np.diag(g["sd2"]) + s2 * (nat ** 2 + div ** 2 * DD + dem ** 2 * LL)
+        e = g["e"]
         sign, logdet = np.linalg.slogdet(S)
         total += 0.5 * (logdet + e @ np.linalg.solve(S, e))
     return total
