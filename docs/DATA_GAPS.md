@@ -19,7 +19,7 @@ Last reviewed 2026-10-02.
 | S10 | Dave's Redistricting | — | avoid | terms restrict bulk reuse | |
 | S11 | The Downballot pres-by-CD (2026 lines) / Cook–Leip | House lean on new lines | check | terms to verify | Phase 2. |
 | S12 | Redistricting Data Hub precinct results + enacted plans | compute lean ourselves | check | free account required | Phase 2 fallback. |
-| S13 | FEC API | fundraising | not started | free API key (Actions secret `FEC_API_KEY`) | Not in launch fundamentals. |
+| S13 | FEC bulk all-candidate summaries (weballYY.zip, 2012–2026) | House fundraising feature | **live** (2026 file refreshed daily) | public domain, no key | Individual contributions only. Historical files are end-of-cycle totals (backtest slightly optimistic). ~78% of races have both nominees matched. |
 | S14 | BLS, BEA | economy | not started | public | Not in launch fundamentals (G9). |
 | S15 | Census ACS 2024 1-year (table-based summary files) | state + district demographics for correlated errors | **live** | public domain | The Census *API* now requires a key; the summary files on www2.census.gov do not. District rows are on the 2024 (119th Congress) lines. |
 | S15b | Census CPS Voting Supplement | turnout by group/state | not started | public | For the full turnout-scenario build (G10). |

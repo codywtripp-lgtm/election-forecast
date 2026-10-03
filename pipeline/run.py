@@ -196,6 +196,7 @@ def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, pub
 
     d_side = choose_d_side(q, a, cands)
     tbl = race_table(races, cands, d_side, choose_r_side(q, a, cands))
+    tbl = fund.attach_money(tbl)
     polls = poll_frame(q[q["cycle"] == CYCLE], a, d_side=d_side)
     polls = rcv_adjust(polls, set(tbl.loc[tbl["rule"].isin(["rcv", "top4_rcv"]), "race_id"]))
     lv = ov.get("lv", lv_shift(polls, ap))

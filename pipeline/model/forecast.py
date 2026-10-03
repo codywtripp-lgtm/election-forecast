@@ -73,7 +73,8 @@ def blend(races: pd.DataFrame, avgs: pd.DataFrame, fmodel: dict, N_hat: float, d
           ep: ErrParams) -> pd.DataFrame:
     """races needs: race_id, office, state, lean, inc. Returns prior / poll / blended mean and sd."""
     df = races.merge(avgs, on="race_id", how="left")
-    pri = [fund.predict(fmodel, o, l, N_hat, i) for o, l, i in zip(df["office"], df["lean"], df["inc"])]
+    money = df["money"].fillna(0.0) if "money" in df else pd.Series(0.0, index=df.index)
+    pri = [fund.predict(fmodel, o, l, N_hat, i, m) for o, l, i, m in zip(df["office"], df["lean"], df["inc"], money)]
     df["prior_mu"] = [p[0] for p in pri]
     df["prior_sd"] = [p[1] for p in pri]
     s = ep.scale(days)

@@ -32,7 +32,7 @@ FULL_HISTORY = (2018, 2020, 2022, 2024)
 DAYS_OUT = (120, 90, 60, 30, 14, 7, 1)
 
 
-COLS = ["race_id", "cycle", "office", "state", "lean", "inc", "margin", "N"]
+COLS = ["race_id", "cycle", "office", "state", "lean", "inc", "margin", "N", "money"]
 
 
 def all_training() -> pd.DataFrame:

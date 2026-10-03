@@ -21,6 +21,7 @@ jobs:
           python -m pipeline.house
           python -m pipeline.normalize.results
           python -m pipeline.normalize.polls
+          python -m pipeline.fec
           python -m pipeline.backtest.replay
           python -m pipeline.backtest.calibrate
           python -m pipeline.composition

@@ -18,7 +18,27 @@ from pipeline.config import DB
 from pipeline.model.data import national_house_vote, state_lean_table
 
 FIT_YEARS = range(2000, 2025, 2)
+import os
+
 FEATURES = ["lean", "N", "inc"]
+# [A17] fundraising (FEC individual contributions, log D/R ratio). Backtest (Oct 2026): House Brier −3%
+# (30 days) / −4% (120 days); Senate mixed; no governor data → used for the House only.
+# MODEL_MONEY=all|none overrides for comparison runs.
+MONEY_OFFICES = {"all": ("sen", "house"), "none": ()}.get(os.environ.get("MODEL_MONEY", ""), ("house",))
+
+
+def features_for(office: str) -> list[str]:
+    return FEATURES + (["money"] if office in MONEY_OFFICES else [])
+
+
+def attach_money(t: pd.DataFrame) -> pd.DataFrame:
+    path = DB / "money.parquet"
+    if not path.exists():
+        return t.assign(money=0.0)
+    m = pd.read_parquet(path)[["race_id", "money", "dem_indiv", "rep_indiv"]]
+    t = t.drop(columns=["money", "dem_indiv", "rep_indiv"], errors="ignore").merge(m, on="race_id", how="left")
+    t["money"] = t["money"].fillna(0.0).clip(-6, 6)       # unknown → neutral; cap extreme ratios
+    return t
 CYCLE_DECAY = 0.8   # weight per 2-year cycle back: incumbency and partisanship have changed since 2000
 
 
@@ -37,7 +57,7 @@ def training_frame() -> pd.DataFrame:
     r = r.merge(lean, on=["cycle", "state"], how="inner")
     r["N"] = r["cycle"].map(national_house_vote())
     r["inc"] = [inc_code(run, p) for run, p in zip(r["incumbent_running"], r["incumbent_cand_party"])]
-    return r.dropna(subset=["margin", "lean", "N"])
+    return attach_money(r.dropna(subset=["margin", "lean", "N"]))
 
 
 def house_training_frame() -> pd.DataFrame:
@@ -52,7 +72,7 @@ def house_training_frame() -> pd.DataFrame:
     r = r.merge(lean[["cycle", "state", "district", "lean"]], on=["cycle", "state", "district"], how="inner")
     r["N"] = r["cycle"].map(national_house_vote())
     r["inc"] = [inc_code(run, p) for run, p in zip(r["incumbent_running"], r["incumbent_cand_party"])]
-    return r.dropna(subset=["margin", "lean", "N"])
+    return attach_money(r.dropna(subset=["margin", "lean", "N"]))
 
 
 def fit(train: pd.DataFrame | None = None, exclude_cycle: int | None = None) -> dict:
@@ -66,8 +86,11 @@ def fit(train: pd.DataFrame | None = None, exclude_cycle: int | None = None) -> 
     if exclude_cycle is not None:
         t = t[t["cycle"] != exclude_cycle]
     out = {}
+    if "money" not in t.columns:
+        t = t.assign(money=0.0)
     for office, g in t.groupby("office"):
-        X = np.column_stack([np.ones(len(g))] + [g[f].to_numpy(float) for f in FEATURES])
+        feats = [f for f in features_for(office) if f in FEATURES or g[f].abs().sum() > 0]  # no data → drop
+        X = np.column_stack([np.ones(len(g))] + [g[f].to_numpy(float) for f in feats])
         y = g["margin"].to_numpy(float)
         w = CYCLE_DECAY ** ((g["cycle"].max() - g["cycle"].to_numpy()) / 2)
         sw = np.sqrt(w)
@@ -75,16 +98,16 @@ def fit(train: pd.DataFrame | None = None, exclude_cycle: int | None = None) -> 
         resid = y - X @ coef
         n_eff = w.sum() ** 2 / (w ** 2).sum()
         sigma = float(np.sqrt(np.sum(w * resid ** 2) / w.sum() * n_eff / max(1, n_eff - X.shape[1])))
-        cov = sigma ** 2 * np.linalg.inv((X * w[:, None]).T @ X)
-        out[office] = dict(coef=dict(zip(["const"] + FEATURES, coef.round(4).tolist())),
-                           se=dict(zip(["const"] + FEATURES, np.sqrt(np.diag(cov)).round(4).tolist())),
+        cov = sigma ** 2 * np.linalg.pinv((X * w[:, None]).T @ X)
+        out[office] = dict(coef=dict(zip(["const"] + feats, coef.round(4).tolist())),
+                           se=dict(zip(["const"] + feats, np.sqrt(np.diag(cov)).round(4).tolist())),
                            sigma=sigma, n=len(y))
     return out
 
 
-def predict(model: dict, office: str, lean: float, N: float, inc: int) -> tuple[float, float]:
+def predict(model: dict, office: str, lean: float, N: float, inc: int, money: float = 0.0) -> tuple[float, float]:
     c = model[office]["coef"]
-    mu = c["const"] + c["lean"] * lean + c["N"] * N + c["inc"] * inc
+    mu = c["const"] + c["lean"] * lean + c["N"] * N + c["inc"] * inc + c.get("money", 0.0) * money
     return float(mu), float(model[office]["sigma"])
 
 
