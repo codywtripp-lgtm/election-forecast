@@ -24,7 +24,7 @@ from pipeline.config import DB, MODEL
 from pipeline.model.forecast import DIVISIONS, ErrParams, demo_loadings
 from pipeline.states import DIVISION
 
-RP_GRID = (1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 5.0)
+RP_GRID = (2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0)
 
 
 def reblend(bt: pd.DataFrame, rp_ed: float, T0: float) -> pd.DataFrame:
@@ -41,25 +41,39 @@ def reblend(bt: pd.DataFrame, rp_ed: float, T0: float) -> pd.DataFrame:
 
 
 def _groups(bt: pd.DataFrame):
+    """Per (cycle, days-out): race errors e, race variances, and the shared-error design
+    U = [1 | division dummies | demographic z/√F]  (n × 14). Backtest House districts use their
+    state's demographics (historical district lines differ from the ACS lines)."""
     for (_, _), g in bt.groupby(["cycle", "days_out"]):
         div = np.array([DIVISIONS.index(DIVISION[s]) for s in g["state"]])
         D = np.eye(len(DIVISIONS))[div]
         L = demo_loadings(g["state"])
+        U = np.column_stack([np.ones(len(g)), D, L / np.sqrt(L.shape[1])])
         # plain numpy only inside the optimiser loop (pandas arithmetic there crashed on Windows)
-        arrs = dict(days=float(g["days_out"].iloc[0]), sd2=g["sd"].to_numpy(float) ** 2,
-                    e=(g["margin"].to_numpy(float) - g["mu"].to_numpy(float)))
-        yield arrs, D @ D.T, L @ L.T / L.shape[1]
+        yield dict(days=float(g["days_out"].iloc[0]), sd2=g["sd"].to_numpy(float) ** 2,
+                   e=(g["margin"].to_numpy(float) - g["mu"].to_numpy(float)), U=U,
+                   k=(1, D.shape[1], L.shape[1]))
 
 
 def neg_loglik(theta, groups, T0):
+    """Gaussian log-likelihood with Σ = diag(sd²) + U C Uᵀ, via Woodbury + determinant lemma
+    (exact; O(n·k²) instead of O(n³), needed once 400+ House races are in each group)."""
     nat, div, dem = np.exp(theta)
     total = 0.0
-    for g, DD, LL in groups:
+    for g in groups:
         s2 = 1 + g["days"] / T0
-        S = np.diag(g["sd2"]) + s2 * (nat ** 2 + div ** 2 * DD + dem ** 2 * LL)
-        e = g["e"]
-        sign, logdet = np.linalg.slogdet(S)
-        total += 0.5 * (logdet + e @ np.linalg.solve(S, e))
+        k1, kd, kl = g["k"]
+        c = s2 * np.concatenate([[nat ** 2], np.full(kd, div ** 2), np.full(kl, dem ** 2)])
+        Dinv = 1 / g["sd2"]
+        U, e = g["U"], g["e"]
+        UtDi = U.T * Dinv                                   # k × n
+        M = np.diag(1 / c) + UtDi @ U                       # k × k
+        _, logdet_M = np.linalg.slogdet(M)
+        logdet = np.sum(np.log(g["sd2"])) + np.sum(np.log(c)) + logdet_M
+        Die = Dinv * e
+        v = UtDi @ e
+        quad = e @ Die - v @ np.linalg.solve(M, v)
+        total += 0.5 * (logdet + quad)
     return total
 
 
@@ -143,9 +157,14 @@ def main() -> None:
     print("fitted", asdict(ep), round(nll, 1))
     cv = loco(bt)
     by_days = {int(d): score(g, g["p"].to_numpy(), g["total_sd"]) for d, g in cv.groupby("days_out")}
+    by_office = {o: {int(d): score(gg, gg["p"].to_numpy(), gg["total_sd"]) for d, gg in g.groupby("days_out")}
+                 for o, g in cv.groupby("office")}
+    cal_office = {o: calibration_bins((g["margin"] > 0).astype(float), g["p"]).round(3).to_dict(orient="records")
+                  for o, g in cv.groupby("office")}
     by_cycle = {int(c): score(g, g["p"].to_numpy(), g["total_sd"]) for c, g in cv[cv["days_out"] == 1].groupby("cycle")}
     cal = calibration_bins((cv["margin"] > 0).astype(float), cv["p"])
-    report = dict(error_params=asdict(ep), loco_by_days_out=by_days, loco_final_by_cycle=by_cycle,
+    report = dict(error_params=asdict(ep), loco_by_days_out=by_days, loco_by_office=by_office,
+                  calibration_by_office=cal_office, loco_final_by_cycle=by_cycle,
                   calibration=cal.round(3).to_dict(orient="records"), baselines=baselines(bt, ep))
     (DB / "backtest_report.json").write_text(json.dumps(report, indent=1))
     # versioned, committed: the daily run reads these calibrated parameters

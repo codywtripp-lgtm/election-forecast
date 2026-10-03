@@ -5,12 +5,12 @@
   {
    "variant": "Baseline (as published)",
    "overrides": {},
-   "senate_dem": 0.5998,
-   "senate_rep": 0.3938,
-   "senate_dem_seats": 51.1872,
-   "gov_dem": 26.7674,
-   "house_dem": 0.7753,
-   "house_dem_seats": 228.1827
+   "senate_dem": 0.5728,
+   "senate_rep": 0.4203,
+   "senate_dem_seats": 50.9868,
+   "gov_dem": 26.6945,
+   "house_dem": 0.7897,
+   "house_dem_seats": 228.1712
   },
   {
    "variant": "Turnout: 2024-like electorate only",
@@ -21,12 +21,12 @@
      0
     ]
    },
-   "senate_dem": 0.4776,
-   "senate_rep": 0.5171,
-   "senate_dem_seats": 50.3307,
-   "gov_dem": 25.8307,
-   "house_dem": 0.6698,
-   "house_dem_seats": 223.7839
+   "senate_dem": 0.4496,
+   "senate_rep": 0.5429,
+   "senate_dem_seats": 50.1792,
+   "gov_dem": 25.7653,
+   "house_dem": 0.6846,
+   "house_dem_seats": 223.8712
   },
   {
    "variant": "Turnout: typical midterm only",
@@ -37,12 +37,12 @@
      0
     ]
    },
-   "senate_dem": 0.6041,
-   "senate_rep": 0.3899,
-   "senate_dem_seats": 51.1822,
-   "gov_dem": 26.7616,
-   "house_dem": 0.7808,
-   "house_dem_seats": 228.0887
+   "senate_dem": 0.575,
+   "senate_rep": 0.418,
+   "senate_dem_seats": 50.9918,
+   "gov_dem": 26.6951,
+   "house_dem": 0.7961,
+   "house_dem_seats": 228.1
   },
   {
    "variant": "Turnout: high-engagement midterm only",
@@ -53,12 +53,12 @@
      1
     ]
    },
-   "senate_dem": 0.7177,
-   "senate_rep": 0.2767,
-   "senate_dem_seats": 52.0404,
-   "gov_dem": 27.6878,
-   "house_dem": 0.8688,
-   "house_dem_seats": 232.7132
+   "senate_dem": 0.6954,
+   "senate_rep": 0.2984,
+   "senate_dem_seats": 51.7901,
+   "gov_dem": 27.6089,
+   "house_dem": 0.8782,
+   "house_dem_seats": 232.6411
   },
   {
    "variant": "Likely-voter shift = 0 (no LV/RV adjustment)",
@@ -68,12 +68,12 @@
      0.0
     ]
    },
-   "senate_dem": 0.5784,
-   "senate_rep": 0.4154,
-   "senate_dem_seats": 51.0089,
-   "gov_dem": 26.5706,
-   "house_dem": 0.7634,
-   "house_dem_seats": 227.3555
+   "senate_dem": 0.5503,
+   "senate_rep": 0.4428,
+   "senate_dem_seats": 50.8318,
+   "gov_dem": 26.5046,
+   "house_dem": 0.7793,
+   "house_dem_seats": 227.3939
   },
   {
    "variant": "Likely-voter shift = historical midterm value (R+1.45)",
@@ -83,72 +83,72 @@
      0.3
     ]
    },
-   "senate_dem": 0.5218,
-   "senate_rep": 0.473,
-   "senate_dem_seats": 50.6435,
-   "gov_dem": 26.154,
-   "house_dem": 0.7088,
-   "house_dem_seats": 226.0974
+   "senate_dem": 0.4991,
+   "senate_rep": 0.4945,
+   "senate_dem_seats": 50.5006,
+   "gov_dem": 26.0969,
+   "house_dem": 0.7235,
+   "house_dem_seats": 226.1853
   },
   {
    "variant": "National polling error +25%",
    "overrides": {
     "nat_scale": 1.25
    },
-   "senate_dem": 0.5853,
-   "senate_rep": 0.4086,
-   "senate_dem_seats": 51.1686,
-   "gov_dem": 26.7257,
-   "house_dem": 0.7368,
-   "house_dem_seats": 228.916
+   "senate_dem": 0.5625,
+   "senate_rep": 0.4316,
+   "senate_dem_seats": 50.9759,
+   "gov_dem": 26.6682,
+   "house_dem": 0.7494,
+   "house_dem_seats": 228.8648
   },
   {
    "variant": "National polling error \u221225%",
    "overrides": {
     "nat_scale": 0.75
    },
-   "senate_dem": 0.6179,
-   "senate_rep": 0.3746,
-   "senate_dem_seats": 51.1981,
-   "gov_dem": 26.7948,
-   "house_dem": 0.824,
-   "house_dem_seats": 227.5293
+   "senate_dem": 0.5861,
+   "senate_rep": 0.4057,
+   "senate_dem_seats": 50.9955,
+   "gov_dem": 26.7195,
+   "house_dem": 0.8374,
+   "house_dem_seats": 227.5734
   },
   {
    "variant": "Demographic error +50%",
    "overrides": {
     "dem_scale": 1.5
    },
-   "senate_dem": 0.6,
-   "senate_rep": 0.3924,
-   "senate_dem_seats": 51.1804,
-   "gov_dem": 26.7223,
-   "house_dem": 0.7802,
-   "house_dem_seats": 228.716
+   "senate_dem": 0.5735,
+   "senate_rep": 0.4194,
+   "senate_dem_seats": 50.9887,
+   "gov_dem": 26.6829,
+   "house_dem": 0.7923,
+   "house_dem_seats": 228.3149
   },
   {
    "variant": "Fatter tails (\u03bd = 3)",
    "overrides": {
     "df": 3.0
    },
-   "senate_dem": 0.6079,
-   "senate_rep": 0.3868,
-   "senate_dem_seats": 51.1491,
-   "gov_dem": 26.8189,
-   "house_dem": 0.7732,
-   "house_dem_seats": 226.4231
+   "senate_dem": 0.5736,
+   "senate_rep": 0.4199,
+   "senate_dem_seats": 50.931,
+   "gov_dem": 26.7504,
+   "house_dem": 0.7847,
+   "house_dem_seats": 226.456
   },
   {
    "variant": "Thinner tails (\u03bd = 10)",
    "overrides": {
     "df": 10.0
    },
-   "senate_dem": 0.5928,
-   "senate_rep": 0.4006,
-   "senate_dem_seats": 51.1666,
-   "gov_dem": 26.7663,
-   "house_dem": 0.7715,
-   "house_dem_seats": 228.8155
+   "senate_dem": 0.5705,
+   "senate_rep": 0.4221,
+   "senate_dem_seats": 50.9833,
+   "gov_dem": 26.6797,
+   "house_dem": 0.7828,
+   "house_dem_seats": 228.8248
   }
  ]
 }
