@@ -1,0 +1,253 @@
+{
+ "run_id": "2026-10-03-8a34a3a",
+ "as_of": "2026-10-03",
+ "days_to_election": 31,
+ "code_sha": "8a34a3a72957c93ff80a5a1d8539df101f3ca962",
+ "created_utc": "2026-10-03T05:30:21+00:00",
+ "n_sims": 50000,
+ "seed": 20261003,
+ "error_params": {
+  "nat_ed": 2.6992,
+  "div_ed": 1.0056,
+  "dem_ed": 1.0843,
+  "rp_ed": 5.0,
+  "T0": 120.0,
+  "df": 5.0,
+  "runoff_sd": 3.0,
+  "other_sd": 1.5
+ },
+ "avg_params": {
+  "lv_prior_mean": -0.9,
+  "lv_prior_sd": 1.0,
+  "rv_minus_a": 0.4,
+  "rv_minus_a_sd": 0.5,
+  "sponsor_shift": {
+   "DEM": -2.8,
+   "REP": 3.85
+  },
+  "sponsor_weight": 0.5,
+  "herding_weight": 0.75,
+  "n_cap": 1500.0,
+  "tau_base": 10.0,
+  "tau_slope": 0.25,
+  "trend_beta": 0.75,
+  "house_sd": 2.0,
+  "max_age_days": 365
+ },
+ "lv_shift": {
+  "mean": 0.7012,
+  "sd": 0.3381
+ },
+ "N_hat": 7.9446,
+ "scenarios": [
+  {
+   "key": "s1_2024_like",
+   "label": "2024-like electorate",
+   "weight": 0.25,
+   "shift": -1.04
+  },
+  {
+   "key": "s2_typical_midterm",
+   "label": "Typical midterm electorate",
+   "weight": 0.5,
+   "shift": 0.0
+  },
+  {
+   "key": "s3_high_engagement",
+   "label": "High-engagement midterm",
+   "weight": 0.25,
+   "shift": 1.04
+  }
+ ],
+ "fundamentals": {
+  "gov": {
+   "coef": {
+    "const": -2.4606,
+    "lean": 0.4381,
+    "N": 0.5929,
+    "inc": 13.3643
+   },
+   "se": {
+    "const": 1.429,
+    "lean": 0.0735,
+    "N": 0.2579,
+    "inc": 1.8985
+   },
+   "sigma": 13.7506,
+   "n": 255
+  },
+  "house": {
+   "coef": {
+    "const": 0.9225,
+    "lean": 0.8908,
+    "N": 0.7193,
+    "inc": 4.6855,
+    "money": 0.9147
+   },
+   "se": {
+    "const": 0.1741,
+    "lean": 0.0091,
+    "N": 0.0426,
+    "inc": 0.2974,
+    "money": 0.1062
+   },
+   "sigma": 6.7396,
+   "n": 2619
+  },
+  "sen": {
+   "coef": {
+    "const": 1.827,
+    "lean": 0.7966,
+    "N": 0.7784,
+    "inc": 8.3803
+   },
+   "se": {
+    "const": 0.8718,
+    "lean": 0.0499,
+    "N": 0.172,
+    "inc": 1.118
+   },
+   "sigma": 9.9702,
+   "n": 416
+  }
+ },
+ "ratings_params": {
+  "tau2_global": 7.5487,
+  "k_bias": 6.3657,
+  "k_tau": 113.9527,
+  "group_tau2": {
+   "aapor": 3.0519,
+   "other": 6.6893
+  },
+  "n_polls": 17787,
+  "n_races": 1413
+ },
+ "weighting_correction": {
+  "PV": {
+   "delta": 1.1437,
+   "sd": 1.4548,
+   "n_pollsters": 2,
+   "n_polls": 5,
+   "raw_diff": 2.4289
+  },
+  "PID": {
+   "delta": 0.6227,
+   "sd": 1.1062,
+   "n_pollsters": 5,
+   "n_polls": 14,
+   "raw_diff": 0.8971
+  },
+  "DEMO": {
+   "delta": -0.1955,
+   "sd": 1.598,
+   "n_pollsters": 1,
+   "n_polls": 4,
+   "raw_diff": -0.5408
+  },
+  "UNK": {
+   "delta": 0.0,
+   "sd": 0.0,
+   "n_pollsters": 0,
+   "n_polls": 0
+  },
+  "_field_mean_error": {
+   "delta": -7.6092,
+   "sd": 0.0,
+   "n_pollsters": 31,
+   "n_polls": 59
+  }
+ },
+ "environment": {
+  "generic_ballot": 7.9446,
+  "N": 7.0849,
+  "w_specials": 0.195,
+  "N_specials": 3.5363,
+  "n_specials": 111,
+  "median_swing": 13.0,
+  "k": 0.3851,
+  "specials_sd": 6.1515
+ },
+ "inputs": {
+  "data/raw/census_acs2024/b03002.dat.gz": "e0c3437c669372a35d513f25afe76c5cdb9cf8ff77eab9988ecd2f3297b002dd",
+  "data/raw/census_acs2024/b15003.dat.gz": "687ac2ec60dac8d8d58b8d24d55b1867976d1ea1b27e643a783f4a4878778d25",
+  "data/raw/census_acs2024/c15002h.dat.gz": "fc063ff8a35c55abc997fef5e088470b890e9d613511ac313623f2c3ba195356",
+  "data/raw/fte_archive/generic_ballot_polls_historical.csv.gz": "bb6abe5c6a588e846004a5a14fe93100e5736b5fa07cecbf2b258d800e26f934",
+  "data/raw/fte_archive/governor_polls_historical.csv.gz": "cb8b1d36dd736ec8f56f3354075b14bdea4e504a9953217f9204646defda31ce",
+  "data/raw/fte_archive/house_polls_historical.csv.gz": "aee8d9c282291140e5c4dc35c3ac525423fa77f05469d614a73d7341d442eb54",
+  "data/raw/fte_archive/pollster_ratings_combined.csv.gz": "352af7328ae7e9a7f20f4e4f0f24a06a841ee0f3e0f356278e08cfbd73a19f12",
+  "data/raw/fte_archive/president_approval_polls_historical.csv.gz": "e92ea24f3dc9da81abc5269c466b8bf64a37650ac6fb6baeaa21eb064a29d134",
+  "data/raw/fte_archive/president_polls_historical.csv.gz": "a9921a9eb99bf36c28d9ef48030973c8826d0aa978544df14ae58d21e812f9fe",
+  "data/raw/fte_archive/raw_polls.csv.gz": "5ed03e388924c4573b32d6c70066392985d7d391efcdeadcec1ec65ca55bd206",
+  "data/raw/fte_archive/senate_polls_historical.csv.gz": "9bf8f72c6a2d4df545c0b334466dd90c7d2ca0bc0656de847226db9df638c875",
+  "data/raw/medsl/president_1976_2024.csv.gz": "299ec6a33bb72beb18b4685f6a14e4d120c36327c33a2780fa148cfd4436d466",
+  "data/raw/medsl/senate_1976_2024.tab.gz": "463a2a9691624afc68130c19bddb4ccec207f8816b3d28183d7e12bf31ba03d4",
+  "data/raw/votehub/polls/2026-10-02.json.gz": "6e3def1e0c7898f8051407b01c6af3c3395a531d2a0c6aef164eb1e65c1b02af",
+  "data/raw/votehub/polls/2026-10-03.json.gz": "b4912ef643f384c4a624ba34f0ce2c302bb06da72055c1d57d923769d85c1b85",
+  "data/raw/wikipedia/current_governors/2026-10-02.json.gz": "74f3567a27b18f4e5bc883fe18a3407e422a128df18c42b3ccd67d93f1722e19",
+  "data/raw/wikipedia/current_governors/2026-10-03.json.gz": "c204a91c4d7de3fe2420a4ed493f9c6d26e5633cdf891ed8472b01f91eea1d2f",
+  "data/raw/wikipedia/current_senators/2026-10-02.json.gz": "8cb8140e3ded7ccddddcab0498a7b20c2dc2defeb3b8d8285d7c5abb90ed6308",
+  "data/raw/wikipedia/current_senators/2026-10-03.json.gz": "d9090cd211e9d5a22ec0e2b98ad27bdffdd06d34833fe6d550329cc9853c0bc3",
+  "data/raw/wikipedia/gov_2000/2026-10-02.json.gz": "4697ca473443a30c7848f90fa17304203620372089b6bd147dd5970c0e4f65b7",
+  "data/raw/wikipedia/gov_2001/2026-10-02.json.gz": "0e1705f9bdf5cb0caf5f1d10430a7ffcaf1ed7938bc097bab60af03cff8209a5",
+  "data/raw/wikipedia/gov_2002/2026-10-02.json.gz": "19404749351ee7794866d1b19d7f55a2607374f98b0fecf81a7c3d1f043e337d",
+  "data/raw/wikipedia/gov_2003/2026-10-02.json.gz": "dc2b0626f6fb859fe82dbb6781cb7e8ad6e49909e6ae0f99cc1a6d486bdaae39",
+  "data/raw/wikipedia/gov_2004/2026-10-02.json.gz": "1307fca158cf6d8c2bd6b0e694c8c955f9b89c593b078cec8087f27739b752c7",
+  "data/raw/wikipedia/gov_2005/2026-10-02.json.gz": "20824e3f4fa4d14c608988e98db7bc7159d0faa188a00ac9dc9d93798890db33",
+  "data/raw/wikipedia/gov_2006/2026-10-02.json.gz": "28db9286ae16dadc3ea9124bd74dc9f78a6c207b79639040e8fffe433950da54",
+  "data/raw/wikipedia/gov_2007/2026-10-02.json.gz": "b3cc2ab838b27d8321ba6d16884c969adb6cfcfe446b9f8fd9cf3d050272aac2",
+  "data/raw/wikipedia/gov_2008/2026-10-02.json.gz": "664a8d209efc35624e8366d755761d0aa66e80f3c283e3ca2ffb0f9f6ef11755",
+  "data/raw/wikipedia/gov_2009/2026-10-02.json.gz": "3e16f747e75df629318bd5e3e5933711aca047f043981e92339ef4c61ddd84c2",
+  "data/raw/wikipedia/gov_2010/2026-10-02.json.gz": "a902de906b08c859d1f37b082334c9d8a2d83400d738cf20b94f8b0a5c8cb4a8",
+  "data/raw/wikipedia/gov_2011/2026-10-02.json.gz": "741cdc64ea6b4e41ca11b34269b1835b86d47054e183e41715d1acaf13d9217c",
+  "data/raw/wikipedia/gov_2012/2026-10-02.json.gz": "c63c5ec014f8b2a89d18cdd1c7c3989afe3355943d4f4963baa7b22e1a62ffcd",
+  "data/raw/wikipedia/gov_2013/2026-10-02.json.gz": "bff92e34e4630a6da44ee40ba0c9d3263ceaf2c51002285e560569ea5988ffdf",
+  "data/raw/wikipedia/gov_2014/2026-10-02.json.gz": "fdf161b015356e6401d49fdc966fefc14b94cae46a22221d93741021b45124b9",
+  "data/raw/wikipedia/gov_2015/2026-10-02.json.gz": "0f1fb935dca1e39ddf298e8c0275be50dc929492e61b9b206bf9483ebcd5ba08",
+  "data/raw/wikipedia/gov_2016/2026-10-02.json.gz": "2a13a0904dab674e1652002078ca610501c48a045a52460ee7d83fb3a683c107",
+  "data/raw/wikipedia/gov_2017/2026-10-02.json.gz": "7e65cba13408a161c8c76de92b682de9c4f8c946bd1e6d1b6574a5ca3fb986ee",
+  "data/raw/wikipedia/gov_2018/2026-10-02.json.gz": "5dd32982744dd5c3dd90fd9632070e5b50faae32875b02dda41ceec5bd801d55",
+  "data/raw/wikipedia/gov_2019/2026-10-02.json.gz": "eae02fa1f239d9fa57aef110a1cbd518e7a486464c57b1b817f946c34c3926dc",
+  "data/raw/wikipedia/gov_2020/2026-10-02.json.gz": "dccb1d5f4608c780cfc6a417d680de76992756c2e08105ddfa85a4d750b91ef5",
+  "data/raw/wikipedia/gov_2021/2026-10-02.json.gz": "c21b95be8661022637fd275c874d6a5c87f3ef663f61a3e78a2725340cac7b02",
+  "data/raw/wikipedia/gov_2022/2026-10-02.json.gz": "ca8f02d718867ee4cbddf0ee3e317b18b40d53a02974ee2a612dfb40d8d1fdd5",
+  "data/raw/wikipedia/gov_2023/2026-10-02.json.gz": "0fcec5f745d4a4ee86724a4c6008fcba3c4771967b9912fd8dc5584fb83abe9a",
+  "data/raw/wikipedia/gov_2024/2026-10-02.json.gz": "8045175c03478a6bc385eca5acbd9e813a4557e747c09717c23f5b06de7835c8",
+  "data/raw/wikipedia/gov_2025/2026-10-02.json.gz": "3b3cdb69344150518011483d44a582d912d76930d22e23a55151eb15309abc20",
+  "data/raw/wikipedia/governor_2026/2026-10-02.json.gz": "ea6da3fbdbdfac3f540989e11910284e19bca4a4b6ad6d3401a44353102763f9",
+  "data/raw/wikipedia/governor_2026/2026-10-03.json.gz": "0d87efdfc84ab1f40a9c5448b70114736ef5aba648ac255fdd5421f4ad2e97f4",
+  "data/raw/wikipedia/house_2012/2026-10-02.json.gz": "c70e7c7f41c23f683f8b4f0ccc77b8f0f9250e0cf4daba4874e71034d416a3f0",
+  "data/raw/wikipedia/house_2014/2026-10-02.json.gz": "8c4cbe8dabba97d8c4917ce44e8ab0105f724bff05cfb72dbf1327e0274b3064",
+  "data/raw/wikipedia/house_2016/2026-10-02.json.gz": "71974f8743593a0be6c4c84d96f43e424edac7ecd9daf1f05aa2c42d6b04f807",
+  "data/raw/wikipedia/house_2018/2026-10-02.json.gz": "acd4c04ea22d0be72a781f866541e010cb3610330ca56737c5bbfe22181fe3d1",
+  "data/raw/wikipedia/house_2020/2026-10-02.json.gz": "8d53e5bce7d06e03577ebfa949435c570d165d299cfb4f007e61d335f4e1004e",
+  "data/raw/wikipedia/house_2022/2026-10-02.json.gz": "1c6f14e7317e5fda6db3df53e72b5110393d257d613f2e15c7fa141ee5e5770a",
+  "data/raw/wikipedia/house_2024/2026-10-02.json.gz": "7532a8cae2cec306116d9e842dc466d1110384f164210342254bd5f51860bf61",
+  "data/raw/wikipedia/house_2026/2026-10-02.json.gz": "8d7b01f25a2fa1b0b824b1a94281131cae3ec1722ef1055488bfcaabb46b621d",
+  "data/raw/wikipedia/house_2026/2026-10-03.json.gz": "3fd38b421769746104cbcae72c91be7e87c9ef37856ac8aa22220d2862560382",
+  "data/raw/wikipedia/sen_2000/2026-10-02.json.gz": "97cbe0200c986cb35ef6fce88742f575760d9f1aa6b24041fe9996fb7fe57575",
+  "data/raw/wikipedia/sen_2002/2026-10-02.json.gz": "77f4f0d446f3ede8bb53cc1fcea1fee1b4a3504163b698b72f188255f144562d",
+  "data/raw/wikipedia/sen_2004/2026-10-02.json.gz": "1a9f3f2944e92d3c1a96ab3720892d68d8401d40445f565f92b6b9905edd541a",
+  "data/raw/wikipedia/sen_2006/2026-10-02.json.gz": "77380821a3cff35b5eff8c52148ab309b444ce977540adcb7d9e938e5b34f93f",
+  "data/raw/wikipedia/sen_2008/2026-10-02.json.gz": "9f35b18f0a2c52549e3dbfb76c4addcff073608494ad728fef169cedd4b3b12d",
+  "data/raw/wikipedia/sen_2010/2026-10-02.json.gz": "a83f36f33de6d0299de60f74b3929713cd5836869ad7ef6ffa1e9d19fc981da5",
+  "data/raw/wikipedia/sen_2012/2026-10-02.json.gz": "333e9d25bdff2e371ff66aecf21b3d25e55bb92149ecc56e816ff804a81baac1",
+  "data/raw/wikipedia/sen_2014/2026-10-02.json.gz": "8fec3e04f78646586260bdd93248dfc3d1a276d8492463eb50e671b6bedbe5e4",
+  "data/raw/wikipedia/sen_2016/2026-10-02.json.gz": "bd1ce0dbb4b4d358f8fba2af82b4a54d5d5be0ae8381684f386e312f26af72fa",
+  "data/raw/wikipedia/sen_2018/2026-10-02.json.gz": "6452983dd67820175dedb8be21afebd9f9a76fcc58a55c4ba7a244adb285daa7",
+  "data/raw/wikipedia/sen_2020/2026-10-02.json.gz": "6e8c6bb1d1bef8191583c802c41d5258866ce1641f6c6083d610671ea316f00e",
+  "data/raw/wikipedia/sen_2022/2026-10-02.json.gz": "4af7c90702ed95ab7e722aa0d7be9163a202f1e38e37e5063200f7cbbac19019",
+  "data/raw/wikipedia/sen_2024/2026-10-02.json.gz": "47ccc5d2827cb49622f412839258e397974efe5d1d379717bf54b7537bddd4c0",
+  "data/raw/wikipedia/senate_2026/2026-10-02.json.gz": "a5735226c3a690dd7aebc8961b6464a4c3f7e284cb26090bcb36fc5ea52510c2",
+  "data/raw/wikipedia/senate_2026/2026-10-03.json.gz": "76c071820f9aa7e95ec4e0c79a0acce6a67a6cbcec1b6d02cd9633079acf19f3",
+  "data/manual/candidate_aliases.csv": "3ab97c398ea54a7a0457d8d307239c1c14617538634fbd14eb67f6600b9d860f",
+  "data/manual/candidate_overrides.csv": "7564b0be9fd7ae54c705d4a8e78068d3aeb6febb8944bbb71c66844f40cd869c",
+  "data/manual/caucus.csv": "fa674ca37af880e7da504d5ed019e91d971b52cfa8c3eda019941af6a9eb4438",
+  "data/manual/national_house_vote.csv": "f688c6a40ffea66423b949b99babf65d41cadb1d8da2b8527caccd8f3f1a4827",
+  "data/manual/race_rules.csv": "826405f1990c3cb216dd4fba87d548bc5d9b6c8d9cbede6cab49569e1e93cbcd",
+  "data/manual/weighting_method.csv": "d477646f5cd0f778b753e747806317660418f08a6b4e4299eb0cbd9a2056568f",
+  "data/model/backtest_report.json": "2a7fc4825bbb50feaf233021c09370ea879968be854f0dc6ab2042007ffc64cd",
+  "data/model/error_params.json": "cbaad6c3ccf11eaf63ede2a07756ca57b5c66652a6e90954211af9f751edfb51",
+  "data/model/sensitivity.json": "938a9aa411b549bf7b32eca73406de0f039a3d0db346983cab59fb887d9dbc05",
+  "data/model/specials_signal.json": "833950e3b2ab5f2a29f68ba0bf99db725299d4e0f3186ee96d04b27567050b73"
+ }
+}
