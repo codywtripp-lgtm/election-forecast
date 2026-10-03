@@ -32,25 +32,37 @@ FULL_HISTORY = (2018, 2020, 2022, 2024)
 DAYS_OUT = (120, 90, 60, 30, 14, 7, 1)
 
 
-def race_frame(cycle: int) -> pd.DataFrame:
-    """Contested D-vs-R Senate/governor races of a past cycle with truth, lean and incumbency."""
-    t = fund.training_frame()
+COLS = ["race_id", "cycle", "office", "state", "lean", "inc", "margin", "N"]
+
+
+def all_training() -> pd.DataFrame:
+    """Senate/governor (2000–2024) + House (2012–2024) contested races with truth, lean, incumbency."""
+    t = fund.training_frame()[COLS]
+    if (DB / "house_results.parquet").exists():
+        h = fund.house_training_frame()
+        t = pd.concat([t, h[COLS + ["district"]]], ignore_index=True)
+    return t
+
+
+def race_frame(cycle: int, train: pd.DataFrame | None = None) -> pd.DataFrame:
+    t = all_training() if train is None else train
     t = t[t["cycle"] == cycle].copy()
-    return t[["race_id", "cycle", "office", "state", "lean", "inc", "margin", "rule"] if "rule" in t else
-             ["race_id", "cycle", "office", "state", "lean", "inc", "margin"]].assign(
-        rule=lambda d: np.where(d["state"].eq("GA"), "majority_runoff", "plurality"))
+    return t.assign(rule=np.where(t["state"].eq("GA"), "majority_runoff", "plurality"))
 
 
 def raw_polls_frame(cycle: int, results: pd.DataFrame) -> pd.DataFrame:
     """Final-21-day Senate/governor polls for 2010–2016 from raw_polls, mapped to our race ids."""
     r = pd.read_csv(RAW / "fte_archive" / "raw_polls.csv.gz")
-    r = r[(r["cycle"] == cycle) & r["type_simple"].isin(["Sen-G", "Gov-G"])]
+    r = r[(r["cycle"] == cycle) & r["type_simple"].isin(["Sen-G", "Gov-G", "House-G"])]
     r = pr._dside_margin(r)
-    office = r["type_simple"].map({"Sen-G": "sen", "Gov-G": "gov"})
+    office = r["type_simple"].map({"Sen-G": "sen", "Gov-G": "gov", "House-G": "house"})
     # map each raw race to our race id; specials share a state → pick the race with the closest result
     res = results.set_index("race_id")["margin"]
     ids = []
     for st, off, act in zip(r["location"], office, r["actual_margin"]):
+        if off == "house":
+            s_, _, d_ = str(st).partition("-")
+            st = f"{s_}-{int(d_):02d}" if d_.isdigit() else st
         cands = [i for i in (f"{cycle}-{off}-{st}", f"{cycle}-{off}-{st}-S") if i in res.index]
         ids.append(min(cands, key=lambda i: abs(res[i] - act)) if cands else None)
     end = pd.to_datetime(r["polldate"])
@@ -78,16 +90,20 @@ def replay(cycles=tuple(ELECTION_DAYS), days_out=DAYS_OUT, ep: ErrParams | None 
     q = pd.read_parquet(DB / "questions.parquet")
     a = pd.read_parquet(DB / "answers.parquet")
     results = pd.read_parquet(DB / "results_races.parquet")
+    if (DB / "house_results.parquet").exists():
+        results = pd.concat([results, pd.read_parquet(DB / "house_results.parquet")], ignore_index=True)
+    train_all = all_training()
     hist = pr.historical_errors()
     boards = specials.all_boards() if use_specials else None
     out = []
     for cycle in cycles:
         E = ELECTION_DAYS[cycle]
-        races = race_frame(cycle)
+        races = race_frame(cycle, train_all)
+        fmodel = fund.fit(exclude_cycle=None, train=train_all[train_all["cycle"] < cycle])
+        races = races[races["office"].isin(list(fmodel))]      # House needs ≥1 earlier House cycle to fit
         if races.empty:
             continue
         ratings, rparams = ratings_before(cycle, hist)
-        fmodel = fund.fit(exclude_cycle=None, train=fund.training_frame().query("cycle < @cycle"))
         if cycle in FULL_HISTORY:
             polls = poll_frame(q[q["cycle"] == cycle], a)
             dlist = days_out
@@ -105,7 +121,7 @@ def replay(cycles=tuple(ELECTION_DAYS), days_out=DAYS_OUT, ep: ErrParams | None 
             if use_specials and cycle in FULL_HISTORY:
                 N_hat = specials.national_blend(N_hat, ep.nat_ed * ep.scale(d), cycle, as_of, boards,
                                                 exclude_cycle=cycle)["N"]
-            adj = adjust(polls[polls["office"].isin(["sen", "gov", "generic"])], ratings, rparams, as_of, E, ap, gt, lv)
+            adj = adjust(polls[polls["office"].isin(["sen", "gov", "house", "generic"])], ratings, rparams, as_of, E, ap, gt, lv)
             avgs, _ = averages(adj, ap)
             tbl = blend(races, avgs, fmodel, N_hat, d, ep)
             tbl["days_out"] = d

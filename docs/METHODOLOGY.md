@@ -317,6 +317,16 @@ m_k,r = μ_r(s_k, δ_k) + national_k + region_k,j(r) + Σ_f L_r,f · demo_k,f + 
 
 **Comparisons:** our model vs. polls-only, fundamentals-only, and expert ratings (benchmark only, converted to probabilities by a published mapping — DATA_GAPS G11; not built yet).
 
+**Update (Oct 3, 2026): the House is now in the backtest** (2,273 district-races 2014–2024; full poll histories 2018–2024, final-weeks polls 2014–2016; House fundamentals fit only on earlier cycles; backtest districts use their state's demographics because historical district lines differ from the ACS lines). Error sizes are now fit jointly on all three offices: national 2.8, regional 1.0, demographic 1.05, race-level poll error 5.0 (Election Day s.d.), T₀ = 120 days. Leave-one-cycle-out scores:
+
+| Office | Races (1 day out) | Brier 30 days | Brier 1 day | Winner right | 80% range covers |
+|---|---|---|---|---|---|
+| Senate | 258 | 0.045 | 0.040 | 94% | 86% |
+| Governor | 187 | 0.039 | 0.056 | 92% | 80% |
+| House | 2,273 | 0.029 | 0.028 | 96% | 85% |
+
+House calibration: forecasts of 60–70% came true 52–62% of the time (slightly overconfident in that band); elsewhere close to the diagonal. The joint refit moved Democratic Senate-control odds from 60% to 57% on Oct 3.
+
 **Results at launch (leave-one-cycle-out, Senate + governor, 2010–2024):**
 
 | | Brier | Log loss | Winner right | 80% range covers |

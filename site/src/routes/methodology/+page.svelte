@@ -43,6 +43,23 @@
 						</tbody>
 					</table>
 				</div>
+				{#if bt.loco_by_office}
+					<h3 style="margin-top:12px">By office</h3>
+					<div class="table-scroll">
+						<table class="small">
+							<thead><tr><th>Office</th><th class="num">Races (1 day out)</th><th class="num">Brier, 30 days</th><th class="num">Brier, 1 day</th><th class="num">Winner right, 1 day</th><th class="num">80% covered, 1 day</th></tr></thead>
+							<tbody>
+								{#each [['sen', 'Senate'], ['gov', 'Governor'], ['house', 'House']] as [k, label]}
+									{@const o = bt.loco_by_office[k]}
+									{#if o}
+										<tr><td>{label}</td><td class="num">{o['1'].n}</td><td class="num">{o['30'].brier.toFixed(3)}</td><td class="num">{o['1'].brier.toFixed(3)}</td>
+											<td class="num">{(o['1'].accuracy * 100).toFixed(0)}%</td><td class="num">{(o['1'].coverage80 * 100).toFixed(0)}%</td></tr>
+									{/if}
+								{/each}
+							</tbody>
+						</table>
+					</div>
+				{/if}
 				<h3 style="margin-top:12px">Against simpler approaches (all dates)</h3>
 				<table class="small">
 					<thead><tr><th>Method</th><th class="num">Brier ↓</th><th class="num">Winner right</th></tr></thead>
