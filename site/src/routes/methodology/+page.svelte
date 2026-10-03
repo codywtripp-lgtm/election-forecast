@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from '$app/paths';
 	import CalibrationChart from '#lib/components/CalibrationChart.svelte';
 
 	let { data } = $props();
@@ -168,6 +169,8 @@
 		</table>
 	</div>
 </section>
+
+<p class="small">After Election Day, the <a href={resolve('/scorecard')}>scorecard</a> grades the final forecast against results and the expert ratings.</p>
 
 <section class="card">
 	<h2>Model changelog</h2>

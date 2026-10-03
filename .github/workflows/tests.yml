@@ -41,4 +41,5 @@ jobs:
           python -m pipeline.run --sims 5000
           python -m pipeline.trackers
           python -m pipeline.changes
+          python -m pipeline.scorecard
           cd site && npm ci && npm run check && npm run build

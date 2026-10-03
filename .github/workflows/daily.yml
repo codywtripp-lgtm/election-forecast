@@ -44,6 +44,7 @@ jobs:
           python -m pipeline.run --sims 50000
           python -m pipeline.trackers
           python -m pipeline.changes
+          python -m pipeline.scorecard
       - name: Commit data, history and run manifest
         run: |
           git config user.name "github-actions[bot]"
