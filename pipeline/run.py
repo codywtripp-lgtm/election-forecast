@@ -197,6 +197,10 @@ def run_forecast(as_of: dt.date, sims_n: int, overrides: dict | None = None, pub
     d_side = choose_d_side(q, a, cands)
     tbl = race_table(races, cands, d_side, choose_r_side(q, a, cands))
     tbl = fund.attach_money(tbl)
+    allres = pd.read_parquet(DB / "results_races.parquet")
+    tbl["inc_over"] = [fund.incumbent_overperformance(CYCLE, o, s, inc, allres) if i != 0 and o in ("sen", "gov") else 0.0
+                       for o, s, inc, i in zip(tbl["office"], tbl["state"], tbl["incumbent"], tbl["inc"])]
+    tbl["inc_over"] = tbl["inc_over"].clip(-60, 60)
     polls = poll_frame(q[q["cycle"] == CYCLE], a, d_side=d_side)
     polls = rcv_adjust(polls, set(tbl.loc[tbl["rule"].isin(["rcv", "top4_rcv"]), "race_id"]))
     lv = ov.get("lv", lv_shift(polls, ap))

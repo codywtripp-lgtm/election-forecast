@@ -74,6 +74,10 @@
 					<tr><td>State partisan lean</td><td class="num">{sign(b.fundamentals.partisan_lean)}</td></tr>
 					<tr><td>National environment (generic ballot)</td><td class="num">{sign(b.fundamentals.national_environment)}</td></tr>
 					<tr><td>Incumbency</td><td class="num">{sign(b.fundamentals.incumbency)}</td></tr>
+					{#if r.office !== 'house' && b.fundamentals.incumbent_strength}
+						<tr><td>Incumbent's past strength<div class="tiny muted">how far their last win ran ahead of (or behind) partisanship</div></td>
+							<td class="num">{sign(b.fundamentals.incumbent_strength)}</td></tr>
+					{/if}
 					{#if r.office === 'house'}
 						<tr>
 							<td>

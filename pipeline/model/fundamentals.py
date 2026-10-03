@@ -27,8 +27,40 @@ FEATURES = ["lean", "N", "inc"]
 MONEY_OFFICES = {"all": ("sen", "house"), "none": ()}.get(os.environ.get("MODEL_MONEY", ""), ("house",))
 
 
+# [A16] incumbent's past overperformance (candidate-strength proxy) for Senate/governor. Backtest (Oct 2026):
+# governor Brier −8.5% at 120 days, −6% at 60; Senate −1–2%; election-eve neutral. MODEL_INCOVER=off to compare.
+INCOVER_OFFICES = () if os.environ.get("MODEL_INCOVER", "") == "off" else ("sen", "gov")
+
+
 def features_for(office: str) -> list[str]:
-    return FEATURES + (["money"] if office in MONEY_OFFICES else [])
+    return (FEATURES + (["money"] if office in MONEY_OFFICES else [])
+            + (["inc_over"] if office in INCOVER_OFFICES else []))
+
+
+def _same_person(a, b) -> bool:
+    import re
+    norm = lambda s: re.sub(r"[^a-z ]", "", str(s).lower()).split()
+    na, nb = norm(a), norm(b)
+    return bool(na and nb) and na[-1] == nb[-1] and na[0][:1] == nb[0][:1]
+
+
+def incumbent_overperformance(cycle: int, office: str, state: str, incumbent: str,
+                              results: pd.DataFrame) -> float:
+    """How far the incumbent's last win beat partisanship + environment:
+    prev D-side margin − prev state lean − prev national House margin (sign: + = D-side strong).
+    0 if no earlier race in our data. Odd-year governor races use the following even year's N."""
+    prev = results[(results["office"] == office) & (results["state"] == state) & (results["cycle"] < cycle)]
+    prev = prev.sort_values("cycle", ascending=False)
+    for r in prev.itertuples():
+        if _same_person(r.winner_name, incumbent) and pd.notna(r.margin):
+            lean = state_lean_table()
+            lv = lean[(lean["cycle"] == r.cycle) & (lean["state"] == state)]["lean"]
+            hv = national_house_vote()
+            nyear = r.cycle if r.cycle in hv.index else r.cycle + 1
+            if lv.empty or nyear not in hv.index:
+                return 0.0
+            return float(r.margin - lv.iloc[0] - hv[nyear])
+    return 0.0
 
 
 def attach_money(t: pd.DataFrame) -> pd.DataFrame:
@@ -57,6 +89,10 @@ def training_frame() -> pd.DataFrame:
     r = r.merge(lean, on=["cycle", "state"], how="inner")
     r["N"] = r["cycle"].map(national_house_vote())
     r["inc"] = [inc_code(run, p) for run, p in zip(r["incumbent_running"], r["incumbent_cand_party"])]
+    allres = pd.read_parquet(DB / "results_races.parquet")
+    r["inc_over"] = [incumbent_overperformance(c, o, s, inc, allres) if run else 0.0
+                     for c, o, s, inc, run in zip(r["cycle"], r["office"], r["state"], r["incumbent"], r["incumbent_running"])]
+    r["inc_over"] = r["inc_over"].clip(-60, 60)
     return attach_money(r.dropna(subset=["margin", "lean", "N"]))
 
 
@@ -72,6 +108,7 @@ def house_training_frame() -> pd.DataFrame:
     r = r.merge(lean[["cycle", "state", "district", "lean"]], on=["cycle", "state", "district"], how="inner")
     r["N"] = r["cycle"].map(national_house_vote())
     r["inc"] = [inc_code(run, p) for run, p in zip(r["incumbent_running"], r["incumbent_cand_party"])]
+    r["inc_over"] = 0.0          # House: not used (district lines change too often for a clean comparison)
     return attach_money(r.dropna(subset=["margin", "lean", "N"]))
 
 
@@ -88,6 +125,9 @@ def fit(train: pd.DataFrame | None = None, exclude_cycle: int | None = None) -> 
     out = {}
     if "money" not in t.columns:
         t = t.assign(money=0.0)
+    if "inc_over" not in t.columns:
+        t = t.assign(inc_over=0.0)
+    t = t.assign(inc_over=t["inc_over"].fillna(0.0))
     for office, g in t.groupby("office"):
         feats = [f for f in features_for(office) if f in FEATURES or g[f].abs().sum() > 0]  # no data → drop
         X = np.column_stack([np.ones(len(g))] + [g[f].to_numpy(float) for f in feats])
@@ -105,9 +145,11 @@ def fit(train: pd.DataFrame | None = None, exclude_cycle: int | None = None) -> 
     return out
 
 
-def predict(model: dict, office: str, lean: float, N: float, inc: int, money: float = 0.0) -> tuple[float, float]:
+def predict(model: dict, office: str, lean: float, N: float, inc: int, money: float = 0.0,
+            inc_over: float = 0.0) -> tuple[float, float]:
     c = model[office]["coef"]
-    mu = c["const"] + c["lean"] * lean + c["N"] * N + c["inc"] * inc + c.get("money", 0.0) * money
+    mu = (c["const"] + c["lean"] * lean + c["N"] * N + c["inc"] * inc + c.get("money", 0.0) * money
+          + c.get("inc_over", 0.0) * inc_over)
     return float(mu), float(model[office]["sigma"])
 
 

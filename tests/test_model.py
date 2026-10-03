@@ -87,3 +87,15 @@ def test_tipping_point_picks_median_seat():
     # hold_r = 49 → R reaches 50 with race a; D (hold 48) reaches 50 only → R controls, tipping = a
     tp = tipping_from_margins(t, m, w, hold_d=48, hold_r=49, is_ind=np.zeros(3, bool), caucus_d=np.zeros((1, 3), bool))
     assert tp["a"] == 1.0
+
+
+def test_incumbent_overperformance_uses_last_win():
+    from pipeline.model.fundamentals import incumbent_overperformance
+    from pipeline.model.data import national_house_vote, state_lean_table
+    res = pd.DataFrame(dict(office=["gov", "gov"], state=["VT", "VT"], cycle=[2022, 2024],
+                            winner_name=["Phil Scott", "Phil Scott"], margin=[-47.0, -50.0]))
+    lean = state_lean_table()
+    vt24 = float(lean[(lean.cycle == 2024) & (lean.state == "VT")]["lean"].iloc[0])
+    got = incumbent_overperformance(2026, "gov", "VT", "Phil Scott", res)
+    assert got == pytest.approx(-50.0 - vt24 - national_house_vote()[2024])
+    assert incumbent_overperformance(2026, "gov", "VT", "Someone Else", res) == 0.0

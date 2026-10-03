@@ -37,6 +37,7 @@ Independent, statistically rigorous election forecast site. Launch: Nov 3, 2026 
 - 2026-10-03: FEC fundraising (`pipeline/fec.py`) in House fundamentals only (backtest −3% Brier); MODEL_MONEY=all|none for comparisons.
 - Known local issue: pandas 3.0.6 on Windows intermittently crashes (access violation) in long loops; rerun, or keep hot loops in numpy. Never seen on the Linux runners.
 - 2026-10-03: audit fix (drop pre-primary hypothetical poll questions), since-yesterday card, RSS feed (/feed.xml), model changelog (data/manual/changelog.csv — add a line for every method change!), scorecard scaffolding (/scorecard auto-activates after Nov 3; rating→probability mapping frozen in pipeline/scorecard.py).
+- 2026-10-03: House expert ratings; manual poll supplement (`data/manual/extra_polls.csv`, source URL required); incumbent past-overperformance feature for Sen/Gov (MODEL_INCOVER=off to compare).
 - Local runs never write tracked history/manifests (only when GITHUB_ACTIONS=true).
 - Open items: code more pollsters' weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10); House expert ratings; candidate quality + FEC fundraising; Phase 3 (scorecard after Nov 3, approval/generic-ballot/special-election trackers, 2027 + 2028 scaffolding, RSS).
 - (old) Next (after House): Phase 2 polish (verify 2026 district lines, district lean, hex map); hand-code weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10).
