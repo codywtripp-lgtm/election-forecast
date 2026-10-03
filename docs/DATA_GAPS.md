@@ -29,6 +29,7 @@ Last reviewed 2026-10-02.
 | S20 | The Downballot, presidential results by congressional district (public Google Sheets) | House district lean: 2024/2020 on the 2026 lines; 2008–2024 on each earlier cycle's lines | **live** | published free ("paywall-free"); no explicit licence — attributed on the site; owner may want to confirm reuse | Whole-number percentages on the 2026 sheet. Reflects all 10 redrawn states and Missouri's reversion to its 2022 map, matching the Wikipedia redistricting summary. |
 | S21 | Wikipedia House election pages | 2026 nominees per district; 2012–2024 district results | **live** | CC BY-SA 4.0 | |
 | S22 | The Downballot special-election Big Boards 2017–2026 (public Google Sheets) | Trackers page; tested as a national-environment signal (not used) | **live** (2025–26 tabs refreshed daily; older cycles frozen) | no explicit licence; attributed | |
+| S23 | Hand-entered polls (`data/manual/extra_polls.csv`) | polls VoteHub is missing | **live** | each row cites its source | Auto-dropped if VoteHub later carries the same pollster/race within 3 days. First entries: Vermont Public / Braun Research (Sept 2026), VT governor and House. |
 | S19 | Clerk of the House | 2024 national House vote | **live** (one number) | public | Entered in `data/manual/national_house_vote.csv` with citation; 1998–2022 from 538 `raw_polls.csv`. |
 
 ## Known gaps (and what we do about them)
@@ -42,7 +43,7 @@ Last reviewed 2026-10-02.
 | G5 | **Weighting method not recorded anywhere in bulk** | δ_class weakly identified | 11 pollsters hand-coded (≈40% of 2026 polls), each with its source statement. Next: code the rest of the top 30 (Cygnal, PPP, SurveyUSA, McLaughlin, RMG, Big Data Poll… were not clearly stated in what we found), add 2022-era classes for the 2022 comparison. |
 | G6 | Partisan-sponsor classification | sponsor penalty | Using VoteHub's partisan flag and 538's `partisan` field. |
 | G7 | Transparency checklist | ratings | Launch uses AAPOR/Roper membership (from 538) as the transparency group. |
-| G8 | Candidate quality (prior office) | prior | Not in launch fundamentals. |
+| G8 | Candidate quality (prior office) | prior | No bulk source. Partly covered for Senate/governor incumbents by the past-overperformance feature (§4.2); challengers' quality still not modeled. |
 | G9 | Approval + generic-ballot history 1946–2022 | national environment regression | Not in launch; N̂ = generic-ballot average. |
 | G10 | Group turnout (CPS) and preferences (CES); special-election and primary turnout | turnout scenarios | Launch scenarios are anchored on the measured LV−RV gap; weights fixed 25/50/25. |
 | G11 | Expert ratings history | benchmark only | Not built. |

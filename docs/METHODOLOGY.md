@@ -221,6 +221,8 @@ House lean uses the presidential results on each cycle's own district lines (201
 
 Quality and fundraising terms are not in the launch version (G8, S13).
 
+**Incumbent strength (added Oct 3, Senate and governor).** inc_over = the incumbent's last winning margin − that cycle's state lean − that cycle's national House margin (capped at ±60), 0 for open seats. It captures candidates who run far ahead of their party (e.g. Vermont's Phil Scott, about 78 points ahead of partisanship in 2024). Fitted coefficients: governor ≈ 0.48 (s.e. 0.10), Senate ≈ 0.26 (s.e. 0.07); fundamentals error fell from 13.8 to 12.3 pts (governor) and 10.0 to 9.6 (Senate). Backtest: governor Brier −8.5% at 120 days and −6% at 60 days, Senate −1–2%, election-eve neutral. Not used for the House (district lines change too often for a clean comparison). [A16]
+
 **Fundraising (added Oct 3, House only).** money = log((D + $5k)/(R + $5k)) of the nominees' *individual* contributions (FEC bulk all-candidate summaries, public domain; self-funding, loans and transfers excluded), matched by state, district and last name; an unmatched nominee → treated as even. Fitted House coefficient ≈ 0.9 pts per log unit (a 3:1 money edge ≈ 1 pt). Backtest: House Brier −3% at 30 days, −4% at 120 days; Senate mixed, so not used there; governors have no FEC data. **Caveat:** historical FEC files are end-of-cycle totals (they include October–December money), so the backtest gain is somewhat optimistic; the 2026 file is as of the latest filings and refreshes daily. [A17] Independents running as the main non-Republican (Idaho, Montana, Nebraska, South Dakota Senate) use the same Senate equation, a simplification covered by the wide uncertainty on those races.
 
 ### 4.3 Blending polls and prior

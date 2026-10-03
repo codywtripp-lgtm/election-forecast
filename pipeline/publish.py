@@ -88,6 +88,7 @@ def breakdown(r: pd.Series, coef: dict, N_hat: float) -> dict:
                           national_environment=c["N"] * N_hat, incumbency=c["inc"] * r["inc"],
                           fundraising=c.get("money", 0.0) * (0.0 if pd.isna(r.get("money")) else float(r.get("money", 0.0))),
                           dem_raised=r.get("dem_indiv"), rep_raised=r.get("rep_indiv"),
+                          incumbent_strength=c.get("inc_over", 0.0) * (0.0 if pd.isna(r.get("inc_over")) else float(r.get("inc_over", 0.0))),
                           total=r["prior_mu"], sd=r["prior_sd"]),
         polls=dict(average=r.get("poll_avg"), n_polls=r.get("n_polls"), effective_n=r.get("n_eff"),
                    sd=None if pd.isna(r.get("poll_v")) else float(np.sqrt(r["poll_v"]))),

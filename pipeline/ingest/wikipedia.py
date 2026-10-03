@@ -13,6 +13,7 @@ API = "https://en.wikipedia.org/w/api.php"
 PAGES = {
     "senate_2026": "2026_United_States_Senate_elections",
     "governor_2026": "2026_United_States_gubernatorial_elections",
+    "house_ratings_2026": "2026_United_States_House_of_Representatives_election_ratings",
 }
 
 

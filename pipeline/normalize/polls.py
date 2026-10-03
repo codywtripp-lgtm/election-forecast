@@ -272,9 +272,43 @@ def fix_2026_specials(q: pd.DataFrame, races: pd.DataFrame) -> pd.DataFrame:
     return q
 
 
+def load_extra(vq: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Hand-entered polls that VoteHub is missing (data/manual/extra_polls.csv, each with a source URL).
+    Dropped automatically if VoteHub carries the same pollster/race within 3 days of the end date."""
+    path = MANUAL / "extra_polls.csv"
+    if not path.exists():
+        return pd.DataFrame(columns=Q_COLS), pd.DataFrame(columns=["qid", "answer", "candidate", "party", "pct"])
+    m = pd.read_csv(path, dtype=str)
+    rows, ans = [], []
+    vq_end = pd.to_datetime(vq["end_date"])
+    for r in m.itertuples():
+        district = int(r.district) if isinstance(r.district, str) and r.district.strip() else None
+        rid = race_id(int(r.cycle), r.office, r.state, district, False)
+        end = pd.Timestamp(r.end_date)
+        dup = vq[(vq["race_id"] == rid) & (vq["pollster"].map(pollster_key) == pollster_key(r.pollster))
+                 & ((vq_end - end).abs() <= pd.Timedelta(days=3))]
+        if len(dup):
+            continue
+        qid = "manual:" + r.poll_id
+        rows.append(dict(qid=qid, source="manual", poll_id=qid, cycle=int(r.cycle), office=r.office, race_id=rid,
+                         state=r.state, district=district, stage="general", pollster=r.pollster,
+                         sponsors=r.sponsors if isinstance(r.sponsors, str) else "",
+                         partisan=r.partisan if r.partisan in ("DEM", "REP") else None, internal=False,
+                         start_date=pd.Timestamp(r.start_date).date(), end_date=end.date(),
+                         sample_size=pd.to_numeric(r.sample_size, errors="coerce"), population=norm_population(r.population),
+                         mode="unknown", mode_source="unknown", weighting_class="UNK", url=r.url, hypothetical=False,
+                         subject=f"{r.cycle} {r.state}", published=pd.Timestamp(r.published).date()))
+        for part in str(r.answers).split("|"):
+            name, _, pct = part.rpartition(":")
+            ans.append(dict(qid=qid, answer=name.strip(), candidate=name.strip(), party=None, pct=float(pct)))
+    return pd.DataFrame(rows, columns=Q_COLS), pd.DataFrame(ans)
+
+
 def main() -> None:
     fq, fa = load_fte()
     vq, va = load_votehub(fte_mode_by_pollster(fq))
+    xq, xa = load_extra(vq)
+    vq, va = pd.concat([vq, xq], ignore_index=True), pd.concat([va, xa], ignore_index=True)
     races = pd.read_parquet(DB / "races.parquet")
     cands = pd.read_parquet(DB / "candidates.parquet")
     if (DB / "house_candidates.parquet").exists():
@@ -287,7 +321,7 @@ def main() -> None:
     q["pollster_key"] = q["pollster"].map(pollster_key)
     # weighting-method classes are coded from current methodology statements → 2025– polls only
     from pipeline.model.weighting import classify
-    cur = q["source"] == "votehub"
+    cur = q["source"].isin(["votehub", "manual"])
     q.loc[cur, "weighting_class"] = classify(q.loc[cur, "pollster"]).to_numpy()
     for c in ("district", "sample_size"):
         q[c] = pd.to_numeric(q[c], errors="coerce")

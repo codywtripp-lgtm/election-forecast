@@ -7,3 +7,6 @@ date,change
 2026-10-03,"House added to the backtest; error sizes refit on all three offices (Senate Democratic odds 60% → 57%)."
 2026-10-03,"Fundraising (FEC individual contributions) added to the House fundamentals; 3 more pollsters' weighting methods coded."
 2026-10-03,"Polls whose answer options included a candidate who lost the primary (≥10 points) are no longer used."
+2026-10-03,"House expert ratings (Cook, Inside Elections, Sabato; 144 competitive districts) added as a benchmark."
+2026-10-03,"Polls VoteHub misses can now be added by hand with a source link (first: Vermont Public/Braun Research, Vermont governor and House)."
+2026-10-03,"Senate and governor fundamentals now include the incumbent's past overperformance (how far their last win beat partisanship and the national environment). Backtest: governor Brier −8.5% at 120 days, Senate −1–2%."

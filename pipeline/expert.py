@@ -33,15 +33,22 @@ def parse(page_key: str, office: str) -> pd.DataFrame:
         if not (isinstance(t.columns, pd.MultiIndex) and any("Ratings" in str(c[0]) for c in t.columns)):
             continue
         cols = {c: _clean(c[1]) for c in t.columns}
-        state_col = next(c for c in t.columns if cols[c] == "State")
+        key_col = next(c for c in t.columns if cols[c] in ("State", "District"))
         for _, r in t.iterrows():
-            label = _clean(r[state_col])
-            special = bool(re.search(r"special|\(Class", label, re.I))
-            try:
-                st = to_abbr(re.sub(r"\s*\(.*\)", "", label).strip())
-            except KeyError:
-                continue
-            rid = f"{CYCLE}-{office}-{st}" + ("-S" if special else "")
+            label = _clean(r[key_col])
+            if office == "house":
+                from pipeline.house import district_code
+                dc = district_code(label)
+                if dc is None:
+                    continue
+                rid = f"{CYCLE}-house-{dc[0]}-{dc[1]:02d}"
+            else:
+                special = bool(re.search(r"special|\(Class", label, re.I))
+                try:
+                    st = to_abbr(re.sub(r"\s*\(.*\)", "", label).strip())
+                except KeyError:
+                    continue
+                rid = f"{CYCLE}-{office}-{st}" + ("-S" if special else "")
             for c in t.columns:
                 name = cols[c]
                 m = re.match(r"^(Cook|IE|Sabato)\s+(.*)$", name)
@@ -53,7 +60,12 @@ def parse(page_key: str, office: str) -> pd.DataFrame:
 
 
 def main() -> None:
-    df = pd.concat([parse("senate_2026", "sen"), parse("governor_2026", "gov")], ignore_index=True)
+    parts = [parse("senate_2026", "sen"), parse("governor_2026", "gov")]
+    try:
+        parts.append(parse("house_ratings_2026", "house"))   # competitive districts only
+    except FileNotFoundError:
+        pass
+    df = pd.concat(parts, ignore_index=True)
     DB.mkdir(parents=True, exist_ok=True)
     df.to_parquet(DB / "expert_ratings.parquet", index=False)
     if os.environ.get("GITHUB_ACTIONS") != "true":   # tracked history is written by the scheduled run only
