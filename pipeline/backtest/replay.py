@@ -16,6 +16,7 @@ import datetime as dt
 import numpy as np
 import pandas as pd
 
+from pipeline import specials
 from pipeline.config import DB, RAW
 from pipeline.model import fundamentals as fund
 from pipeline.model import pollster_ratings as pr
@@ -70,13 +71,15 @@ def ratings_before(cycle: int, hist: pd.DataFrame):
 
 
 def replay(cycles=tuple(ELECTION_DAYS), days_out=DAYS_OUT, ep: ErrParams | None = None,
-           ap: AvgParams | None = None) -> pd.DataFrame:
+           ap: AvgParams | None = None, use_specials: bool = False) -> pd.DataFrame:
+    # use_specials=True reproduces the Oct-2026 test (specials made every backtest metric slightly worse)
     ep = ep or ErrParams()
     ap = ap or AvgParams()
     q = pd.read_parquet(DB / "questions.parquet")
     a = pd.read_parquet(DB / "answers.parquet")
     results = pd.read_parquet(DB / "results_races.parquet")
     hist = pr.historical_errors()
+    boards = specials.all_boards() if use_specials else None
     out = []
     for cycle in cycles:
         E = ELECTION_DAYS[cycle]
@@ -99,6 +102,9 @@ def replay(cycles=tuple(ELECTION_DAYS), days_out=DAYS_OUT, ep: ErrParams | None 
                 N_hat = gt(pd.Timestamp(as_of)) if gt else float(national_house_vote()[cycle])
             else:
                 gt, N_hat = None, final_generic(cycle)
+            if use_specials and cycle in FULL_HISTORY:
+                N_hat = specials.national_blend(N_hat, ep.nat_ed * ep.scale(d), cycle, as_of, boards,
+                                                exclude_cycle=cycle)["N"]
             adj = adjust(polls[polls["office"].isin(["sen", "gov", "generic"])], ratings, rparams, as_of, E, ap, gt, lv)
             avgs, _ = averages(adj, ap)
             tbl = blend(races, avgs, fmodel, N_hat, d, ep)

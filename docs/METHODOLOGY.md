@@ -197,6 +197,8 @@ Fit on midterms 1946–2022 (approval + generic-ballot history needs hand assemb
 
 Special-election overperformance (2025–26 results vs. baseline partisanship) enters as an extra signal on N with a weight fit on 2017–18 and 2021–22. **[A12, med]**
 
+**Tested Oct 2026, not used.** Data: The Downballot's special-election Big Boards, 2017–2026 (every contested state-legislative and congressional special, swing vs. the newest presidential result in the district). Model: N − national presidential margin = k · median swing of specials held before Oct 1, fit on 2018–2024, leave-one-cycle-out error **7.2 pts** (the generic ballot's is ≈2.9); blended by inverse variance (error variance shrunk toward a 6-pt prior). In the as-of backtest the blend made every metric slightly worse (e.g. Brier 0.0439 → 0.0440 at 30 days, MAE +0.05 to +0.15 pts), so the forecast uses the generic ballot alone. 2024 is the cautionary case: Democrats ran 4.5 pts ahead in specials and lost the House vote by 2.6. Specials are shown on the Trackers page (2025–26 median swing D+13).
+
 ### 4.2 Race-level prior
 ```
 m_r,prior = λ_office · lean_r + N + inc_r + quality_r + money_r + regional_r

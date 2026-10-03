@@ -28,6 +28,7 @@ Last reviewed 2026-10-02.
 | S18 | `us-atlas` TopoJSON | state map | **live** | ISC | |
 | S20 | The Downballot, presidential results by congressional district (public Google Sheets) | House district lean: 2024/2020 on the 2026 lines; 2008–2024 on each earlier cycle's lines | **live** | published free ("paywall-free"); no explicit licence — attributed on the site; owner may want to confirm reuse | Whole-number percentages on the 2026 sheet. Reflects all 10 redrawn states and Missouri's reversion to its 2022 map, matching the Wikipedia redistricting summary. |
 | S21 | Wikipedia House election pages | 2026 nominees per district; 2012–2024 district results | **live** | CC BY-SA 4.0 | |
+| S22 | The Downballot special-election Big Boards 2017–2026 (public Google Sheets) | Trackers page; tested as a national-environment signal (not used) | **live** (2025–26 tabs refreshed daily; older cycles frozen) | no explicit licence; attributed | |
 | S19 | Clerk of the House | 2024 national House vote | **live** (one number) | public | Entered in `data/manual/national_house_vote.csv` with citation; 1998–2022 from 538 `raw_polls.csv`. |
 
 ## Known gaps (and what we do about them)
