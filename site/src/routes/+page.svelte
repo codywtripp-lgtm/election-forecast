@@ -5,7 +5,7 @@
 	import SeatHistogram from '#lib/components/SeatHistogram.svelte';
 	import RaceTable from '#lib/components/RaceTable.svelte';
 	import { CLASSES } from '#lib/colors.ts';
-	import { inHundred, margin, raceTitle } from '#lib/format.ts';
+	import { fmtDate, inHundred, margin, raceTitle } from '#lib/format.ts';
 	import type { RaceSummary } from '#lib/types.ts';
 
 	let { data } = $props();
@@ -110,6 +110,40 @@
 		{/each}
 	</div>
 </section>
+
+{#if data.changes?.previous}
+	{@const c = data.changes}
+	<section class="card changes">
+		<h2>Since {fmtDate(c.previous)}</h2>
+		<p class="small">
+			{#each [['sen_p_dem', 'Senate'], ['house_p_dem', 'House']] as [k, label]}
+				{@const x = c.national[k]}
+				{#if x && x.before !== null}
+					{@const dl = Math.round((x.now - x.before) * 100)}
+					<span class="chg">{label}: Democrats {Math.round(x.before * 100)}% → <strong>{Math.round(x.now * 100)}%</strong>
+						{#if dl}<span class={dl > 0 ? 'dem' : 'rep'}>({dl > 0 ? '+' : '−'}{Math.abs(dl)})</span>{/if}</span>
+				{/if}
+			{/each}
+		</p>
+		{#if c.movers.length}
+			<ul class="movers">
+				{#each c.movers.slice(0, 6) as m}
+					<li>
+						<a href={resolve('/race/[id]', { id: m.id })}>{m.label}</a>
+						<span class="small muted">{m.d}</span>
+						<span class="num small">{Math.round(m.p_before * 100)}% → <strong>{Math.round(m.p_now * 100)}%</strong></span>
+					</li>
+				{/each}
+			</ul>
+		{:else}
+			<p class="small muted">No race moved 3 points or more.</p>
+		{/if}
+		{#if c.model_changes?.length}
+			<p class="tiny muted">Some of this movement comes from method changes, not new data:
+				{c.model_changes.join(' ')} <a href={resolve('/methodology')}>Changelog</a>.</p>
+		{/if}
+	</section>
+{/if}
 
 <div class="grid-2">
 	<section class="card">
@@ -263,4 +297,7 @@
 	.swatch.none { background: var(--surface); outline: 1px solid var(--axis); }
 	.house-soon { padding: 24px 0; max-width: 40em; }
 	.lede-sm { font-size: 1.05rem; }
+	.changes .chg { margin-right: 18px; display: inline-block; }
+	.movers { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px 20px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+	.movers li { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
 </style>

@@ -169,6 +169,14 @@
 	</div>
 </section>
 
+<section class="card">
+	<h2>Model changelog</h2>
+	<p class="small muted">Every change to the method, newest first. Daily updates note when movement comes from a change here rather than new data.</p>
+	<ul class="log">
+		{#each data.changelog as e}<li><span class="num small muted">{e.date}</span> {e.change}</li>{/each}
+	</ul>
+</section>
+
 <article class="card doc">
 	{@html data.html}
 </article>
@@ -176,6 +184,8 @@
 <style>
 	.lede { font-size: 1.1rem; }
 	tr.base td { font-weight: 700; }
+	.log { padding-left: 1.1em; margin: 0; }
+	.log li { margin: 4px 0; }
 	.delta { color: var(--ink-3); font-weight: 400; margin-left: 4px; font-size: 0.85em; }
 	.card { margin-bottom: 16px; }
 	input[type='search'] {
