@@ -24,3 +24,19 @@ export function fillVar(pD: number): string {
 export function inkVar(pD: number): string {
 	return `var(--on-${classOf(pD).key})`;
 }
+
+/** Presidential net approval (approve − disapprove), purple = approve, orange = disapprove (validated CVD-safe). */
+export const APPROVAL_CLASSES = [
+	{ key: 'strong-dis', label: '−20 or worse', min: -1000, max: -20 },
+	{ key: 'dis', label: '−10 to −20', min: -20, max: -10 },
+	{ key: 'lean-dis', label: '−3 to −10', min: -10, max: -3 },
+	{ key: 'even', label: 'Within 3', min: -3, max: 3 },
+	{ key: 'lean-app', label: '+3 to +10', min: 3, max: 10 },
+	{ key: 'app', label: '+10 to +20', min: 10, max: 20 },
+	{ key: 'strong-app', label: '+20 or better', min: 20, max: 1000 }
+] as const;
+
+export function approvalFill(net: number): string {
+	const c = APPROVAL_CLASSES.find((c) => net >= c.min && net < c.max) ?? APPROVAL_CLASSES[3];
+	return `var(--a-${c.key})`;
+}

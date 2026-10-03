@@ -21,22 +21,35 @@ from pipeline.model.data import one_question_per_poll
 START = dt.date(2025, 2, 1)
 
 
-def approval_frame(q: pd.DataFrame, a: pd.DataFrame) -> pd.DataFrame:
-    """Net approval (approve − disapprove) for the sitting president, one row per poll."""
-    q = q[(q["office"] == "approval") & (q["source"] == "votehub") & (q["subject"] == "Donald Trump")].copy()
-    aa = a[a["qid"].isin(q["qid"])]
-    ap = aa[aa["answer"].str.lower().str.startswith("approve")].groupby("qid")["pct"].max()
-    dis = aa[aa["answer"].str.lower().str.startswith("disapprove")].groupby("qid")["pct"].max()
-    q["dem_pct"], q["rep_pct"] = q["qid"].map(ap), q["qid"].map(dis)
+POS = ("approve", "favorable")
+NEG = ("disapprove", "unfavorable")
+
+
+def net_frame(q: pd.DataFrame, a: pd.DataFrame, office: str, subject: str) -> pd.DataFrame:
+    """Net (approve − disapprove, or favorable − unfavorable) per poll for one subject."""
+    q = q[(q["office"] == office) & (q["source"] == "votehub") & (q["subject"] == subject)].copy()
+    aa = a[a["qid"].isin(q["qid"])].assign(ans=lambda d: d["answer"].str.lower().str.strip())
+    pos = aa[aa["ans"].isin(POS)].groupby("qid")["pct"].max()
+    neg = aa[aa["ans"].isin(NEG)].groupby("qid")["pct"].max()
+    q["dem_pct"], q["rep_pct"] = q["qid"].map(pos), q["qid"].map(neg)
     q["margin"] = q["dem_pct"] - q["rep_pct"]
     q = q.dropna(subset=["margin"])
-    q["race_id"] = "approval"
+    q["race_id"] = "net"
     q["other_pct"], q["other_rep"], q["other_dem"], q["n_answers"] = 0.0, 0.0, 0.0, 2
     q = one_question_per_poll(q)
     q["end_date"] = pd.to_datetime(q["end_date"])
     q["published"] = pd.to_datetime(q["published"]).where(lambda s: s >= q["end_date"], q["end_date"])
     q["mid_date"] = q["end_date"] - (q["end_date"] - pd.to_datetime(q["start_date"])) / 2
     return q
+
+
+SERIES = [  # key, office, subject, label
+    ("approval", "approval", "Donald Trump", "Donald Trump: net job approval"),
+    ("trump_fav", "favorability", "Donald Trump", "Donald Trump: net favorability"),
+    ("vance_fav", "favorability", "JD Vance", "JD Vance: net favorability"),
+    ("congress", "approval", "Congress", "Congress: net approval"),
+    ("scotus", "approval", "Supreme Court", "Supreme Court: net approval"),
+]
 
 
 def weekly_series(frame: pd.DataFrame, race_id: str, ratings, rparams, ap: AvgParams, lv, end: dt.date,
@@ -64,9 +77,14 @@ def main(as_of: dt.date | None = None) -> None:
     gen = poll_frame(q[(q["cycle"] == CYCLE) & (q["office"] == "generic")], a, offices=("generic",))
     lv = lv_shift(poll_frame(q[q["cycle"] == CYCLE], a), ap)
     generic = weekly_series(gen, f"{CYCLE}-generic", ratings, rparams, ap, lv, as_of, ELECTION_DATE)
-    # approval has no election date; use a far horizon so recency decay stays moderate (τ ≈ 3 weeks)
-    appr = weekly_series(approval_frame(q, a), "approval", ratings, rparams, ap, (0.0, 0.0), as_of,
-                         as_of + dt.timedelta(days=40))
+    # approval/favorability have no election date; a short horizon keeps recency decay moderate (τ ≈ 3 weeks)
+    nets = {}
+    for key, office, subject, label in SERIES:
+        f = net_frame(q, a, office, subject)
+        if len(f) >= 10:
+            nets[key] = dict(label=label, points=weekly_series(f, "net", ratings, rparams, ap, (0.0, 0.0), as_of,
+                                                               as_of + dt.timedelta(days=40)), n_polls=int(len(f)))
+    appr = nets.get("approval", {}).get("points", [])
 
     sp = pd.read_parquet(DB / "specials.parquet")
     sp = sp[sp["date"] >= dt.date(2025, 1, 1)].sort_values("date")
@@ -76,12 +94,15 @@ def main(as_of: dt.date | None = None) -> None:
     sig = json.loads((DB.parent / "model" / "specials_signal.json").read_text()) \
         if (DB.parent / "model" / "specials_signal.json").exists() else None
 
-    out = dict(as_of=as_of.isoformat(), generic_ballot=generic, approval=appr, specials=specials,
+    from pipeline.ingest.fred import economy_block
+    from pipeline.mood import mood_block
+    out = dict(as_of=as_of.isoformat(), generic_ballot=generic, approval=appr, nets=nets, specials=specials,
+               economy=economy_block(), mood=mood_block(),
                specials_fit=sig, attribution="Special elections: The Downballot's Big Boards (the-downballot.com/p/data)")
     path = SITE_DATA / str(CYCLE) / "trackers.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, separators=(",", ":"), default=float))
-    print(len(generic), "generic weeks;", len(appr), "approval weeks;", len(specials), "specials")
+    print(len(generic), "generic weeks;", {k: len(v["points"]) for k, v in nets.items()}, len(specials), "specials")
 
 
 if __name__ == "__main__":

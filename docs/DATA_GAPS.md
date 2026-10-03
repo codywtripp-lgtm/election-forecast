@@ -30,6 +30,10 @@ Last reviewed 2026-10-02.
 | S21 | Wikipedia House election pages | 2026 nominees per district; 2012–2024 district results | **live** | CC BY-SA 4.0 | |
 | S22 | The Downballot special-election Big Boards 2017–2026 (public Google Sheets) | Trackers page; tested as a national-environment signal (not used) | **live** (2025–26 tabs refreshed daily; older cycles frozen) | no explicit licence; attributed | |
 | S23 | Hand-entered polls (`data/manual/extra_polls.csv`) | polls VoteHub is missing | **live** | each row cites its source | Auto-dropped if VoteHub later carries the same pollster/race within 3 days. First entries: Vermont Public / Braun Research (Sept 2026), VT governor and House. |
+| S24 | FRED graph CSVs (BLS CPI and unemployment, BEA real disposable income, EIA gas prices, U. Michigan consumer sentiment) | Trackers: economy panel | **live** (daily) | public data; U. Michigan series © University of Michigan, cited | Display only; not a model input. |
+| S25 | Wikipedia "Opinion polling on the second Trump presidency" → statewide approval polls | calibrate the approval-by-state map | **live** | CC BY-SA 4.0 | Only ~40 polls in 17 states, so the map is an estimate (national average + partisanship + shrunk state deviations), labelled as such. |
+| S26 | Hand-curated public-mood readings (`data/manual/mood_polls.csv`) | right track, top issue, economy views, enthusiasm, Israeli–Palestinian sympathies | **live** (manual) | each row cites the published result | Numbers verified against the source page before entry. Needs regular manual updates. |
+| — | Civiqs, Morning Consult, Decision Desk HQ, RealClearPolling trackers; Ballotpedia polling index | — | **excluded** | proprietary trackers / bot-blocked | Not republished. |
 | S19 | Clerk of the House | 2024 national House vote | **live** (one number) | public | Entered in `data/manual/national_house_vote.csv` with citation; 1998–2022 from 538 `raw_polls.csv`. |
 
 ## Known gaps (and what we do about them)
