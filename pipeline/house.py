@@ -239,4 +239,5 @@ def main(refresh_2026: bool = True) -> None:
 
 
 if __name__ == "__main__":
-    main()
+    import os
+    main(refresh_2026=os.environ.get("FROZEN") != "1")   # after Election Day keep the nominee snapshot

@@ -23,7 +23,13 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: pip install -r requirements.txt
+      - name: Freeze after Election Day
+        # From Nov 4 the forecast is final: no new polls or race data; the Election Day forecast is
+        # re-run from saved snapshots and the scorecard fills in as results arrive.
+        run: |
+          if [ "$(date -u +%F)" \> "2026-11-03" ]; then echo "FROZEN=1" >> "$GITHUB_ENV"; echo "AS_OF=--as-of 2026-11-03" >> "$GITHUB_ENV"; fi
       - name: Ingest
+        if: env.FROZEN != '1'
         run: |
           python -m pipeline.ingest.votehub
           python -m pipeline.ingest.wikipedia
@@ -41,9 +47,10 @@ jobs:
         run: python -m pytest -q
       - name: Forecast
         run: |
-          python -m pipeline.run --sims 50000
+          python -m pipeline.run --sims 50000 $AS_OF
           python -m pipeline.trackers
           python -m pipeline.changes
+          python -m pipeline.scorecard
       - name: Commit data, history and run manifest
         run: |
           git config user.name "github-actions[bot]"

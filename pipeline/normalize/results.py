@@ -31,11 +31,11 @@ def page_name(office: str, year: int) -> str:
     return f"{year}_United_States_{kind}_elections"
 
 
-def fetch_cycle(office: str, year: int) -> dict:
-    """Fetch once and cache as a snapshot (history pages rarely change)."""
+def fetch_cycle(office: str, year: int, refresh: bool = False) -> dict:
+    """Fetch once and cache as a snapshot (history pages rarely change); refresh=True for a live cycle."""
     key = f"{office}_{year}"
     existing = sorted((snapshot_path("wikipedia", key, "json").parent).glob("*.gz"))
-    if existing:
+    if existing and not refresh:
         return json.loads(read_snapshot(existing[-1]))
     r = SESSION.get(API, params={"action": "parse", "page": page_name(office, year), "prop": "text|revid",
                                  "format": "json", "formatversion": 2}, timeout=60)
