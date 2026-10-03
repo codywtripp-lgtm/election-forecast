@@ -26,6 +26,9 @@
 	--rep-ink: #a32b2b;
 	--on-safe-d: #fff; --on-likely-d: #fff; --on-lean-d: #0b0b0b; --on-tossup: #0b0b0b;
 	--on-lean-r: #0b0b0b; --on-likely-r: #fff; --on-safe-r: #fff;
+	--a-strong-app: #3f2f96; --a-app: #6f5cc9; --a-lean-app: #a99be3; --a-even: #cfcec6;
+	--a-lean-dis: #ef9a72; --a-dis: #d9581f; --a-strong-dis: #93360f;
+	--approve: #6f5cc9; --disapprove: #d9581f;
 
 	--font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 	--radius: 8px;
@@ -60,6 +63,9 @@
 		--rep-ink: #f0a29c;
 		--on-safe-d: #0b0b0b; --on-likely-d: #fff; --on-lean-d: #fff; --on-tossup: #fff;
 		--on-lean-r: #fff; --on-likely-r: #fff; --on-safe-r: #0b0b0b;
+		--a-strong-app: #ad9fe6; --a-app: #7a68d2; --a-lean-app: #5544b8; --a-even: #6b6a64;
+		--a-lean-dis: #93360f; --a-dis: #d9581f; --a-strong-dis: #ef9a72;
+		--approve: #9085e9; --disapprove: #e0703d;
 	}
 }
 :root[data-theme='dark'] {
@@ -88,6 +94,9 @@
 	--rep-ink: #f0a29c;
 	--on-safe-d: #0b0b0b; --on-likely-d: #fff; --on-lean-d: #fff; --on-tossup: #fff;
 	--on-lean-r: #fff; --on-likely-r: #fff; --on-safe-r: #0b0b0b;
+	--a-strong-app: #ad9fe6; --a-app: #7a68d2; --a-lean-app: #5544b8; --a-even: #6b6a64;
+	--a-lean-dis: #93360f; --a-dis: #d9581f; --a-strong-dis: #ef9a72;
+	--approve: #9085e9; --disapprove: #e0703d;
 }
 
 * { box-sizing: border-box; }

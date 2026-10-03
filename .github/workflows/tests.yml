@@ -38,8 +38,10 @@ jobs:
           python -m pipeline.composition
           python -m pipeline.expert
           python -m pipeline.specials
+          python -m pipeline.ingest.approval_states
           python -m pipeline.run --sims 5000
           python -m pipeline.trackers
+          python -m pipeline.approval_map
           python -m pipeline.changes
           python -m pipeline.scorecard
           cd site && npm ci && npm run check && npm run build

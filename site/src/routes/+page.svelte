@@ -2,15 +2,22 @@
 	import { asset, resolve } from '$app/paths';
 	import USMap from '#lib/components/USMap.svelte';
 	import HexMap from '#lib/components/HexMap.svelte';
+	import ApprovalMap from '#lib/components/ApprovalMap.svelte';
+	import Sparkline from '#lib/components/Sparkline.svelte';
 	import SeatHistogram from '#lib/components/SeatHistogram.svelte';
 	import RaceTable from '#lib/components/RaceTable.svelte';
-	import { CLASSES } from '#lib/colors.ts';
+	import { APPROVAL_CLASSES, CLASSES } from '#lib/colors.ts';
 	import { fmtDate, inHundred, margin, raceTitle } from '#lib/format.ts';
 	import type { RaceSummary } from '#lib/types.ts';
 
 	let { data } = $props();
 	const s = $derived(data.summary);
-	let tab: 'sen' | 'gov' | 'house' = $state('sen');
+	let tab: 'sen' | 'gov' | 'house' | 'approval' = $state('sen');
+	const appr = $derived(data.trackers?.approval ?? []);
+	const apprNow = $derived(appr.length ? appr[appr.length - 1].value : null);
+	const appr30 = $derived(appr.length > 5 ? appr[appr.length - 5].value : null);
+	const apprTrend = $derived(appr.slice(-14).map((p: { value: number }) => p.value));
+	const signed = (v: number) => `${v >= 0 ? '+' : '−'}${Math.abs(v).toFixed(1)}`;
 	let scenario: string = $state('all');
 
 	const races = $derived(s.races.filter((r: RaceSummary) => r.office === tab));
@@ -68,7 +75,7 @@
 		sim = null;
 		simShown = null;
 	}
-	function setTab(t: 'sen' | 'gov' | 'house') {
+	function setTab(t: 'sen' | 'gov' | 'house' | 'approval') {
 		tab = t;
 		clearSim();
 	}
@@ -110,6 +117,22 @@
 		{/each}
 	</div>
 </section>
+
+{#if apprNow !== null}
+	<section class="card approval-card">
+		<div>
+			<div class="label-sm">Trump job approval</div>
+			<div class="big-num" style:color={apprNow >= 0 ? 'var(--approve)' : 'var(--disapprove)'}>{signed(apprNow)}</div>
+			<div class="small muted">net (approve − disapprove), our polling average
+				{#if appr30 !== null}· {apprNow - appr30 >= 0 ? 'up' : 'down'} {Math.abs(apprNow - appr30).toFixed(1)} in 4 weeks{/if}</div>
+		</div>
+		<Sparkline values={apprTrend} label="Net approval over the last 14 weeks" />
+		<div class="small links">
+			<button onclick={() => { setTab('approval'); document.querySelector('.map-card')?.scrollIntoView({ behavior: 'smooth' }); }}>By state →</button>
+			<a href={resolve('/trackers')}>All trackers →</a>
+		</div>
+	</section>
+{/if}
 
 {#if data.changes?.previous}
 	{@const c = data.changes}
@@ -225,9 +248,24 @@
 		<button role="tab" aria-selected={tab === 'sen'} onclick={() => setTab('sen')}>Senate</button>
 		<button role="tab" aria-selected={tab === 'gov'} onclick={() => setTab('gov')}>Governor</button>
 		<button role="tab" aria-selected={tab === 'house'} onclick={() => setTab('house')}>House</button>
+		{#if data.approvalStates}<button role="tab" aria-selected={tab === 'approval'} onclick={() => setTab('approval')}>Trump approval</button>{/if}
 	</div>
 
-	{#if tab === 'house' && !house}
+	{#if tab === 'approval' && data.approvalStates}
+		{@const a = data.approvalStates}
+		<p class="small">Estimated Trump net approval (approve − disapprove) in each state. National average: <strong>{signed(a.national_net)}</strong>.</p>
+		<ApprovalMap rows={a.states} />
+		<div class="legend small" aria-label="Legend">
+			{#each APPROVAL_CLASSES as c}
+				<span><span class="swatch" style:background="var(--a-{c.key})"></span> {c.label}</span>
+			{/each}
+		</div>
+		<p class="tiny muted">
+			These are estimates, not polls. Most states have few or no public approval polls, so each state is the national average
+			adjusted by its partisan lean (each point of lean moves net approval about {Math.abs(a.fit.b).toFixed(2)} points, fit on
+			{a.fit.n_polls} state polls in {a.fit.n_states} states) plus what its own polls say. Hover a state for its latest poll.
+		</p>
+	{:else if tab === 'house' && !house}
 		<div class="house-soon">
 			<h2>House forecast: coming soon</h2>
 		</div>
@@ -274,7 +312,7 @@
 	{/if}
 </section>
 
-{#if tab !== 'house' || house}
+{#if tab !== 'approval' && (tab !== 'house' || house)}
 	<section class="card">
 		<h2>All {tab === 'sen' ? 'Senate' : tab === 'gov' ? 'governor' : 'House'} races</h2>
 		<RaceTable {races} caption="{tab === 'sen' ? 'Senate' : 'Governor'} race forecasts" competitiveDefault={tab === 'house'} />
@@ -297,6 +335,10 @@
 	.swatch.none { background: var(--surface); outline: 1px solid var(--axis); }
 	.house-soon { padding: 24px 0; max-width: 40em; }
 	.lede-sm { font-size: 1.05rem; }
+	.approval-card { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+	.label-sm { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); font-weight: 600; }
+	.big-num { font-size: 2.2rem; font-weight: 700; line-height: 1.1; font-variant-numeric: tabular-nums; }
+	.approval-card .links { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
 	.changes .chg { margin-right: 18px; display: inline-block; }
 	.movers { list-style: none; padding: 0; margin: 0; display: grid; gap: 4px 20px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 	.movers li { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }

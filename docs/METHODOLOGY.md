@@ -350,6 +350,13 @@ Fitted error structure (Election Day s.d., points): national 2.8, regional 0.6, 
 
 ---
 
+## 7b. Trackers and the approval map (not model inputs)
+
+- **National trackers** (generic ballot; Trump job approval and favorability; Vance favorability; Congress and Supreme Court approval) use the same pollster ratings, sponsor corrections, house effects and recency weighting as the forecast, evaluated weekly. Approval is not converted to a likely-voter basis.
+- **Approval by state** is an estimate: national net approval + b × state partisan lean + the state's own deviation from its polls. b is fit on statewide approval polls (prior −1.0 ± 0.3; fitted ≈ −0.87 ± 0.10 on 39 polls in 17 states at launch); a state's deviation is shrunk toward zero (prior s.d. 4 pts, poll s.d. 6 pts). States without polls rely on partisanship alone. Shown with a purple (approve) / orange (disapprove) scale so it isn't read as a party map.
+- **Public mood** readings (right track, top issue, economy views, enthusiasm, Israeli–Palestinian sympathies) are shown poll by poll with sources, not averaged, because question wording differs.
+- **Economy** panel: official series via FRED. None of these feed the forecast; the generic ballot already carries the national environment, and the approval/economy regression (G9) has not been fit.
+
 ## 8. Sensitivity analysis
 
 **Live:** `pipeline/sensitivity.py` re-runs the day's forecast under the variants below and publishes the table on the methodology page (refreshed weekly with the backtest). At launch, Democratic Senate-control odds ranged from 48% (2024-like electorate) to 72% (high-engagement midterm), and fell to 52% if the historical midterm likely-voter shift (R+1.45) were used instead of the 2026 evidence; error-size and tail-shape changes moved them by 1–3 points.

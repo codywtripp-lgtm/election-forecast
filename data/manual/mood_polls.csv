@@ -1,0 +1,25 @@
+topic,pollster,sponsor,start_date,end_date,population,n,item,value,url,note
+right_track,AP-NORC,,2026-09-24,2026-09-28,a,2140,Right direction,26,https://apnorc.org/projects/most-blame-president-trump-for-higher-prices-and-are-unhappy-with-how-he-is-handling-the-economy/,
+right_track,AP-NORC,,2026-09-24,2026-09-28,a,2140,Wrong direction,73,https://apnorc.org/projects/most-blame-president-trump-for-higher-prices-and-are-unhappy-with-how-he-is-handling-the-economy/,
+right_track,Rasmussen Reports,,2026-09-18,2026-09-24,lv,,Right direction,37,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Sept 24; weekly tracker
+right_track,Rasmussen Reports,,2026-09-04,2026-09-10,lv,,Right direction,34,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Sept 10
+right_track,Rasmussen Reports,,2026-08-28,2026-09-03,lv,,Right direction,39,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Sept 3
+right_track,Rasmussen Reports,,2026-08-21,2026-08-27,lv,,Right direction,37,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Aug 27
+right_track,Rasmussen Reports,,2026-08-14,2026-08-20,lv,,Right direction,36,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Aug 20
+right_track,Rasmussen Reports,,2026-08-07,2026-08-13,lv,,Right direction,33,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Aug 13
+right_track,Rasmussen Reports,,2026-07-31,2026-08-06,lv,,Right direction,34,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending Aug 6
+right_track,Rasmussen Reports,,2026-07-24,2026-07-30,lv,,Right direction,36,https://www.rasmussenreports.com/public_content/archive/mood_of_america_archive/right_direction_or_wrong_track,Week ending July 30
+top_issue,Emerson College,,2026-09-21,2026-09-22,lv,1000,Economy,41,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,Most important issue facing the country
+top_issue,Emerson College,,2026-09-21,2026-09-22,lv,1000,Threats to democracy,17,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+top_issue,Emerson College,,2026-09-21,2026-09-22,lv,1000,Immigration,13,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+top_issue,Emerson College,,2026-09-21,2026-09-22,lv,1000,Healthcare,12,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+economy_view,Emerson College,,2026-09-21,2026-09-22,lv,1000,Trump's economic policies making the economy worse,60,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+economy_view,Emerson College,,2026-09-21,2026-09-22,lv,1000,Trump's economic policies making the economy better,28,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+enthusiasm,Emerson College,,2026-09-21,2026-09-22,lv,1000,Democrats: very excited to vote,78,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+enthusiasm,Emerson College,,2026-09-21,2026-09-22,lv,1000,Independents: very excited to vote,70,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+enthusiasm,Emerson College,,2026-09-21,2026-09-22,lv,1000,Republicans: very excited to vote,66,https://emersoncollegepolling.com/september-2026-national-poll-democrats/,
+israel,YouGov,The Economist,2026-09-18,2026-09-21,a,,Sympathize more with Israelis,26,https://yougov.com/en-us/articles/55607-americans-split-whom-sympathize-with-more-in-israeli-palestinian-conflict-september-18-21-2026-economist-yougov-poll,Narrowest gap since the question was first asked in 2011
+israel,YouGov,The Economist,2026-09-18,2026-09-21,a,,Sympathize more with Palestinians,25,https://yougov.com/en-us/articles/55607-americans-split-whom-sympathize-with-more-in-israeli-palestinian-conflict-september-18-21-2026-economist-yougov-poll,
+israel,YouGov,The Economist,2026-09-18,2026-09-21,a,,Both equally,21,https://yougov.com/en-us/articles/55607-americans-split-whom-sympathize-with-more-in-israeli-palestinian-conflict-september-18-21-2026-economist-yougov-poll,
+israel,Gallup,,2026-02-02,2026-02-16,a,1001,Sympathize more with Israelis,36,https://news.gallup.com/poll/702440/israelis-no-longer-ahead-americans-middle-east-sympathies.aspx,First time since 2001 that Israelis did not lead
+israel,Gallup,,2026-02-02,2026-02-16,a,1001,Sympathize more with Palestinians,41,https://news.gallup.com/poll/702440/israelis-no-longer-ahead-americans-middle-east-sympathies.aspx,

@@ -22,7 +22,7 @@ FTE_OFFICES = {"senate": "sen", "governor": "gov", "house": "house", "president"
 # Senate class up in each regular cycle; any other class in that year is a special election.
 SEN_CLASS = {2018: "Class I", 2020: "Class II", 2022: "Class III", 2024: "Class I", 2026: "Class II"}
 VH_OFFICES = {"us-senator": "sen", "governor": "gov", "us-representative": "house",
-              "generic-ballot": "generic", "approval": "approval"}
+              "generic-ballot": "generic", "approval": "approval", "favorability": "favorability"}
 
 Q_COLS = ["qid", "source", "poll_id", "cycle", "office", "race_id", "state", "district", "stage",
           "pollster", "sponsors", "partisan", "internal", "start_date", "end_date", "sample_size",
@@ -40,7 +40,7 @@ def norm_population(p) -> str:
 
 
 def race_id(cycle, office, state, district=None, special=False):
-    if office in {"generic", "approval"}:
+    if office in {"generic", "approval", "favorability"}:
         return None
     rid = f"{cycle}-{office}-{state}"
     if office in {"house", "pres"} and district is not None and not pd.isna(district):
@@ -150,8 +150,6 @@ def load_votehub(fte_modes: dict[str, str]) -> tuple[pd.DataFrame, pd.DataFrame]
         office = VH_OFFICES.get(p["poll_type"])
         if office is None:
             continue
-        if office == "approval" and p.get("subject") != "Donald Trump":
-            continue
         subj = p.get("subject") or ""
         m = re.match(r"^(\d{4})\s*(.*)$", subj)
         cycle = int(m.group(1)) if m else int(str(p["end_date"])[:4])
@@ -170,7 +168,7 @@ def load_votehub(fte_modes: dict[str, str]) -> tuple[pd.DataFrame, pd.DataFrame]
             if not mm:
                 continue
             state, district = mm.group(1), int(mm.group(2))
-        if office == "approval":
+        if office in ("approval", "favorability"):
             cycle = int(str(p["end_date"])[:4])
         elif office == "generic":
             cycle = 2026
@@ -187,7 +185,7 @@ def load_votehub(fte_modes: dict[str, str]) -> tuple[pd.DataFrame, pd.DataFrame]
             sample_size=p.get("sample_size"), population=norm_population(p.get("population")),
             mode=mode or "unknown", mode_source="inferred_538" if mode else "unknown",
             weighting_class="UNK", url=p.get("url"), hypothetical=False,
-            subject="Donald Trump" if office == "approval" else subj,
+            subject=subj,
             published=pd.Timestamp(p.get("created_at") or p["end_date"]).date()))
         for a in p["answers"]:
             party = {"Dem": "DEM", "Rep": "REP"}.get(a["choice"]) if office == "generic" else None
