@@ -34,6 +34,8 @@ Independent, statistically rigorous election forecast site. Launch: Nov 3, 2026 
 - 2026-10-02: Sensitivity analysis (PR #6, `pipeline/sensitivity.py`, weekly), expert ratings benchmark (Cook/IE/Sabato on race pages, never a model input), LA/MS rules verified, weighting-method correction (PR #7: `data/manual/weighting_method.csv`, `pipeline/model/weighting.py`).
 - 2026-10-03: Trackers page (generic ballot, net approval, special elections; `pipeline/trackers.py`, `pipeline/specials.py`). Specials tested as an environment signal → backtest slightly worse → not used.
 - 2026-10-03: House added to the backtest (Woodbury likelihood; per-office scores); error params refit jointly (rp 5.0, div 1.0, dem 1.05).
+- 2026-10-03: FEC fundraising (`pipeline/fec.py`) in House fundamentals only (backtest −3% Brier); MODEL_MONEY=all|none for comparisons.
+- Known local issue: pandas 3.0.6 on Windows intermittently crashes (access violation) in long loops; rerun, or keep hot loops in numpy. Never seen on the Linux runners.
 - Local runs never write tracked history/manifests (only when GITHUB_ACTIONS=true).
 - Open items: code more pollsters' weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10); House expert ratings; candidate quality + FEC fundraising; Phase 3 (scorecard after Nov 3, approval/generic-ballot/special-election trackers, 2027 + 2028 scaffolding, RSS).
 - (old) Next (after House): Phase 2 polish (verify 2026 district lines, district lean, hex map); hand-code weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10).

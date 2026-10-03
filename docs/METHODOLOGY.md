@@ -219,7 +219,9 @@ Coefficients fit on 2000–2024 contested D-vs-R races, weighted 0.8× per cycle
 
 House lean uses the presidential results on each cycle's own district lines (2012–2024 lines for the fit, 2026 lines for the forecast). In the 10 states redrawn for 2026 only 2024 results exist on the new lines; 2020 is imputed from 2024 plus the state's 2020→2024 shift (flag `lean_2020_imputed`). Missouri uses its 2022 map (the 2025 map is blocked).
 
-Quality and fundraising terms are not in the launch version (G8, S13). Independents running as the main non-Republican (Idaho, Montana, Nebraska, South Dakota Senate) use the same Senate equation, a simplification covered by the wide uncertainty on those races.
+Quality and fundraising terms are not in the launch version (G8, S13).
+
+**Fundraising (added Oct 3, House only).** money = log((D + $5k)/(R + $5k)) of the nominees' *individual* contributions (FEC bulk all-candidate summaries, public domain; self-funding, loans and transfers excluded), matched by state, district and last name; an unmatched nominee → treated as even. Fitted House coefficient ≈ 0.9 pts per log unit (a 3:1 money edge ≈ 1 pt). Backtest: House Brier −3% at 30 days, −4% at 120 days; Senate mixed, so not used there; governors have no FEC data. **Caveat:** historical FEC files are end-of-cycle totals (they include October–December money), so the backtest gain is somewhat optimistic; the 2026 file is as of the latest filings and refreshes daily. [A17] Independents running as the main non-Republican (Idaho, Montana, Nebraska, South Dakota Senate) use the same Senate equation, a simplification covered by the wide uncertainty on those races.
 
 ### 4.3 Blending polls and prior
 Precision weighting:

@@ -74,6 +74,19 @@
 					<tr><td>State partisan lean</td><td class="num">{sign(b.fundamentals.partisan_lean)}</td></tr>
 					<tr><td>National environment (generic ballot)</td><td class="num">{sign(b.fundamentals.national_environment)}</td></tr>
 					<tr><td>Incumbency</td><td class="num">{sign(b.fundamentals.incumbency)}</td></tr>
+					{#if r.office === 'house'}
+						<tr>
+							<td>
+								Fundraising
+								{#if b.fundamentals.dem_raised != null && b.fundamentals.rep_raised != null}
+									<div class="tiny muted">individual contributions: ${(b.fundamentals.dem_raised / 1e6).toFixed(2)}M D vs ${(b.fundamentals.rep_raised / 1e6).toFixed(2)}M R (FEC)</div>
+								{:else}
+									<div class="tiny muted">not matched in FEC data yet (treated as even)</div>
+								{/if}
+							</td>
+							<td class="num">{sign(b.fundamentals.fundraising ?? 0)}</td>
+						</tr>
+					{/if}
 					<tr class="total"><td>Fundamentals estimate</td><td class="num">{margin(b.fundamentals.total, dL)}</td></tr>
 				</tbody>
 			</table>
