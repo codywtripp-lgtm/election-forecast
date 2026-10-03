@@ -212,3 +212,435 @@ race_id,rater,rating,rating_date,fetched
 2026-gov-WY,Cook Political Report,Solid R,"Oct. 1, 2026",2026-10-02
 2026-gov-WY,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-02
 2026-gov-WY,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-02
+2026-house-AL-02,Cook Political Report,Likely R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-AL-02,Inside Elections,Likely R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-AL-02,Sabato's Crystal Ball,Lean R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-AK-01,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-AK-01,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-AK-01,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-AZ-01,Cook Political Report,Lean D (flip),"Sep. 25, 2026",2026-10-03
+2026-house-AZ-01,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-AZ-01,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-AZ-02,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-AZ-02,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-AZ-02,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-AZ-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-AZ-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-AZ-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-AZ-06,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-AZ-06,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-AZ-06,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-AZ-08,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-AZ-08,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-AZ-08,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-AR-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-AR-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-AR-02,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-CA-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-CA-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-CA-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-CA-06,Cook Political Report,Solid D (flip),"Sep. 25, 2026",2026-10-03
+2026-house-CA-06,Inside Elections,Lean D (flip),"Oct. 1, 2026",2026-10-03
+2026-house-CA-06,Sabato's Crystal Ball,Likely D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-CA-13,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-CA-13,Inside Elections,Tilt D,"Oct. 1, 2026",2026-10-03
+2026-house-CA-13,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-CA-21,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-CA-21,Inside Elections,Solid D,"Oct. 1, 2026",2026-10-03
+2026-house-CA-21,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-CA-22,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-CA-22,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-CA-22,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-CA-45,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-CA-45,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-CA-45,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-CA-48,Cook Political Report,Lean D (flip),"Sep. 25, 2026",2026-10-03
+2026-house-CA-48,Inside Elections,Tilt D (flip),"Oct. 1, 2026",2026-10-03
+2026-house-CA-48,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-CO-03,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-CO-03,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-CO-03,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-CO-04,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-CO-04,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-CO-04,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-CO-05,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-CO-05,Inside Elections,Tilt R,"Oct. 1, 2026",2026-10-03
+2026-house-CO-05,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-CO-08,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-CO-08,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-CO-08,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-FL-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-02,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-03,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-03,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-03,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-04,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-04,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-04,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-07,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-07,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-07,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-08,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-08,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-08,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-09,Cook Political Report,Likely R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-FL-09,Inside Elections,Likely R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-FL-09,Sabato's Crystal Ball,Likely R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-FL-11,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-11,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-11,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-12,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-12,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-12,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-13,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-13,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-13,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-14,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-FL-14,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-FL-14,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-FL-15,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-15,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-15,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-16,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-16,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-16,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-18,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-18,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-18,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-21,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-21,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-21,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-22,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-FL-22,Inside Elections,Tilt R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-FL-22,Sabato's Crystal Ball,Lean R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-FL-25,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-FL-25,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-FL-25,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-FL-26,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-26,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-26,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-FL-27,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-FL-27,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-FL-27,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-GA-01,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-GA-01,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-GA-01,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-GA-10,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-GA-10,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-GA-10,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-GA-12,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-GA-12,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-GA-12,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-IL-17,Cook Political Report,Solid D,"Sep. 25, 2026",2026-10-03
+2026-house-IL-17,Inside Elections,Solid D,"Oct. 1, 2026",2026-10-03
+2026-house-IL-17,Sabato's Crystal Ball,Safe D,"Sep. 29, 2026",2026-10-03
+2026-house-IN-01,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-IN-01,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-IN-01,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-IN-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-IN-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-IN-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-IA-01,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-IA-01,Inside Elections,Tilt D (flip),"Oct. 1, 2026",2026-10-03
+2026-house-IA-01,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-IA-02,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-IA-02,Inside Elections,Tilt R,"Oct. 1, 2026",2026-10-03
+2026-house-IA-02,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-IA-03,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-IA-03,Inside Elections,Tilt D (flip),"Oct. 1, 2026",2026-10-03
+2026-house-IA-03,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-KS-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-KS-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-KS-02,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-KS-03,Cook Political Report,Solid D,"Sep. 25, 2026",2026-10-03
+2026-house-KS-03,Inside Elections,Solid D,"Oct. 1, 2026",2026-10-03
+2026-house-KS-03,Sabato's Crystal Ball,Safe D,"Sep. 29, 2026",2026-10-03
+2026-house-KY-06,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-KY-06,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-KY-06,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-ME-02,Cook Political Report,Likely R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-ME-02,Inside Elections,Likely R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-ME-02,Sabato's Crystal Ball,Lean R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-MD-01,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-MD-01,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-MD-01,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-MI-01,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-MI-01,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-MI-01,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-MI-03,Cook Political Report,Solid D,"Sep. 25, 2026",2026-10-03
+2026-house-MI-03,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-MI-03,Sabato's Crystal Ball,Safe D,"Sep. 29, 2026",2026-10-03
+2026-house-MI-04,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-MI-04,Inside Elections,Tilt R,"Oct. 1, 2026",2026-10-03
+2026-house-MI-04,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-MI-07,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-MI-07,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-MI-07,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-MI-08,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-MI-08,Inside Elections,Solid D,"Oct. 1, 2026",2026-10-03
+2026-house-MI-08,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-MI-10,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-MI-10,Inside Elections,Tilt R,"Oct. 1, 2026",2026-10-03
+2026-house-MI-10,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-MN-01,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-MN-01,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-MN-01,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-MN-02,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-MN-02,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-MN-02,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-MN-08,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-MN-08,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-MN-08,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-MO-02,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-MO-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-MO-02,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-MT-01,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-MT-01,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-MT-01,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-NE-01,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NE-01,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NE-01,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NE-02,Cook Political Report,Lean D (flip),"Sep. 25, 2026",2026-10-03
+2026-house-NE-02,Inside Elections,Tilt D (flip),"Oct. 1, 2026",2026-10-03
+2026-house-NE-02,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-NV-01,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-NV-01,Inside Elections,Lean D,"Oct. 1, 2026",2026-10-03
+2026-house-NV-01,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-NV-02,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-NV-02,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-NV-02,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-NV-03,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-NV-03,Inside Elections,Lean D,"Oct. 1, 2026",2026-10-03
+2026-house-NV-03,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-NV-04,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-NV-04,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-NV-04,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-NH-01,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-NH-01,Inside Elections,Lean D,"Oct. 1, 2026",2026-10-03
+2026-house-NH-01,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-NH-02,Cook Political Report,Solid D,"Sep. 25, 2026",2026-10-03
+2026-house-NH-02,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-NH-02,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-NJ-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NJ-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NJ-02,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NJ-07,Cook Political Report,Lean D (flip),"Sep. 25, 2026",2026-10-03
+2026-house-NJ-07,Inside Elections,Tilt D (flip),"Oct. 1, 2026",2026-10-03
+2026-house-NJ-07,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-NJ-09,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-NJ-09,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-NJ-09,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-NM-02,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-NM-02,Inside Elections,Tilt D,"Oct. 1, 2026",2026-10-03
+2026-house-NM-02,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-NY-01,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NY-01,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NY-01,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-NY-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NY-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NY-02,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NY-03,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-NY-03,Inside Elections,Lean D,"Oct. 1, 2026",2026-10-03
+2026-house-NY-03,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-NY-04,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-NY-04,Inside Elections,Tilt D,"Oct. 1, 2026",2026-10-03
+2026-house-NY-04,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-NY-17,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-NY-17,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-NY-17,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-NY-19,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-NY-19,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-NY-19,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-NY-21,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-NY-21,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-NY-21,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-NY-23,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NY-23,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NY-23,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-01,Cook Political Report,Lean R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-NC-01,Inside Elections,Tilt R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-NC-01,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-NC-03,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-03,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-03,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-06,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-06,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-06,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-07,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-07,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-07,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-08,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-08,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-08,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-09,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-09,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-09,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-10,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-10,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-10,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-11,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-NC-11,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-11,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-NC-13,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-13,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-13,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-NC-14,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-NC-14,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-NC-14,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-OH-01,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-OH-01,Inside Elections,Tilt D,"Oct. 1, 2026",2026-10-03
+2026-house-OH-01,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-OH-07,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-OH-07,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-OH-07,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-OH-08,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-OH-08,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-OH-08,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-OH-09,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-OH-09,Inside Elections,Tilt R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-OH-09,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-OH-10,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-OH-10,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-OH-10,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-OH-13,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-OH-13,Inside Elections,Solid D,"Oct. 1, 2026",2026-10-03
+2026-house-OH-13,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-OH-15,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-OH-15,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-OH-15,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-OK-01,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-OK-01,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-OK-01,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-OK-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-OK-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-OK-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-OR-05,Cook Political Report,Solid D,"Sep. 25, 2026",2026-10-03
+2026-house-OR-05,Inside Elections,Solid D,"Oct. 1, 2026",2026-10-03
+2026-house-OR-05,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-PA-01,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-PA-01,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-PA-01,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-PA-07,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-PA-07,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-PA-07,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-PA-08,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-PA-08,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-PA-08,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-PA-10,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-PA-10,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-PA-10,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-PA-11,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-PA-11,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-PA-11,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-SC-01,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-SC-01,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-SC-01,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-SC-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-SC-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-SC-02,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-SC-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-SC-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-SC-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TN-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TN-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TN-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TN-07,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TN-07,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TN-07,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TN-09,Cook Political Report,Solid R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-TN-09,Inside Elections,Solid R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-TN-09,Sabato's Crystal Ball,Safe R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-TX-02,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-02,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-02,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-09,Cook Political Report,Likely R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-TX-09,Inside Elections,Likely R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-TX-09,Sabato's Crystal Ball,Likely R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-TX-10,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-10,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-10,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-15,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-TX-15,Inside Elections,Tilt R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-15,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-TX-17,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-17,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-17,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-21,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-21,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-21,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-22,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-22,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-22,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-23,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-23,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-23,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-24,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-24,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-24,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-27,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-27,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-27,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-28,Cook Political Report,Lean D,"Sep. 25, 2026",2026-10-03
+2026-house-TX-28,Inside Elections,Tilt D,"Oct. 1, 2026",2026-10-03
+2026-house-TX-28,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-TX-31,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-31,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-31,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-TX-32,Cook Political Report,Solid R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-TX-32,Inside Elections,Solid R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-TX-32,Sabato's Crystal Ball,Safe R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-TX-34,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-TX-34,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-TX-34,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-TX-35,Cook Political Report,Lean R (flip),"Sep. 25, 2026",2026-10-03
+2026-house-TX-35,Inside Elections,Lean R (flip),"Oct. 1, 2026",2026-10-03
+2026-house-TX-35,Sabato's Crystal Ball,Lean R (flip),"Sep. 29, 2026",2026-10-03
+2026-house-TX-38,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-TX-38,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-TX-38,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-VA-01,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-VA-01,Inside Elections,Lean R,"Oct. 1, 2026",2026-10-03
+2026-house-VA-01,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-VA-02,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-VA-02,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-VA-02,Sabato's Crystal Ball,Lean D (flip),"Sep. 29, 2026",2026-10-03
+2026-house-VA-05,Cook Political Report,Likely R,"Sep. 25, 2026",2026-10-03
+2026-house-VA-05,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-VA-05,Sabato's Crystal Ball,Lean R,"Sep. 29, 2026",2026-10-03
+2026-house-VA-07,Cook Political Report,Likely D,"Sep. 25, 2026",2026-10-03
+2026-house-VA-07,Inside Elections,Likely D,"Oct. 1, 2026",2026-10-03
+2026-house-VA-07,Sabato's Crystal Ball,Likely D,"Sep. 29, 2026",2026-10-03
+2026-house-WA-03,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-WA-03,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-WA-03,Sabato's Crystal Ball,Lean D,"Sep. 29, 2026",2026-10-03
+2026-house-WA-04,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-WA-04,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-WA-04,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-WA-05,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-WA-05,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-WA-05,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-WI-01,Cook Political Report,Lean R,"Sep. 25, 2026",2026-10-03
+2026-house-WI-01,Inside Elections,Likely R,"Oct. 1, 2026",2026-10-03
+2026-house-WI-01,Sabato's Crystal Ball,Likely R,"Sep. 29, 2026",2026-10-03
+2026-house-WI-03,Cook Political Report,Tossup,"Sep. 25, 2026",2026-10-03
+2026-house-WI-03,Inside Elections,Tossup,"Oct. 1, 2026",2026-10-03
+2026-house-WI-03,Sabato's Crystal Ball,Tossup,"Sep. 29, 2026",2026-10-03
+2026-house-WI-06,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-WI-06,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-WI-06,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-WI-07,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-WI-07,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-WI-07,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
+2026-house-WI-08,Cook Political Report,Solid R,"Sep. 25, 2026",2026-10-03
+2026-house-WI-08,Inside Elections,Solid R,"Oct. 1, 2026",2026-10-03
+2026-house-WI-08,Sabato's Crystal Ball,Safe R,"Sep. 29, 2026",2026-10-03
