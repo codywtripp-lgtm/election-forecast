@@ -80,6 +80,7 @@ def is_midterm(cycle: int) -> bool:
 
 # ---------------------------------------------------------------- poll margins
 
+MAX_UNMATCHED = 10.0
 POP_RANK = {"lv": 0, "v": 1, "rv": 2, "a": 3, "unknown": 4}
 
 
@@ -95,8 +96,15 @@ def question_margins(q: pd.DataFrame, a: pd.DataFrame, d_side: dict[str, str] | 
     a = a.dropna(subset=["pct"])
     rid = q.set_index("qid")["race_id"]
     out = []
+    has_ids = "candidate_id" in a.columns
     for qid, g in a.groupby("qid", sort=False):
         g = g.sort_values("pct", ascending=False)
+        if has_ids:
+            # answers naming someone who is not on the November ballot (pre-primary hypotheticals):
+            # if they hold ≥ MAX_UNMATCHED points the question isn't a test of the real matchup
+            unmatched = g["candidate_id"].isna() & g["party"].isna()
+            if g.loc[unmatched, "pct"].sum() >= MAX_UNMATCHED:
+                continue
         rep = g[g["party"] == "REP"]
         forced = d_side.get(rid.get(qid)) if d_side else None
         if forced is not None:

@@ -9,3 +9,4 @@ site/build/
 data/db/*
 !data/db/.gitkeep
 site/static/data/
+site/static/feed.xml

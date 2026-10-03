@@ -1,0 +1,9 @@
+date,change
+2026-10-02,"Launch: Senate and governor forecast, daily runs, backtest 2010–2024."
+2026-10-02,"House forecast added (435 districts, 2026 district lines)."
+2026-10-02,"Sensitivity analysis and expert-ratings comparison added; Louisiana and Mississippi runoff rules verified (plurality)."
+2026-10-02,"Weighting-method correction (past-vote / party / demographic weighting classes) added for 11 pollsters."
+2026-10-03,"Special elections tested as a national-environment signal; made the backtest slightly worse, so shown on the Trackers page only."
+2026-10-03,"House added to the backtest; error sizes refit on all three offices (Senate Democratic odds 60% → 57%)."
+2026-10-03,"Fundraising (FEC individual contributions) added to the House fundamentals; 3 more pollsters' weighting methods coded."
+2026-10-03,"Polls whose answer options included a candidate who lost the primary (≥10 points) are no longer used."

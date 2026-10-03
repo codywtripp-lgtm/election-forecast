@@ -2,7 +2,7 @@
 	import '../app.css';
 	import favicon from '#lib/assets/favicon.svg';
 	import SummaryBar from '#lib/components/SummaryBar.svelte';
-	import { resolve } from '$app/paths';
+	import { asset, resolve } from '$app/paths';
 	import { page } from '$app/state';
 
 	let { data, children } = $props();
@@ -16,6 +16,7 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<link rel="alternate" type="application/rss+xml" title="Open Forecast 2026: daily updates" href={asset('feed.xml')} />
 	<meta name="description" content="An independent, open-methodology forecast of the 2026 U.S. Senate, governor and House elections." />
 </svelte:head>
 
@@ -40,7 +41,7 @@
 	<p>
 		Forecast run <code>{data.bar.run_id}</code>. Every number traces to versioned code and data —
 		<a href="https://github.com/codywtripp-lgtm/election-forecast">source and run manifests on GitHub</a>.
-		No prediction-market data is used anywhere on this site.
+		No prediction-market data is used anywhere on this site. <a href={asset('feed.xml')}>RSS feed of daily updates</a>.
 	</p>
 	<p>
 		Polls: <a href="https://votehub.com/polls/api/">VoteHub</a> (CC BY 4.0), FiveThirtyEight archive (CC BY 4.0),
