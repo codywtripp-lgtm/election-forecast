@@ -1172,3 +1172,220 @@ race_id,rater,rating,rating_date,fetched
 2026-sen-VA,Sabato's Crystal Ball,Safe D,"Oct 14, 2026",2026-10-15
 2026-sen-WV,Sabato's Crystal Ball,Safe R,"Oct 14, 2026",2026-10-15
 2026-sen-WY,Sabato's Crystal Ball,Safe R,"Oct 14, 2026",2026-10-15
+2026-sen-AL,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-AK,Inside Elections,Tossup,"Oct 15, 2026",2026-10-16
+2026-sen-AR,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-CO,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-DE,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-FL-S,Inside Elections,Likely R,"Oct 15, 2026",2026-10-16
+2026-sen-GA,Inside Elections,Lean D,"Oct 15, 2026",2026-10-16
+2026-sen-ID,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-IL,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-IA,Inside Elections,Tilt R,"Oct 15, 2026",2026-10-16
+2026-sen-KS,Inside Elections,Tilt R,"Oct 15, 2026",2026-10-16
+2026-sen-KY,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-LA,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-ME,Inside Elections,Tossup,"Oct 15, 2026",2026-10-16
+2026-sen-MA,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-MI,Inside Elections,Tilt D,"Oct 15, 2026",2026-10-16
+2026-sen-MN,Inside Elections,Lean D,"Oct 15, 2026",2026-10-16
+2026-sen-MS,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-MT,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-NE,Inside Elections,Lean R,"Oct 15, 2026",2026-10-16
+2026-sen-NH,Inside Elections,Tilt D,"Oct 15, 2026",2026-10-16
+2026-sen-NJ,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-NM,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-NC,Inside Elections,Lean D (flip),"Oct 15, 2026",2026-10-16
+2026-sen-OH-S,Inside Elections,Tossup,"Oct 15, 2026",2026-10-16
+2026-sen-OK,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-OR,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-RI,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-SC,Inside Elections,Lean R,"Oct 15, 2026",2026-10-16
+2026-sen-SD,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-TN,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-TX,Inside Elections,Tossup,"Oct 15, 2026",2026-10-16
+2026-sen-VA,Inside Elections,Solid D,"Oct 15, 2026",2026-10-16
+2026-sen-WV,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-sen-WY,Inside Elections,Solid R,"Oct 15, 2026",2026-10-16
+2026-gov-AL,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-AK,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-gov-AZ,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-gov-AR,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-CA,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-CO,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-CT,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-FL,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-gov-GA,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-gov-HI,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-ID,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-IL,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-IA,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-gov-KS,Inside Elections,Tilt R (flip),"Oct. 15, 2026",2026-10-16
+2026-gov-ME,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-MD,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-MA,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-MI,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-gov-MN,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-gov-NE,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-gov-NV,Inside Elections,Tilt R,"Oct. 15, 2026",2026-10-16
+2026-gov-NH,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-NM,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-gov-NY,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-gov-OH,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-gov-OK,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-gov-OR,Inside Elections,Lean D,"Oct. 15, 2026",2026-10-16
+2026-gov-PA,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-RI,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-gov-SC,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-SD,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-TN,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-gov-TX,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-gov-VT,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-gov-WI,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-gov-WY,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-AL-02,Inside Elections,Lean R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-AK-01,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-AZ-01,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-AZ-02,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-AZ-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-AZ-06,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-AZ-08,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-AR-02,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-CA-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-CA-06,Inside Elections,Lean D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-CA-13,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-house-CA-21,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-CA-22,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-CA-45,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-CA-48,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-CO-03,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-CO-04,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-CO-05,Inside Elections,Tilt R,"Oct. 15, 2026",2026-10-16
+2026-house-CO-08,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-FL-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-03,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-04,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-07,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-08,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-09,Inside Elections,Likely R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-FL-11,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-12,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-13,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-14,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-FL-15,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-16,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-18,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-21,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-22,Inside Elections,Tilt R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-FL-25,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-FL-26,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-FL-27,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-GA-01,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-GA-07,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-GA-10,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-GA-11,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-GA-12,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-IL-17,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-IN-01,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-IN-05,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-IA-01,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-IA-02,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-IA-03,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-KS-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-KS-03,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-KY-06,Inside Elections,Tilt R,"Oct. 15, 2026",2026-10-16
+2026-house-ME-02,Inside Elections,Lean R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-MD-01,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-MI-01,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-MI-03,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-MI-04,Inside Elections,Tilt R,"Oct. 15, 2026",2026-10-16
+2026-house-MI-07,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-MI-08,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-MI-10,Inside Elections,Tilt R,"Oct. 15, 2026",2026-10-16
+2026-house-MN-01,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-MN-02,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-MN-08,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-MO-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-MT-01,Inside Elections,Tilt R,"Oct. 15, 2026",2026-10-16
+2026-house-NE-01,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-NE-02,Inside Elections,Lean D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-NV-01,Inside Elections,Lean D,"Oct. 15, 2026",2026-10-16
+2026-house-NV-02,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-NV-03,Inside Elections,Lean D,"Oct. 15, 2026",2026-10-16
+2026-house-NV-04,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-NH-01,Inside Elections,Lean D,"Oct. 15, 2026",2026-10-16
+2026-house-NH-02,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-NJ-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NJ-07,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-NJ-09,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-NM-02,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-house-NY-01,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NY-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NY-03,Inside Elections,Lean D,"Oct. 15, 2026",2026-10-16
+2026-house-NY-04,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-house-NY-17,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-NY-19,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-NY-21,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-01,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-NC-03,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-06,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-07,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-08,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-09,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-10,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-11,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-NC-13,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-NC-14,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-OH-01,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-house-OH-07,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-OH-08,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-OH-09,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-OH-10,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-OH-13,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-OH-15,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-OK-01,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-OK-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-OR-05,Inside Elections,Solid D,"Oct. 15, 2026",2026-10-16
+2026-house-PA-01,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-PA-07,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-PA-08,Inside Elections,Tilt D (flip),"Oct. 15, 2026",2026-10-16
+2026-house-PA-10,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-PA-11,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-SC-01,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-SC-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-SC-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TN-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TN-07,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TN-09,Inside Elections,Solid R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-TX-02,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-09,Inside Elections,Likely R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-TX-10,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-15,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-TX-21,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-22,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-23,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-24,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-27,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-TX-28,Inside Elections,Tilt D,"Oct. 15, 2026",2026-10-16
+2026-house-TX-32,Inside Elections,Solid R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-TX-34,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-TX-35,Inside Elections,Lean R (flip),"Oct. 15, 2026",2026-10-16
+2026-house-TX-38,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-VA-01,Inside Elections,Lean R,"Oct. 15, 2026",2026-10-16
+2026-house-VA-02,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-VA-05,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-VA-07,Inside Elections,Likely D,"Oct. 15, 2026",2026-10-16
+2026-house-WA-03,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-WA-04,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-WA-05,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-WI-01,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-WI-03,Inside Elections,Tossup,"Oct. 15, 2026",2026-10-16
+2026-house-WI-06,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-WI-07,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-WI-08,Inside Elections,Solid R,"Oct. 15, 2026",2026-10-16
+2026-house-WY-01,Cook Political Report,Solid R,"Oct. 9, 2026",2026-10-16
+2026-house-WY-01,Inside Elections,Likely R,"Oct. 15, 2026",2026-10-16
+2026-house-WY-01,Sabato's Crystal Ball,Safe R,"Oct. 8, 2026",2026-10-16
