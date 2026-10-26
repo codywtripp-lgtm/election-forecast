@@ -41,3 +41,6 @@ Independent, statistically rigorous election forecast site. Launch: Nov 3, 2026 
 - Local runs never write tracked history/manifests (only when GITHUB_ACTIONS=true).
 - Open items: code more pollsters' weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10); House expert ratings; candidate quality + FEC fundraising; Phase 3 (scorecard after Nov 3, approval/generic-ballot/special-election trackers, 2027 + 2028 scaffolding, RSS).
 - (old) Next (after House): Phase 2 polish (verify 2026 district lines, district lean, hex map); hand-code weighting methods (G5); approval/midterm regression (G9); CPS/CES turnout build (G10).
+
+## STOPPED (2026-10-26)
+Owner shut the project down. All workflows disabled and GitHub Pages unpublished; repo and local folder kept. Restart = re-enable workflows (gh workflow enable daily.yml/backtest.yml/tests.yml) and re-enable Pages (source: GitHub Actions).
